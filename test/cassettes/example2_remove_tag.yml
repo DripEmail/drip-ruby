@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: https://qsor48ughrjufyu2dqcrasz6fmktns11:@api.getdrip.com/v2/7986477/tags
+    body:
+      encoding: UTF-8
+      string: '{"tags":[{"email":"iantnance@gmail.com","tag":"test_tag"}]}'
+    headers:
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Drip v1.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 10 Sep 2014 20:16:27 GMT
+      Connection:
+      - keep-alive
+      Status:
+      - 204 No Content
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Cache-Control:
+      - no-cache
+      Set-Cookie:
+      - request_method=DELETE; path=/
+      X-Request-Id:
+      - dc0bc7c2e8fe2d89a50d63bfe1d9ded4
+      X-Runtime:
+      - '0.029849'
+      X-Rack-Cache:
+      - invalidate, pass
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 10 Sep 2014 20:16:32 GMT
+recorded_with: VCR 2.9.3

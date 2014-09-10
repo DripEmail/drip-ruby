@@ -21,12 +21,10 @@ module Drip
     end
 
     def create_or_update_subscribers(params)
-      response = connection.post do |req|
+      connection.post do |req|
         req.url "#{account_id}/subscribers/batches"
         req.body = { :batches => [{ :subscribers => params }] }.to_json
       end
-
-      response
     end
 
     def fetch_subscriber(email_or_id)
@@ -37,17 +35,17 @@ module Drip
       response.body
     end
 
-    def apply_tag(params)
+    def apply_tag(email, tag)
       connection.post do |req|
         req.url "#{account_id}/tags"
-        req.body = { :tags => [params] }.to_json
+        req.body = { :tags => [{ :email => email, :tag => tag }] }.to_json
       end
     end
 
-    def remove_tag(params)
+    def remove_tag(email, tag)
       connection.delete do |req|
         req.url "#{account_id}/tags"
-        req.body = { :tags => [params] }.to_json
+        req.body = { :tags => [{ :email => email, :tag => tag }] }.to_json
       end
     end
 
