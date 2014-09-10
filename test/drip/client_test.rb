@@ -111,7 +111,7 @@ class Drip::ClientTest < Test::Unit::TestCase
       end
     end
 
-    context "apply_tag" do
+    context "#apply_tag" do
       should "tag subscriber" do
         VCR.use_cassette('example2_apply_tag') do
            response = @client.apply_tag("iantnance@gmail.com", "test_tag")
@@ -120,11 +120,41 @@ class Drip::ClientTest < Test::Unit::TestCase
       end 
     end
 
-    context "remove_tag" do
+    context "#remove_tag" do
       should "tag subscriber" do
         VCR.use_cassette('example2_remove_tag') do
            response = @client.remove_tag("iantnance@gmail.com", "test_tag")
            assert_equal "204 No Content", response.headers[:status]
+        end
+      end 
+    end
+  end
+
+  context "events" do
+    setup do
+      @client = Drip::Client.new do |config|
+        config.api_key = "qsor48ughrjufyu2dqcrasz6fmktns11"
+        config.account_id = 7986477
+      end     
+    end
+
+    context "#track_event" do
+      should "record event" do
+        VCR.use_cassette('example2_track_events') do
+           response = @client.track_event("iantnance@gmail.com", "Purchased something", { :item => "taco" })
+           assert_equal "204 No Content", response.headers[:status]
+        end
+      end 
+    end
+
+    context "#track_events" do
+      should "record event" do
+        VCR.use_cassette('example2_track_events_batch') do
+           response = @client.track_events([
+              { :email => "iantnance@gmail.com", :action => "Purchased something", :properties => { :item => "taco" } },
+              { :email => "iantnance@gmail.com", :action => "Purchased another things", :properties => { :item => "burrito" } }
+            ])
+           assert_equal "201 Created", response.headers[:status]
         end
       end 
     end

@@ -49,17 +49,23 @@ module Drip
       end
     end
 
-    def track_event(params)
+    def track_event(email, action, properties = {}, occurred_at=nil)
+      if occurred_at.nil?
+        body = { :events => [{ :email => email, :action => action, :properties => properties }] }.to_json
+      else 
+        { :events => [{ :email => email, :action => action, :properties => properties, :occurred_at => occurred_at }] }.to_json
+      end
+
       connection.post do |req|
         req.url "#{account_id}/events"
-        req.body = { :events => [params] }.to_json
+        req.body = body
       end
     end
 
     def track_events(params)
       connection.post do |req|
         req.url "#{account_id}/events/batches"
-        req.body = { :events => params }.to_json
+        req.body = { :batches => [{ :events => params }] }.to_json
       end
     end
 
