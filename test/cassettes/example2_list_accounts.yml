@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://qsor48ughrjufyu2dqcrasz6fmktns11:@api.getdrip.com/v2/7986477/subscribers/ycmi2jgsbtkwmbdb12fj
+    uri: https://qsor48ughrjufyu2dqcrasz6fmktns11:@api.getdrip.com/v2/accounts
     body:
       encoding: US-ASCII
       string: ''
@@ -23,7 +23,7 @@ http_interactions:
       Server:
       - nginx/1.1.19
       Date:
-      - Wed, 10 Sep 2014 21:22:22 GMT
+      - Wed, 10 Sep 2014 22:43:35 GMT
       Content-Type:
       - application/vnd.api+json; charset=utf-8
       Transfer-Encoding:
@@ -35,20 +35,20 @@ http_interactions:
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Etag:
-      - '"b5e8d6487da0de0c0e3793b9408dc96f"'
+      - '"124ab4021f2f3857d67ad041b9214ffb"'
       Cache-Control:
       - must-revalidate, private, max-age=0
       Set-Cookie:
       - request_method=GET; path=/
       X-Request-Id:
-      - 9f635624c4cbf82d8ec81c9aadaf5c0c
+      - a40e5f5208a4df6fa38870b89959d793
       X-Runtime:
-      - '0.036993'
+      - '0.015768'
       X-Rack-Cache:
       - miss
     body:
       encoding: UTF-8
-      string: '{"links":{"subscribers.account":"https://api.getdrip.com/v2/accounts/{subscribers.account}"},"subscribers":[{"id":"ycmi2jgsbtkwmbdb12fj","href":"https://api.getdrip.com/v2/7986477/subscribers/ycmi2jgsbtkwmbdb12fj","status":"active","email":"iantnance@gmail.com","time_zone":null,"utc_offset":0,"visitor_uuid":null,"custom_fields":{"first_name":"Ian","last_name":"Nance","name":"Ian"},"tags":[],"created_at":"2014-08-27T23:54:36Z","links":{"account":"7986477"}}]}'
+      string: '{"links":{"accounts.broadcasts":"http://api.getdrip.com/v2/{accounts.id}/broadcasts","accounts.campaigns":"http://api.getdrip.com/v2/{accounts.id}/campaigns","accounts.goals":"http://api.getdrip.com/v2/{accounts.id}/goals"},"accounts":[{"id":"7986477","href":"https://api.getdrip.com/v2/accounts/7986477","name":"www.example2.com","url":"www.example2.com","default_from_name":"rwalling@gmail.com","default_from_email":"rwalling@gmail.com","default_postal_address":"","primary_email":"rwalling@gmail.com","enable_third_party_cookies":false,"phone_number":"","created_at":"2013-08-20T20:57:29Z"}]}'
     http_version: 
-  recorded_at: Wed, 10 Sep 2014 21:22:26 GMT
+  recorded_at: Wed, 10 Sep 2014 22:43:39 GMT
 recorded_with: VCR 2.9.3

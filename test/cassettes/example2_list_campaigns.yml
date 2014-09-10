@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://qsor48ughrjufyu2dqcrasz6fmktns11:@api.getdrip.com/v2/7986477/campaigns?status=all
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Drip v1.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 10 Sep 2014 21:24:19 GMT
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"230d76f3dde369bc502a148b06f80b59"'
+      Cache-Control:
+      - must-revalidate, private, max-age=0
+      Set-Cookie:
+      - request_method=GET; path=/
+      X-Request-Id:
+      - 5fa40e62c808695ccc34ba6bb3db44ae
+      X-Runtime:
+      - '0.034838'
+      X-Rack-Cache:
+      - miss
+    body:
+      encoding: UTF-8
+      string: '{"links":{"campaigns.account":"https://api.getdrip.com/v2/accounts/{campaigns.account}","campaigns.forms":"https://api.getdrip.com/v2/{campaigns.account}/forms/{campaigns.forms}","campaigns.subscribers":"https://api.getdrip.com/v2/{campaigns.account}/campaigns/{campaigns.id}/subscribers"},"meta":{"page":1,"sort":"created_at","direction":"desc","count":6,"status":"all","total_pages":2,"total_count":6},"campaigns":[{"id":"9533099","href":"https://api.getdrip.com/v2/7986477/campaigns/9533099","name":"My
+        Welcome Email","status":"draft","from_name":"Derrick","from_email":"derrick@codetree.com","postal_address":"123
+        Anywhere","minutes_from_midnight":660,"localize_sending_time":true,"days_of_the_week_mask":"0111110","start_immediately":true,"double_optin":true,"confirmation_url":null,"send_to_confirmation_page":false,"use_custom_confirmation_page":false,"notify_subscribe_email":"rwalling@gmail.com","notify_unsubscribe_email":"rwalling@gmail.com","bcc":"","email_count":1,"active_subscriber_count":0,"unsubscribed_subscriber_count":0,"created_at":"2014-09-02T22:43:17Z","subscription_rate":0.0,"email_open_rate":0.0,"email_click_rate":0.0,"links":{"account":"7986477","forms":["9108289"]}},{"id":"2188784","href":"https://api.getdrip.com/v2/7986477/campaigns/2188784","name":"Post-time
+        Tracking Drip Campaign","status":"draft","from_name":"rwalling@gmail.com","from_email":"rwalling@gmail.com","postal_address":"","minutes_from_midnight":660,"localize_sending_time":true,"days_of_the_week_mask":"0111110","start_immediately":true,"double_optin":true,"confirmation_url":null,"send_to_confirmation_page":false,"use_custom_confirmation_page":false,"notify_subscribe_email":"rwalling@gmail.com","notify_unsubscribe_email":"rwalling@gmail.com","bcc":null,"email_count":0,"active_subscriber_count":0,"unsubscribed_subscriber_count":0,"created_at":"2014-08-07T20:49:57Z","subscription_rate":0.0,"email_open_rate":0.0,"email_click_rate":0.0,"links":{"account":"7986477","forms":["9895288"]}},{"id":"3805781","href":"https://api.getdrip.com/v2/7986477/campaigns/3805781","name":"Pre-time
+        Tracking Drip Campaign","status":"draft","from_name":"rwalling@gmail.com","from_email":"rwalling@gmail.com","postal_address":"","minutes_from_midnight":660,"localize_sending_time":true,"days_of_the_week_mask":"0111110","start_immediately":true,"double_optin":true,"confirmation_url":null,"send_to_confirmation_page":false,"use_custom_confirmation_page":false,"notify_subscribe_email":"rwalling@gmail.com","notify_unsubscribe_email":"rwalling@gmail.com","bcc":null,"email_count":0,"active_subscriber_count":84,"unsubscribed_subscriber_count":0,"created_at":"2014-08-07T20:49:43Z","subscription_rate":0.0,"email_open_rate":0.0,"email_click_rate":0.0,"links":{"account":"7986477","forms":["1699541"]}},{"id":"4836993","href":"https://api.getdrip.com/v2/7986477/campaigns/4836993","name":"Book
+        Purchased","status":"draft","from_name":"rwalling@gmail.com","from_email":"rwalling@gmail.com","postal_address":null,"minutes_from_midnight":660,"localize_sending_time":true,"days_of_the_week_mask":"0111110","start_immediately":true,"double_optin":true,"confirmation_url":null,"send_to_confirmation_page":false,"use_custom_confirmation_page":false,"notify_subscribe_email":"rwalling@gmail.com","notify_unsubscribe_email":"rwalling@gmail.com","bcc":null,"email_count":0,"active_subscriber_count":86,"unsubscribed_subscriber_count":2,"created_at":"2014-05-29T19:54:08Z","subscription_rate":0.0,"email_open_rate":0.0,"email_click_rate":0.0,"links":{"account":"7986477","forms":["8818222"]}},{"id":"8718025","href":"https://api.getdrip.com/v2/7986477/campaigns/8718025","name":"Sample
+        Chapter Not Downloaded","status":"paused","from_name":"rwalling@gmail.com","from_email":"rwalling@gmail.com","postal_address":"123
+        any st.\r\nontario, CA 91761","minutes_from_midnight":660,"localize_sending_time":true,"days_of_the_week_mask":"0111110","start_immediately":true,"double_optin":true,"confirmation_url":"","send_to_confirmation_page":false,"use_custom_confirmation_page":false,"notify_subscribe_email":"rwalling@gmail.com","notify_unsubscribe_email":"rwalling@gmail.com","bcc":"","email_count":2,"active_subscriber_count":86,"unsubscribed_subscriber_count":1,"created_at":"2013-10-01T18:01:43Z","subscription_rate":0.0,"email_open_rate":0.0,"email_click_rate":0.0,"links":{"account":"7986477","forms":["2515815"]}}]}'
+    http_version: 
+  recorded_at: Wed, 10 Sep 2014 21:24:24 GMT
+recorded_with: VCR 2.9.3

@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://qsor48ughrjufyu2dqcrasz6fmktns11:@api.getdrip.com/v2/7986477/campaigns?status=active
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Drip v1.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 10 Sep 2014 21:24:20 GMT
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"7f0bbc89c21a43e74a0892ebfacc36fd"'
+      Cache-Control:
+      - must-revalidate, private, max-age=0
+      Set-Cookie:
+      - request_method=GET; path=/
+      X-Request-Id:
+      - 602d99486076a30a342a30ad93bbec73
+      X-Runtime:
+      - '0.024514'
+      X-Rack-Cache:
+      - miss
+    body:
+      encoding: UTF-8
+      string: '{"links":{"campaigns.account":"https://api.getdrip.com/v2/accounts/{campaigns.account}","campaigns.forms":"https://api.getdrip.com/v2/{campaigns.account}/forms/{campaigns.forms}","campaigns.subscribers":"https://api.getdrip.com/v2/{campaigns.account}/campaigns/{campaigns.id}/subscribers"},"meta":{"page":1,"sort":"created_at","direction":"desc","count":1,"status":"active","total_pages":1,"total_count":1},"campaigns":[{"id":"9234216","href":"https://api.getdrip.com/v2/7986477/campaigns/9234216","name":"Sample
+        Chapter Downloaded","status":"active","from_name":"rwalling@gmail.com","from_email":"rwalling@gmail.com","postal_address":"Address","minutes_from_midnight":660,"localize_sending_time":true,"days_of_the_week_mask":"0111110","start_immediately":true,"double_optin":false,"confirmation_url":"","send_to_confirmation_page":false,"use_custom_confirmation_page":false,"notify_subscribe_email":"rwalling@gmail.com","notify_unsubscribe_email":"rwalling@gmail.com","bcc":"","email_count":4,"active_subscriber_count":26,"unsubscribed_subscriber_count":0,"created_at":"2013-10-01T18:01:43Z","subscription_rate":0.06667,"email_open_rate":0.65385,"email_click_rate":0.0,"links":{"account":"7986477","forms":["8996356"]}}]}'
+    http_version: 
+  recorded_at: Wed, 10 Sep 2014 21:24:24 GMT
+recorded_with: VCR 2.9.3

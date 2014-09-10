@@ -159,4 +159,83 @@ class Drip::ClientTest < Test::Unit::TestCase
       end 
     end
   end
+
+  context "campaigns" do
+    setup do
+      @client = Drip::Client.new do |config|
+        config.api_key = "qsor48ughrjufyu2dqcrasz6fmktns11"
+        config.account_id = 7986477
+      end     
+    end
+
+    context "#list_campaigns" do
+      context "no status given" do
+        should "return campaigns" do
+          VCR.use_cassette('example2_list_campaigns') do
+             response = @client.list_campaigns
+             assert_equal 6, response["meta"]["total_count"]
+          end
+        end         
+      end
+
+      context "status given" do
+        should "return campaigns" do
+          VCR.use_cassette('example2_list_campaigns_by_status') do
+             response = @client.list_campaigns("active")
+             assert_equal 1, response["meta"]["total_count"]
+          end
+        end         
+      end
+    end
+
+    context "#subscribe_to_campaign" do
+      should "subscriber to campaign" do
+        VCR.use_cassette('example2_subscribe_to_campaign') do
+           response = @client.subscribe_to_campaign(9234216, "iantnance+DRIPRUBY4@gmail.com", 
+            :time_zone => "America/Los_Angeles",:custom_fields => { :organization => "Drip" })
+           assert_equal "iantnance+DRIPRUBY4@gmail.com", response["subscribers"][0]["email"]
+           assert_equal "America/Los_Angeles", response["subscribers"][0]["time_zone"]
+           assert_equal "Drip", response["subscribers"][0]["custom_fields"]["organization"]
+        end
+      end
+    end
+
+    context "#unsubscribe_from_campaigns" do
+      context "campaign id given" do
+        should "unsubscribe from campaign" do
+          VCR.use_cassette('example2_unsubscribe_from_campaign') do
+             response = @client.unsubscribe_from_campaigns("iantnance+DRIPRUBY4@gmail.com", 9234216)
+             assert_equal "200 OK", response.headers[:status]
+          end
+        end
+      end
+
+      context "no campaign id" do
+        should "unsubscribe from campaign" do
+          VCR.use_cassette('example2_unsubscribe_from_campaigns') do
+             response = @client.unsubscribe_from_campaigns("iantnance@gmail.com")
+             assert_equal "200 OK", response.headers[:status]
+          end
+        end
+      end
+    end   
+  end
+
+  context "accounts" do
+    setup do
+      @client = Drip::Client.new do |config|
+        config.api_key = "qsor48ughrjufyu2dqcrasz6fmktns11"
+        config.account_id = 7986477
+      end     
+    end
+
+    context "#list_accounts" do
+      should "list accounts" do
+        VCR.use_cassette('example2_list_accounts') do
+          response = @client.list_accounts
+          assert_equal 1, response["accounts"].length
+        end
+      end
+    end
+  end
 end

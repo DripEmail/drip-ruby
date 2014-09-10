@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://qsor48ughrjufyu2dqcrasz6fmktns11:@api.getdrip.com/v2/7986477/campaigns/9234216/subscribers
+    body:
+      encoding: UTF-8
+      string: '{"subscribers":[{"time_zone":"America/Los_Angeles","custom_fields":{"organization":"Drip"},"email":"iantnance+DRIPRUBY4@gmail.com"}]}'
+    headers:
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Drip v1.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 10 Sep 2014 22:31:20 GMT
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 201 Created
+      Location:
+      - https://api.getdrip.com/v2/7986477/subscribers/ugnyqkdjjf8a5p7whtst
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"75733dea29760df1f3d7bbb2fcc4ba66"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - request_method=POST; path=/
+      X-Request-Id:
+      - ee6057da18a538022637bcc926afa322
+      X-Runtime:
+      - '0.323883'
+      X-Rack-Cache:
+      - invalidate, pass
+    body:
+      encoding: UTF-8
+      string: '{"links":{"subscribers.account":"https://api.getdrip.com/v2/accounts/{subscribers.account}"},"subscribers":[{"id":"ugnyqkdjjf8a5p7whtst","href":"https://api.getdrip.com/v2/7986477/subscribers/ugnyqkdjjf8a5p7whtst","status":"active","email":"iantnance+DRIPRUBY4@gmail.com","time_zone":"America/Los_Angeles","utc_offset":-420,"visitor_uuid":null,"custom_fields":{"organization":"Drip"},"tags":[],"created_at":"2014-09-10T22:31:20Z","links":{"account":"7986477"}}]}'
+    http_version: 
+  recorded_at: Wed, 10 Sep 2014 22:31:25 GMT
+recorded_with: VCR 2.9.3

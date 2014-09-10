@@ -69,26 +69,28 @@ module Drip
       end
     end
 
-    def subscribe_to_campaign(params)
-      connection.post do |req|
-        req.url "#{account_id}/campaigns/#{params[campaign_id]}/subscribers"
-        req.body = { :subscribers => [params.except(:campaign_id)] }.to_json
+    def subscribe_to_campaign(campaign_id, email, params)
+      response = connection.post do |req|
+        req.url "#{account_id}/campaigns/#{campaign_id}/subscribers"
+        req.body = { :subscribers => [params.merge(:email => email)] }.to_json
       end
+
+      response.body
     end
 
-    def unsubscribe_from_campaigns(id_or_email, params)
+    def unsubscribe_from_campaigns(id_or_email, campaign_id=nil)
       connection.post do |req|
-        if params[:campaign_id]
-          req.url "#{account_id}/subscribers/#{id_or_email}/unsubscribe?campaign_id=#{params[:campaign_id]}"
-        else
+        if campaign_id.nil?
           req.url "#{account_id}/subscribers/#{id_or_email}/unsubscribe"
+        else
+          req.url "#{account_id}/subscribers/#{id_or_email}/unsubscribe?campaign_id=#{campaign_id}"
         end
       end
     end
 
-    def list_campaigns
+    def list_campaigns(status="all")
       response = connection.get do |req|
-        req.url "#{account_id}/campaigns"
+        req.url "#{account_id}/campaigns?status=#{status}"
       end
       
       response.body
