@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://qsor48ughrjufyu2dqcrasz6fmktns11:@api.getdrip.com/v2/7986477/subscribers
+    body:
+      encoding: UTF-8
+      string: '{"subscribers":[{"email":"iantnance@gmail.com","custom_fields":{"name":"Ian"}}]}'
+    headers:
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Drip v1.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Wed, 10 Sep 2014 19:06:35 GMT
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Location:
+      - https://api.getdrip.com/v2/7986477/subscribers/ycmi2jgsbtkwmbdb12fj
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"b5e8d6487da0de0c0e3793b9408dc96f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - request_method=POST; path=/
+      X-Request-Id:
+      - 1f7f5582d14c081ba96bc08babc6de2b
+      X-Runtime:
+      - '0.038183'
+      X-Rack-Cache:
+      - invalidate, pass
+    body:
+      encoding: UTF-8
+      string: '{"links":{"subscribers.account":"https://api.getdrip.com/v2/accounts/{subscribers.account}"},"subscribers":[{"id":"ycmi2jgsbtkwmbdb12fj","href":"https://api.getdrip.com/v2/7986477/subscribers/ycmi2jgsbtkwmbdb12fj","status":"active","email":"iantnance@gmail.com","time_zone":null,"utc_offset":0,"visitor_uuid":null,"custom_fields":{"first_name":"Ian","last_name":"Nance","name":"Ian"},"tags":[],"created_at":"2014-08-27T23:54:36Z","links":{"account":"7986477"}}]}'
+    http_version: 
+  recorded_at: Wed, 10 Sep 2014 19:06:40 GMT
+recorded_with: VCR 2.9.3
