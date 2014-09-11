@@ -1,6 +1,6 @@
 # Drip
 
-TODO: Write a gem description
+The drip gem allows for easy Ruby interaction with Drip's REST API.
 
 ## Installation
 
@@ -18,7 +18,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Drip Credentials
+
+To access Drip's API, you'll need your api token and your Drip account number. The api token can be found on the "General Settings" tab on your Settings page. The Drip account ID can be found on the "Site Setup" tab of the Settings page. It also appears directly after "www.getdrip.com" in the URL when you are signed in to Drip.
+
+### Initialize a Drip client
+
+Set up a client instance by passing your credentials in a configuration block.
+
+```ruby
+      client = Drip::Client.new do |config|
+        config.api_key = <your api key>
+        config.account_id = <your drip account number>
+      end
+```
+
+### Client methods
+
+
 
 ## Contributing
 
