@@ -24,23 +24,30 @@ class Drip::ClientTest < Test::Unit::TestCase
     end
 
     context "with existing subscriber" do
-      should "update subscriber" do
+      setup do
         VCR.use_cassette('example2_subscriber_update') do
-           response = @client.create_or_update_subscriber("iantnance@gmail.com", :custom_fields => { :name => "Ian" })
-           subscriber = response["subscribers"][0]
-           assert_equal "iantnance@gmail.com", subscriber["email"]
-           assert_equal "Ian", subscriber["custom_fields"]["name"]
+           @response = @client.create_or_update_subscriber("iantnance@gmail.com", :custom_fields => { :name => "Ian" })
         end
+      end
+      should "update subscriber" do
+         subscriber = @response.subscribers.first
+         assert_equal "iantnance@gmail.com", subscriber.email
+         assert_equal "Ian", subscriber.custom_fields["name"]
       end 
+
+      should "expose links" do
+        expected = { "subscribers.account" => "http://api.getdrip.com/v2/accounts/7986477" }
+        assert_equal expected, @response.full_links
+      end
     end
 
     context "with new subscriber" do
       should "create subscriber" do
         VCR.use_cassette('example2_subscriber_create') do
            response = @client.create_or_update_subscriber("iantnance+DRIPRUBY@gmail.com", :custom_fields => { :name => "Ian" })
-           subscriber = response["subscribers"][0]
-           assert_equal "iantnance+DRIPRUBY@gmail.com", subscriber["email"]
-           assert_equal "Ian", subscriber["custom_fields"]["name"]
+           subscriber = response.subscribers.first
+           assert_equal "iantnance+DRIPRUBY@gmail.com", subscriber.email
+           assert_equal "Ian", subscriber.custom_fields["name"]
         end
       end    
     end
@@ -63,7 +70,7 @@ class Drip::ClientTest < Test::Unit::TestCase
                 { :email => "iantnance@gmail.com", :custom_fields => { :name => "Ian" } },
                 { :email => "iantnance+DRIPRUBY@gmail.com", :custom_fields => { :name => "Ian" } }
               ])
-            assert_equal "201 Created", response.headers[:status]
+            assert_equal "201 Created", response.response.headers[:status]
           end
         end 
       end
@@ -76,7 +83,7 @@ class Drip::ClientTest < Test::Unit::TestCase
                 { :email => "iantnance+DRIPRUBY1@gmail.com", :custom_fields => { :name => "Ian" } },
                 { :email => "iantnance+DRIPRUBY2@gmail.com", :custom_fields => { :name => "Ian" } }
               ])
-            assert_equal "201 Created", response.headers[:status]
+            assert_equal "201 Created", response.response.headers[:status]
           end
         end 
       end
@@ -86,7 +93,7 @@ class Drip::ClientTest < Test::Unit::TestCase
           should "return subscriber subscribers" do
             VCR.use_cassette('example2_fetch_subscriber') do
                response = @client.fetch_subscriber("iantnance@gmail.com")
-               assert_equal "iantnance@gmail.com", response["subscribers"][0]["email"]
+               assert_equal "iantnance@gmail.com", response.subscribers.first.email
             end
           end 
         end
@@ -95,7 +102,7 @@ class Drip::ClientTest < Test::Unit::TestCase
           should "return subscriber subscribers" do
             VCR.use_cassette('example2_fetch_subscriber_by_id') do
                response = @client.fetch_subscriber("ycmi2jgsbtkwmbdb12fj")
-               assert_equal "iantnance@gmail.com", response["subscribers"][0]["email"]
+               assert_equal "iantnance@gmail.com", response.subscribers.first.email
             end
           end 
         end
@@ -115,7 +122,7 @@ class Drip::ClientTest < Test::Unit::TestCase
       should "tag subscriber" do
         VCR.use_cassette('example2_apply_tag') do
            response = @client.apply_tag("iantnance@gmail.com", "test_tag")
-           assert_equal "201 Created", response.headers[:status]
+           assert_equal "201 Created", response.response.headers[:status]
         end
       end 
     end
@@ -124,7 +131,7 @@ class Drip::ClientTest < Test::Unit::TestCase
       should "tag subscriber" do
         VCR.use_cassette('example2_remove_tag') do
            response = @client.remove_tag("iantnance@gmail.com", "test_tag")
-           assert_equal "204 No Content", response.headers[:status]
+           assert_equal "204 No Content", response.response.headers[:status]
         end
       end 
     end
@@ -142,7 +149,7 @@ class Drip::ClientTest < Test::Unit::TestCase
       should "record event" do
         VCR.use_cassette('example2_track_events') do
            response = @client.track_event("iantnance@gmail.com", "Purchased something", { :item => "taco" })
-           assert_equal "204 No Content", response.headers[:status]
+           assert_equal "204 No Content", response.response.headers[:status]
         end
       end 
     end
@@ -154,7 +161,7 @@ class Drip::ClientTest < Test::Unit::TestCase
               { :email => "iantnance@gmail.com", :action => "Purchased something", :properties => { :item => "taco" } },
               { :email => "iantnance@gmail.com", :action => "Purchased another things", :properties => { :item => "burrito" } }
             ])
-           assert_equal "201 Created", response.headers[:status]
+           assert_equal "201 Created", response.response.headers[:status]
         end
       end 
     end
@@ -173,7 +180,7 @@ class Drip::ClientTest < Test::Unit::TestCase
         should "return campaigns" do
           VCR.use_cassette('example2_list_campaigns') do
              response = @client.list_campaigns
-             assert_equal 6, response["meta"]["total_count"]
+             assert_equal 6, response.meta.total_count
           end
         end         
       end
@@ -182,7 +189,7 @@ class Drip::ClientTest < Test::Unit::TestCase
         should "return campaigns" do
           VCR.use_cassette('example2_list_campaigns_by_status') do
              response = @client.list_campaigns("active")
-             assert_equal 1, response["meta"]["total_count"]
+             assert_equal 1, response.meta.total_count
           end
         end         
       end
@@ -193,9 +200,9 @@ class Drip::ClientTest < Test::Unit::TestCase
         VCR.use_cassette('example2_subscribe_to_campaign') do
            response = @client.subscribe_to_campaign(9234216, "iantnance+DRIPRUBY4@gmail.com", 
             :time_zone => "America/Los_Angeles",:custom_fields => { :organization => "Drip" })
-           assert_equal "iantnance+DRIPRUBY4@gmail.com", response["subscribers"][0]["email"]
-           assert_equal "America/Los_Angeles", response["subscribers"][0]["time_zone"]
-           assert_equal "Drip", response["subscribers"][0]["custom_fields"]["organization"]
+           assert_equal "iantnance+DRIPRUBY4@gmail.com", response.subscribers.first.email
+           assert_equal "America/Los_Angeles", response.subscribers.first.time_zone
+           assert_equal "Drip", response.subscribers.first.custom_fields["organization"]
         end
       end
     end
@@ -205,7 +212,7 @@ class Drip::ClientTest < Test::Unit::TestCase
         should "unsubscribe from campaign" do
           VCR.use_cassette('example2_unsubscribe_from_campaign') do
              response = @client.unsubscribe_from_campaigns("iantnance+DRIPRUBY4@gmail.com", 9234216)
-             assert_equal "200 OK", response.headers[:status]
+             assert_equal "200 OK", response.response.headers[:status]
           end
         end
       end
@@ -214,7 +221,7 @@ class Drip::ClientTest < Test::Unit::TestCase
         should "unsubscribe from campaign" do
           VCR.use_cassette('example2_unsubscribe_from_campaigns') do
              response = @client.unsubscribe_from_campaigns("iantnance@gmail.com")
-             assert_equal "200 OK", response.headers[:status]
+             assert_equal "200 OK", response.response.headers[:status]
           end
         end
       end
@@ -233,7 +240,7 @@ class Drip::ClientTest < Test::Unit::TestCase
       should "list accounts" do
         VCR.use_cassette('example2_list_accounts') do
           response = @client.list_accounts
-          assert_equal 1, response["accounts"].length
+          assert_equal 1, response.accounts.length
         end
       end
     end
