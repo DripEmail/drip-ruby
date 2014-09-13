@@ -20,16 +20,21 @@ module Drip
     def initialize(response, attributes = {} )
       @response = response
       super(attributes)
+      assign_links
     end
 
     def resources
-      return subscribers if subscribers
-      return campaigns if campaigns
-      return accounts if accounts
+      return subscribers if subscribers.any?
+      return campaigns if campaigns.any?
+      return accounts if accounts.any?
     end
     
-    def full_links
-      @full_links ||= Drip::Links.new(links, resources).links
+    def assign_links
+      self.links = Drip::Links.new(links, resources)
+    end
+
+    def subscriber
+      @subscriber ||= subscribers.first
     end
   end
 end

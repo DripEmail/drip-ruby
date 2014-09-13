@@ -30,25 +30,36 @@ class Drip::ClientTest < Test::Unit::TestCase
         end
       end
       should "update subscriber" do
-         subscriber = @response.subscribers.first
+         subscriber = @response.subscriber
          assert_equal "iantnance@gmail.com", subscriber.email
          assert_equal "Ian", subscriber.custom_fields["name"]
       end 
 
       should "expose links" do
-        expected = { "subscribers.account" => "http://api.getdrip.com/v2/accounts/7986477" }
-        assert_equal expected, @response.full_links
+        expected = [{ "subscribers.account" => "http://api.getdrip.com/v2/accounts/7986477" }]
+        assert_equal expected, @response.links.all
+        assert_equal ["http://api.getdrip.com/v2/accounts/7986477"],  @response.links.accounts
+        assert_equal "http://api.getdrip.com/v2/accounts/7986477", @response.subscriber.links.accounts
       end
     end
 
     context "with new subscriber" do
-      should "create subscriber" do
+      setup do
         VCR.use_cassette('example2_subscriber_create') do
-           response = @client.create_or_update_subscriber("iantnance+DRIPRUBY@gmail.com", :custom_fields => { :name => "Ian" })
-           subscriber = response.subscribers.first
-           assert_equal "iantnance+DRIPRUBY@gmail.com", subscriber.email
-           assert_equal "Ian", subscriber.custom_fields["name"]
+           @response = @client.create_or_update_subscriber("iantnance+DRIPRUBY@gmail.com", :custom_fields => { :name => "Ian" })
         end
+      end
+
+      should "create subscriber" do
+        subscriber = @response.subscriber
+        assert_equal "iantnance+DRIPRUBY@gmail.com", subscriber.email
+        assert_equal "Ian", subscriber.custom_fields["name"]
+      end
+
+      should "expose links" do
+        expected = [{ "subscribers.account" => "http://api.getdrip.com/v2/accounts/7986477" }]
+        assert_equal expected, @response.links.all
+        assert_equal ["http://api.getdrip.com/v2/accounts/7986477"],  @response.links.accounts
       end    
     end
   end
@@ -89,22 +100,33 @@ class Drip::ClientTest < Test::Unit::TestCase
       end
 
       context "#fetch_subscriber" do
+        setup do
+          VCR.use_cassette('example2_fetch_subscriber') do
+            @response = @client.fetch_subscriber("iantnance@gmail.com")
+          end
+        end
         context "with email" do
           should "return subscriber subscribers" do
-            VCR.use_cassette('example2_fetch_subscriber') do
-               response = @client.fetch_subscriber("iantnance@gmail.com")
-               assert_equal "iantnance@gmail.com", response.subscribers.first.email
-            end
+            assert_equal "iantnance@gmail.com", @response.subscriber.email
+          end
+
+          should "expose links" do
+            expected = [{ "subscribers.account" => "http://api.getdrip.com/v2/accounts/7986477" }]
+            assert_equal expected, @response.links.all
+            assert_equal ["http://api.getdrip.com/v2/accounts/7986477"],  @response.links.accounts
           end 
         end
 
         context "with id" do
           should "return subscriber subscribers" do
-            VCR.use_cassette('example2_fetch_subscriber_by_id') do
-               response = @client.fetch_subscriber("ycmi2jgsbtkwmbdb12fj")
-               assert_equal "iantnance@gmail.com", response.subscribers.first.email
-            end
-          end 
+            assert_equal "iantnance@gmail.com", @response.subscriber.email
+          end
+
+          should "expose links" do
+            expected = [{ "subscribers.account" => "http://api.getdrip.com/v2/accounts/7986477" }]
+            assert_equal expected, @response.links.all
+            assert_equal ["http://api.getdrip.com/v2/accounts/7986477"],  @response.links.accounts
+          end  
         end
       end
     end
@@ -176,12 +198,55 @@ class Drip::ClientTest < Test::Unit::TestCase
     end
 
     context "#list_campaigns" do
+      setup do
+        VCR.use_cassette('example2_list_campaigns') do
+          @response = @client.list_campaigns
+        end
+      end
       context "no status given" do
         should "return campaigns" do
-          VCR.use_cassette('example2_list_campaigns') do
-             response = @client.list_campaigns
-             assert_equal 6, response.meta.total_count
-          end
+           assert_equal 6, @response.meta.total_count
+        end
+
+        should "expose links" do
+          expected_all = [
+            {
+              "campaigns.account" => "http://api.getdrip.com/v2/accounts/7986477",
+              "campaigns.forms" => "http://api.getdrip.com/v2/7986477/forms/9108289",
+              "campaigns.subscribers" => "http://api.getdrip.com/v2/7986477/campaigns/9533099/subscribers"
+            },
+            {
+              "campaigns.account" => "http://api.getdrip.com/v2/accounts/7986477",
+              "campaigns.forms" => "http://api.getdrip.com/v2/7986477/forms/9895288",
+              "campaigns.subscribers" => "http://api.getdrip.com/v2/7986477/campaigns/2188784/subscribers"
+            },
+            {
+              "campaigns.account" => "http://api.getdrip.com/v2/accounts/7986477",
+              "campaigns.forms" => "http://api.getdrip.com/v2/7986477/forms/1699541",
+              "campaigns.subscribers" => "http://api.getdrip.com/v2/7986477/campaigns/3805781/subscribers"
+            },
+            {
+              "campaigns.account" => "http://api.getdrip.com/v2/accounts/7986477",
+              "campaigns.forms" => "http://api.getdrip.com/v2/7986477/forms/8818222",
+              "campaigns.subscribers" => "http://api.getdrip.com/v2/7986477/campaigns/4836993/subscribers"
+            },
+            {
+              "campaigns.account" => "http://api.getdrip.com/v2/accounts/7986477",
+              "campaigns.forms" => "http://api.getdrip.com/v2/7986477/forms/2515815",
+              "campaigns.subscribers" => "http://api.getdrip.com/v2/7986477/campaigns/8718025/subscribers"
+            }
+          ]
+
+          expected_forms = [
+            "http://api.getdrip.com/v2/7986477/forms/9108289",
+            "http://api.getdrip.com/v2/7986477/forms/9895288",
+            "http://api.getdrip.com/v2/7986477/forms/1699541",
+            "http://api.getdrip.com/v2/7986477/forms/8818222",
+            "http://api.getdrip.com/v2/7986477/forms/2515815",
+          ]
+          assert_same_elements expected_all, @response.links.all
+          assert_same_elements ["http://api.getdrip.com/v2/accounts/7986477"], @response.links.accounts
+          assert_same_elements expected_forms, @response.links.forms
         end         
       end
 
@@ -202,7 +267,7 @@ class Drip::ClientTest < Test::Unit::TestCase
             :time_zone => "America/Los_Angeles",:custom_fields => { :organization => "Drip" })
            assert_equal "iantnance+DRIPRUBY4@gmail.com", response.subscribers.first.email
            assert_equal "America/Los_Angeles", response.subscribers.first.time_zone
-           assert_equal "Drip", response.subscribers.first.custom_fields["organization"]
+           assert_equal "Drip", response.subscriber.custom_fields["organization"]
         end
       end
     end
