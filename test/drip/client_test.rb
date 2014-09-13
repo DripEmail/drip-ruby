@@ -39,7 +39,6 @@ class Drip::ClientTest < Test::Unit::TestCase
         expected = [{ "subscribers.account" => "http://api.getdrip.com/v2/accounts/7986477" }]
         assert_equal expected, @response.links.all
         assert_equal ["http://api.getdrip.com/v2/accounts/7986477"],  @response.links.accounts
-        assert_equal "http://api.getdrip.com/v2/accounts/7986477", @response.subscriber.links.accounts
       end
     end
 
