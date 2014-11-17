@@ -17,13 +17,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     context "if subscriber is found" do
       setup do
         @data = load_json_fixture("resources/subscriber.json")
+        @payload = { "subscribers" => [@data] }.to_json
         @stubs.get "12345/subscribers/derrick@getdrip.com" do
-          [200, {}, @data.to_json]
+          [200, {}, @payload]
         end
       end
 
       should "fetch a subscriber by email" do
-        expected = Drip::Response.new(200, @data.to_json)
+        expected = Drip::Response.new(200, @payload)
         assert_equal expected, @client.subscriber("derrick@getdrip.com")
       end
     end

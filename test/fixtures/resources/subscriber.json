@@ -1,19 +1,17 @@
 {
-  "subscribers": [{
-    "id": "z1togz2hcjrkpp5treip",
-    "status": "active",
-    "email": "john@acme.com",
-    "time_zone": "America/Los_Angeles",
-    "utc_offset": -440,
-    "visitor_uuid": "sa8f7sdf78sdsdahf788d7asf8sd",
-    "custom_fields": {
-      "name": "John Doe"
-    },
-    "tags": ["Customer", "SEO"],
-    "created_at": "2013-06-21T10:31:58Z",
-    "href": "https://api.getdrip.com/v2/9999999/subscribers/12345",
-    "links": {
-      "account": "9999999"
-    }
-  }]
+  "id": "z1togz2hcjrkpp5treip",
+  "status": "active",
+  "email": "john@acme.com",
+  "time_zone": "America/Los_Angeles",
+  "utc_offset": -440,
+  "visitor_uuid": "sa8f7sdf78sdsdahf788d7asf8sd",
+  "custom_fields": {
+    "name": "John Doe"
+  },
+  "tags": ["Customer", "SEO"],
+  "created_at": "2013-06-21T10:31:58Z",
+  "href": "https://api.getdrip.com/v2/9999999/subscribers/12345",
+  "links": {
+    "account": "9999999"
+  }
 }

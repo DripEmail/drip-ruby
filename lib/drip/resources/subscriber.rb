@@ -1,13 +1,15 @@
 require "drip/resource"
+require "time"
 
 module Drip
   class Subscriber < Resource
-    attr_reader :id
-    attr_reader :email
-    attr_reader :custom_fields
-    attr_reader :tags
-    attr_reader :time_zone
-    attr_reader :status
-    attr_reader :visitor_uuid
+    def self.resource_name
+      "subscriber"
+    end
+
+    def attribute_keys
+      %i{id status email custom_fields tags time_zone
+        utc_offset visitor_uuid created_at href links}
+    end
   end
 end

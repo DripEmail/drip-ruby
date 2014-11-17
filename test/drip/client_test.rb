@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper.rb'
 
-class Drip::ClientTest < Minitest::Test
+class Drip::ClientTest < Drip::TestCase
   context "initialization" do
     should "accept api key" do
       client = Drip::Client.new do |config|
