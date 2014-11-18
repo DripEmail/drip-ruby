@@ -41,7 +41,7 @@ module Drip
       #                               unsubscribe the subscriber. Defaults to all.
       #
       # Returns a Drip::Response.
-      # See https://www.getdrip.com/docs/rest-api#unsubscribe_subscriber
+      # See https://www.getdrip.com/docs/rest-api#unsubscribe
       def unsubscribe(id_or_email, options = {})
         url = "#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe"
         url += options[:campaign_id] ? "?campaign_id=#{options[:campaign_id]}" : ""
@@ -70,7 +70,7 @@ module Drip
       #                                 422 Unprocessable Entity. Defaults to true.
       #
       # Returns a Drip::Response.
-      # See https://www.getdrip.com/docs/rest-api#unsubscribe_subscriber
+      # See https://www.getdrip.com/docs/rest-api#subscribe
       def subscribe(email, campaign_id, options = {})
         opts = options.merge("email" => email)
         url = "#{account_id}/campaigns/#{campaign_id}/subscribers"

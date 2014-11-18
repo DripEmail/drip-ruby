@@ -33,23 +33,22 @@ class Drip::Client::TagsTest < Drip::TestCase
     end
   end
 
-  # context "#remove_tag" do
-  #   setup do
-  #     @email = "derrick@getdrip.com"
-  #     @tag = "Customer"
-  #     @payload = { "tags" => [{ "email" => @email, "tag" => @tag }] }.to_json
-  #
-  #     @response_status = 204
-  #     @response_body = stub
-  #
-  #     @stubs.delete "12345/tags", @payload do
-  #       [@response_status, {}, @response_body]
-  #     end
-  #   end
-  #
-  #   should "send the right request" do
-  #     expected = Drip::Response.new(@response_status, @response_body)
-  #     assert_equal expected, @client.remove_tag(@email, @tag)
-  #   end
-  # end
+  context "#remove_tag" do
+    setup do
+      @email = "derrick@getdrip.com"
+      @tag = "Customer"
+
+      @response_status = 204
+      @response_body = stub
+
+      @stubs.delete "12345/subscribers/#{CGI.escape @email}/tags/#{CGI.escape @tag}" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.remove_tag(@email, @tag)
+    end
+  end
 end

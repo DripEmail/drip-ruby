@@ -23,8 +23,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#remove_tag
       def remove_tag(email, tag)
-        data = { "email" => email, "tag" => tag }
-        delete "#{account_id}/tags", generate_resource("tags", data)
+        delete "#{account_id}/subscribers/#{CGI.escape email}/tags/#{CGI.escape tag}"
       end
     end
   end
