@@ -44,9 +44,10 @@ as methods on the client object. The following methods are currently available:
 | Track an event             | `#track_event(email, action, properties = {})`       |
 
 
-**Note:** We do not yet have complete API coverage. If we are missing an API method
+**Note:** We do not have complete API coverage yet. If we are missing an API method
 that you need to use in your application, please file an issue and/or open a
-pull request.
+pull request. [See the official REST API docs](https://www.getdrip.com/docs/rest-api)
+for a complete API reference.
 
 ## Examples
 
