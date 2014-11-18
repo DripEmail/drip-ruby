@@ -1,6 +1,7 @@
 require "drip/response"
 require "drip/client/subscribers"
 require "faraday"
+require "faraday_middleware"
 require "json"
 
 module Drip
@@ -17,43 +18,51 @@ module Drip
       { key => args }
     end
 
+    def content_type
+      'application/vnd.api+json'
+    end
+
     def get(url, options = {})
-      result = connection.get do |req|
-        req.url url
-        req.params = options
+      build_response do
+        connection.get do |req|
+          req.url url
+          req.params = options
+        end
       end
 
-      Drip::Response.new(result.status, result.body)
+      # Drip::Response.new(result.status, result.body)
     end
 
     def post(url, options = {})
-      result = connection.post do |req|
-        req.url url
-        req.headers['Content-Type'] = 'application/vnd.api+json'
-        req.body = options.to_json
+      build_response do
+        connection.post do |req|
+          req.url url
+          req.body = options.to_json
+        end
       end
-
-      Drip::Response.new(result.status, result.body)
     end
 
     def put(url, options = {})
-      result = connection.put do |req|
-        req.url url
-        req.headers['Content-Type'] = 'application/vnd.api+json'
-        req.body = options.to_json
+      build_response do
+        connection.put do |req|
+          req.url url
+          req.body = options.to_json
+        end
       end
-
-      Drip::Response.new(result.status, result.body)
     end
 
     def delete(url, options = {})
-      result = connection.delete do |req|
-        req.url url
-        req.headers['Content-Type'] = 'application/vnd.api+json'
-        req.body = options.to_json
+      build_response do
+        connection.delete do |req|
+          req.url url
+          req.body = options.to_json
+        end
       end
+    end
 
-      Drip::Response.new(result.status, result.body)
+    def build_response(&block)
+      response = yield
+      Drip::Response.new(response.status, response.body)
     end
 
     def connection
@@ -61,6 +70,7 @@ module Drip
         f.adapter :net_http
         f.url_prefix = "https://api.getdrip.com/v2/"
         f.headers['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
+        f.headers['Content-Type'] = content_type
         f.headers['Accept'] = "*/*"
         f.basic_auth api_key, ""
         f.response :json, :content_type => /\bjson$/

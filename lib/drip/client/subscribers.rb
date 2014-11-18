@@ -13,8 +13,8 @@ module Drip
 
       # Public: Create or update a subscriber.
       #
-      # email   - The String subscriber email address.
       # options - A Hash of options.
+      #           - email         - Required. The String subscriber email address.
       #           - new_email     - Optional. A new email address for the subscriber.
       #                             If provided and a subscriber with the email above
       #                             does not exist, this address will be used to
@@ -26,7 +26,7 @@ module Drip
       #
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#create_or_update_subscriber
-      def create_or_update_subscriber(email, options = {})
+      def create_or_update_subscriber(options = {})
         post "#{account_id}/subscribers", generate_resource("subscribers", options)
       end
 

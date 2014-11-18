@@ -1,15 +1,21 @@
 require "drip/collections/subscribers"
+require "drip/collections/errors"
 
 module Drip
   module Collections
     def self.classes
       [
-        Drip::Subscribers
+        Drip::Subscribers,
+        Drip::Errors
       ]
     end
 
     def self.find_class(name)
-      self.classes.select { |c| c.collection_name == name }.first || Drip::Collection
+      matches = self.classes.select do |c|
+        c.collection_name == name
+      end
+
+      matches.first || Drip::Collection
     end
   end
 end

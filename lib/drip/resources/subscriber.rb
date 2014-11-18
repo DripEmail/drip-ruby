@@ -9,7 +9,7 @@ module Drip
 
     def attribute_keys
       %i{id status email custom_fields tags time_zone
-        utc_offset visitor_uuid created_at href links}
+        utc_offset visitor_uuid created_at href}
     end
   end
 end

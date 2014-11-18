@@ -8,11 +8,15 @@ module Drip
     end
 
     def self.resource_name
-      "subscriber"
+      "resource"
     end
 
     def attribute_keys
       []
+    end
+
+    def singular?
+      true
     end
 
     def respond_to?(method_name, include_private = false)

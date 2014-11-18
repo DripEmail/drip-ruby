@@ -10,11 +10,11 @@ module Drip
     end
 
     def self.collection_name
-      raise NotImplementedError
+      "resources"
     end
 
     def self.resource_name
-      raise NotImplementedError
+      "resource"
     end
 
     def item_class
