@@ -1,5 +1,7 @@
 require "drip/response"
 require "drip/client/subscribers"
+require "drip/client/tags"
+require "drip/client/events"
 require "faraday"
 require "faraday_middleware"
 require "json"
@@ -7,6 +9,8 @@ require "json"
 module Drip
   class Client
     include Subscribers
+    include Tags
+    include Events
 
     attr_accessor :api_key, :account_id
 

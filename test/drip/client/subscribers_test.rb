@@ -14,41 +14,27 @@ class Drip::Client::SubscribersTest < Drip::TestCase
   end
 
   context "#subscriber" do
-    context "if subscriber is found" do
-      setup do
-        @data = load_json_fixture("resources/subscriber.json")
-        @payload = { "subscribers" => [@data] }.to_json
-        @stubs.get "12345/subscribers/derrick@getdrip.com" do
-          [200, {}, @payload]
-        end
-      end
+    setup do
+      @id = "derrick@getdrip.com"
+      @response_status = 201
+      @response_body = stub
 
-      should "fetch a subscriber by email" do
-        expected = Drip::Response.new(200, @payload)
-        assert_equal expected, @client.subscriber("derrick@getdrip.com")
+      @stubs.get "12345/subscribers/#{CGI.escape @id}" do
+        [@response_status, {}, @response_body]
       end
     end
 
-    context "if subscriber is not found" do
-      setup do
-        @data = load_json_fixture("resources/not_found_error.json")
-        @payload = { "errors" => [@data] }.to_json
-        @stubs.get "12345/subscribers/derrick@getdrip.com" do
-          [404, {}, @payload]
-        end
-      end
-
-      should "return an error response" do
-        expected = Drip::Response.new(404, @payload)
-        assert_equal expected, @client.subscriber("derrick@getdrip.com")
-      end
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.subscriber(@id)
     end
   end
 
   context "#create_or_update_subscriber" do
     setup do
-      @data = load_json_fixture("resources/subscriber.json")
-      @payload = { "subscribers" => [@data] }.to_json
+      @email = "derrick@getdrip.com"
+      @data = { "time_zone" => "America/Los_Angeles" }
+      @payload = { "subscribers" => [@data.merge(:email => @email)] }.to_json
 
       @response_status = 201
       @response_body = stub
@@ -60,7 +46,87 @@ class Drip::Client::SubscribersTest < Drip::TestCase
 
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.create_or_update_subscriber(@data)
+      assert_equal expected, @client.create_or_update_subscriber(@email, @data)
+    end
+  end
+
+  context "#subscribe" do
+    setup do
+      @email = "derrick@getdrip.com"
+      @campaign_id = "12345"
+      @data = { "time_zone" => "America/Los_Angeles" }
+      @payload = { "subscribers" => [@data.merge(:email => @email)] }.to_json
+
+      @response_status = 201
+      @response_body = stub
+
+      @stubs.post "12345/campaigns/#{@campaign_id}/subscribers", @payload do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.subscribe(@email, @campaign_id, @data)
+    end
+  end
+
+  context "#unsubscribe" do
+    context "if no campaign id is provided" do
+      setup do
+        @id = "derrick@getdrip.com"
+
+        @response_status = 201
+        @response_body = stub
+
+        @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe" do
+          [@response_status, {}, @response_body]
+        end
+      end
+
+      should "send the right request" do
+        expected = Drip::Response.new(@response_status, @response_body)
+        assert_equal expected, @client.unsubscribe(@id)
+      end
+    end
+
+    context "if a campaign id is provided" do
+      setup do
+        @id = "derrick@getdrip.com"
+        @campaign = "12345"
+
+        @response_status = 201
+        @response_body = stub
+
+        @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe?campaign_id=#{@campaign}" do
+          [@response_status, {}, @response_body]
+        end
+      end
+
+      should "send the right request" do
+        expected = Drip::Response.new(@response_status, @response_body)
+        assert_equal expected, @client.unsubscribe(@id, campaign_id: @campaign)
+      end
+    end
+  end
+
+  context "#apply_tag" do
+    setup do
+      @email = "derrick@getdrip.com"
+      @tag = "Customer"
+      @payload = { "tags" => [{ "email" => @email, "tag" => @tag }] }.to_json
+
+      @response_status = 201
+      @response_body = stub
+
+      @stubs.post "12345/tags", @payload do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.apply_tag(@email, @tag)
     end
   end
 end
