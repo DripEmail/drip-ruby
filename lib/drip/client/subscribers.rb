@@ -29,8 +29,8 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#create_or_update_subscriber
       def create_or_update_subscriber(email, options = {})
-        opts = options.merge(:email => email)
-        post "#{account_id}/subscribers", generate_resource("subscribers", opts)
+        data = options.merge(:email => email)
+        post "#{account_id}/subscribers", generate_resource("subscribers", data)
       end
 
       # Public: Unsubscribe a subscriber globally or from a specific campaign.
@@ -72,9 +72,9 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#subscribe
       def subscribe(email, campaign_id, options = {})
-        opts = options.merge("email" => email)
+        data = options.merge("email" => email)
         url = "#{account_id}/campaigns/#{campaign_id}/subscribers"
-        post url, generate_resource("subscribers", opts)
+        post url, generate_resource("subscribers", data)
       end
     end
   end
