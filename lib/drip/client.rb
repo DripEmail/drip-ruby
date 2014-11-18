@@ -29,8 +29,6 @@ module Drip
           req.params = options
         end
       end
-
-      # Drip::Response.new(result.status, result.body)
     end
 
     def post(url, options = {})
