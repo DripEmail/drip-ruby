@@ -6,7 +6,7 @@ A Ruby toolkit for the [Drip](https://www.getdrip.com/) API.
 
 Add this line to your application's Gemfile:
 
-    gem 'drip-ruby'
+    gem 'drip-ruby', :require => 'drip' 
 
 And then execute:
 
