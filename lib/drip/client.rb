@@ -12,7 +12,7 @@ module Drip
     include Tags
     include Events
 
-    attr_accessor :api_key, :account_id
+    attr_accessor :access_token, :api_key, :account_id
 
     def initialize
       yield(self) if block_given?
@@ -74,7 +74,13 @@ module Drip
         f.headers['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
         f.headers['Content-Type'] = content_type
         f.headers['Accept'] = "*/*"
-        f.basic_auth api_key, ""
+
+        if access_token
+          f.headers['Authorization'] = "Bearer #{access_token}"
+        else
+          f.basic_auth api_key, ""
+        end
+
         f.response :json, :content_type => /\bjson$/
       end
     end

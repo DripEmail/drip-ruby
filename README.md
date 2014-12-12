@@ -18,17 +18,27 @@ Or install it yourself as:
 
 ## Usage
 
-To begin making requests, spin up a new Drip client:
+Your account ID can be found [here](https://www.getdrip.com/settings/site).
+
+For private integrations, you may use your personal API key (found
+[here](https://www.getdrip.com/user/edit)) via the `api_key` setting:
 
 ```ruby
 client = Drip::Client.new do |c|
-  c.api_key = "YOUR_API_TOKEN"
+  c.api_key = "YOUR_API_KEY"
   c.account_id = "YOUR_ACCOUNT_ID"
 end
 ```
 
-You can find your API key [here](https://www.getdrip.com/settings/general)
-and your account ID [here](https://www.getdrip.com/settings/site).
+For public integrations, pass in the user's OAuth token via the `access_token`
+setting:
+
+```ruby
+client = Drip::Client.new do |c|
+  c.access_token = "YOUR_ACCESS_TOKEN"
+  c.account_id = "YOUR_ACCOUNT_ID"
+end
+```
 
 Since the Drip client is a flat API client, most API actions are available
 as methods on the client object. The following methods are currently available:
