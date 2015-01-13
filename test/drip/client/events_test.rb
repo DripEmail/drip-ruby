@@ -39,4 +39,32 @@ class Drip::Client::EventsTest < Drip::TestCase
       assert_equal expected, @client.track_event(@email, @action, @properties)
     end
   end
+
+  context "#track_events" do
+    setup do
+      @events = [
+        {
+          :email => "derrick@getdrip.com",
+          :action => "subscribed"
+        },
+        {
+          :email => "darin@getdrip.com",
+          :action => "unsubscribed"
+        }
+      ]
+
+      @payload = { "batches" => [ { "events" => @events } ] }.to_json
+      @response_status = 201
+      @response_body = stub
+
+      @stubs.post "12345/events/batches", @payload do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.track_events(@events)
+    end
+  end
 end

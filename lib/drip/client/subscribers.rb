@@ -33,6 +33,27 @@ module Drip
         post "#{account_id}/subscribers", generate_resource("subscribers", data)
       end
 
+      # Public: Create or update a collection of subscribers.
+      #
+      # subscribers - Required. An Array with between 1 and 1000 objects containing subscriber data
+      #               - A hash containing subscribers data.
+      #                 - email         - Required. The String subscriber email address.
+      #                 - new_email     - Optional. A new email address for the subscriber.
+      #                                   If provided and a subscriber with the email above
+      #                                   does not exist, this address will be used to
+      #                                   create a new subscriber.
+      #                 - time_zone     - Optional. The subscriber's time zone (in Olsen
+      #                                   format). Defaults to Etc/UTC.
+      #                 - custom_fields - Optional. A Hash of custom field data.
+      #                 - tags          - Optional. An Array of tags.
+      #
+      # Returns a Drip::Response
+      # See https://www.getdrip.com/docs/rest-api#subscriber_batches
+      def create_or_update_subscribers(subscribers)
+        url = "#{account_id}/subscribers/batches"
+        post url, generate_resource("batches", { "subscribers" => subscribers })
+      end
+
       # Public: Unsubscribe a subscriber globally or from a specific campaign.
       #
       # id_or_email - Required. The String id or email address of the subscriber.

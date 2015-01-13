@@ -50,6 +50,34 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     end
   end
 
+  context "#create_or_update_subscribers" do
+    setup do
+      @subscribers = [
+        {
+          :email => "derrick@getdrip.com",
+          :time_zone => "America/Los_Angeles"
+        },
+        {
+          :email => "darin@getdrip.com",
+          :time_zone => "America/Los_Angeles"
+        }
+      ]
+
+      @payload = { "batches" => [ { "subscribers" => @subscribers } ] }.to_json
+      @response_status = 201
+      @response_body = stub
+
+      @stubs.post "12345/subscribers/batches", @payload do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.create_or_update_subscribers(@subscribers)
+    end
+  end
+
   context "#subscribe" do
     setup do
       @email = "derrick@getdrip.com"
