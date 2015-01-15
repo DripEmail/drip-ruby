@@ -35,17 +35,16 @@ module Drip
 
       # Public: Create or update a collection of subscribers.
       #
-      # subscribers - Required. An Array with between 1 and 1000 objects containing subscriber data
-      #               - A hash containing subscribers data.
-      #                 - email         - Required. The String subscriber email address.
-      #                 - new_email     - Optional. A new email address for the subscriber.
-      #                                   If provided and a subscriber with the email above
-      #                                   does not exist, this address will be used to
-      #                                   create a new subscriber.
-      #                 - time_zone     - Optional. The subscriber's time zone (in Olsen
-      #                                   format). Defaults to Etc/UTC.
-      #                 - custom_fields - Optional. A Hash of custom field data.
-      #                 - tags          - Optional. An Array of tags.
+      # subscribers - Required. An Array of between 1 and 1000 Hashes of subscriber data.
+      #               - email         - Required. The String subscriber email address.
+      #               - new_email     - Optional. A new email address for the subscriber.
+      #                                 If provided and a subscriber with the email above
+      #                                 does not exist, this address will be used to
+      #                                 create a new subscriber.
+      #               - time_zone     - Optional. The subscriber's time zone (in Olsen
+      #                                 format). Defaults to Etc/UTC.
+      #               - custom_fields - Optional. A Hash of custom field data.
+      #               - tags          - Optional. An Array of tags.
       #
       # Returns a Drip::Response
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches

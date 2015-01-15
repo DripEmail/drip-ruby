@@ -18,11 +18,10 @@ module Drip
 
       # Public: Track a collection of events all at once.
       #
-      # events - Required. An Array with between 1 and 1000 objects containing event data.
-      #          - A hash containing event data.
-      #            - email      - Required. The String email address of the subscriber.
-      #            - action     - Required. The String event action.
-      #            - properties - Optional. A Hash of event properties.
+      # events - Required. An Array of between 1 and 1000 Hashes of event data.
+      #          - email      - Required. The String email address of the subscriber.
+      #          - action     - Required. The String event action.
+      #          - properties - Optional. A Hash of event properties.
       #
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#event_batches

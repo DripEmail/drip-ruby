@@ -6,7 +6,7 @@ A Ruby toolkit for the [Drip](https://www.getdrip.com/) API.
 
 Add this line to your application's Gemfile:
 
-    gem 'drip-ruby', :require => 'drip' 
+    gem 'drip-ruby', :require => 'drip'
 
 And then execute:
 
@@ -46,12 +46,14 @@ as methods on the client object. The following methods are currently available:
 | Action                     | Method                                               |
 | :------------------------- | :--------------------------------------------------- |
 | Create/update a subscriber | `#create_or_update_subscriber(email, options = {})`  |
+| Create/update a batch of subscribers | `#create_or_update_subscribers(subscribers)` |
 | Fetch a subscriber         | `#subscriber(id_or_email)`                           |
 | Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
 | Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
 | Apply a tag                | `#apply_tag(email, tag)`                             |
 | Remove a tag               | `#remove_tag(email, tag)`                            |
 | Track an event             | `#track_event(email, action, properties = {})`       |
+| Track a batch of events    | `#track_events(events)`                              |
 
 
 **Note:** We do not have complete API coverage yet. If we are missing an API method
