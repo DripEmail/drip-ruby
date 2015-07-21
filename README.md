@@ -99,7 +99,7 @@ resp = client.accounts
 # => <Drip::Response ...>
 
 account_id = resp.accounts.first.id
-# => "999999"
+# => "9999999"
 
 client.account_id = account_id
 ```
