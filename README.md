@@ -2,6 +2,8 @@
 
 A Ruby toolkit for the [Drip](https://www.getdrip.com/) API.
 
+[![Build Status](https://travis-ci.org/DripEmail/drip-ruby.svg?branch=master)](https://travis-ci.org/DripEmail/drip-ruby)
+
 ## Installation
 
 Add this line to your application's Gemfile:
