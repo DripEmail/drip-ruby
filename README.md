@@ -62,6 +62,7 @@ as methods on the client object. The following methods are currently available:
 | Action                     | Method                                               |
 | :------------------------- | :--------------------------------------------------- |
 | List accounts              | `#accounts`                                          |
+| List subscribers           | `#subscribers(options = {})`                         |
 | Create/update a subscriber | `#create_or_update_subscriber(email, options = {})`  |
 | Create/update a batch of subscribers | `#create_or_update_subscribers(subscribers)` |
 | Fetch a subscriber         | `#subscriber(id_or_email)`                           |
