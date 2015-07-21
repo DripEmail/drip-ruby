@@ -101,7 +101,7 @@ resp = client.accounts
 account_id = resp.accounts.first.id
 # => "999999"
 
-client.account_id = ACCOUNT_ID
+client.account_id = account_id
 ```
 
 ### Fetching subscriber data
