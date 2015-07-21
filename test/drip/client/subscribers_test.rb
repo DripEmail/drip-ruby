@@ -12,6 +12,22 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     @client.expects(:connection).at_least_once.returns(@connection)
   end
 
+  context "#subscribers" do
+    setup do
+      @response_status = 200
+      @response_body = stub
+
+      @stubs.get "12345/subscribers" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.subscribers
+    end
+  end
+
   context "#subscriber" do
     setup do
       @id = "derrick@getdrip.com"

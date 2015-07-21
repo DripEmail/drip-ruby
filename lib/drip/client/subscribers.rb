@@ -5,6 +5,22 @@ module Drip
     module Subscribers
       # Public: Fetch a subscriber.
       #
+      # options - A Hash of options.
+      #           - status - Optional. Filter by one of the following statuses:
+      #                      active, or unsubscribed, or removed. Defaults to all.
+      #           - page   - Optional. Use this parameter to paginate through
+      #                      your list of subscribers. Each response contains a
+      #                      a `meta` object that includes `total_count` and
+      #                      `total_pages` attributes.
+      #
+      # Returns a Drip::Response.
+      # See https://www.getdrip.com/docs/rest-api#list_subscribers
+      def subscribers(options = {})
+        get "#{account_id}/subscribers", options
+      end
+
+      # Public: Fetch a subscriber.
+      #
       # id_or_email - Required. The String id or email address of the subscriber.
       #
       # Returns a Drip::Response.
