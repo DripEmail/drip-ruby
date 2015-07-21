@@ -1,4 +1,4 @@
-# Drip Ruby Bindings
+# Drip Ruby Client
 
 A Ruby toolkit for the [Drip](https://www.getdrip.com/) API.
 
@@ -6,7 +6,7 @@ A Ruby toolkit for the [Drip](https://www.getdrip.com/) API.
 
 Add this line to your application's Gemfile:
 
-    gem 'drip-ruby', :require => 'drip'
+    gem 'drip-ruby', require: 'drip'
 
 And then execute:
 
@@ -16,9 +16,7 @@ Or install it yourself as:
 
     $ gem install drip-ruby
 
-## Usage
-
-Your account ID can be found [here](https://www.getdrip.com/settings/site).
+## Authentication
 
 For private integrations, you may use your personal API key (found
 [here](https://www.getdrip.com/user/edit)) via the `api_key` setting:
@@ -40,11 +38,27 @@ client = Drip::Client.new do |c|
 end
 ```
 
+You may also pass client options in an argument hash:
+
+```ruby
+client = Drip::Client.new(
+  access_token: "YOUR_ACCESS_TOKEN"
+  account_id: "YOUR_ACCOUNT_ID"
+)
+```
+
+Your account ID can be found [here](https://www.getdrip.com/settings/site).
+Most API actions require an account ID, with the exception of methods like
+the "list accounts" endpoint.
+
+## Usage
+
 Since the Drip client is a flat API client, most API actions are available
 as methods on the client object. The following methods are currently available:
 
 | Action                     | Method                                               |
 | :------------------------- | :--------------------------------------------------- |
+| List accounts              | `#accounts`                                          |
 | Create/update a subscriber | `#create_or_update_subscriber(email, options = {})`  |
 | Create/update a batch of subscribers | `#create_or_update_subscribers(subscribers)` |
 | Fetch a subscriber         | `#subscriber(id_or_email)`                           |
@@ -61,15 +75,17 @@ that you need to use in your application, please file an issue and/or open a
 pull request. [See the official REST API docs](https://www.getdrip.com/docs/rest-api)
 for a complete API reference.
 
-## Examples
+## Use Cases
+
+Here are some common use cases for the API client.
+
+### Fetching subscriber data
+
+Subscribers can be looked up by their email address or by their Drip subscriber
+ID. Most of the time you will want to look up subscribers by their email address,
+unless you've already stored this ID in your database.
 
 ```ruby
-client = Drip::Client.new do |c|
-  c.api_key = "YOUR_API_TOKEN"
-  c.account_id = "YOUR_ACCOUNT_ID"
-end
-
-# Fetch a subscriber
 resp = client.subscriber("foo@example.com")
 # => <Drip::Response ...>
 
