@@ -2,33 +2,21 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 
 class Drip::ResourceTest < Drip::TestCase
   class TestResource < Drip::Resource
-    def attribute_keys
-      %i{id name}
-    end
-
-    def process_attribute(key, value)
-      case key
-      when :id
-        value.to_i
-      else
-        value
-      end
-    end
   end
 
-  should "respond to all attribute keys" do
-    resource = TestResource.new
+  should "respond to attributes passed in" do
+    resource = TestResource.new("id" => "1234")
     assert resource.respond_to?(:id)
-    assert resource.respond_to?(:name)
+    assert_equal "1234", resource.id
   end
 
-  should "process raw data" do
+  should "not respond to non-existant attributes" do
     resource = TestResource.new("id" => "1234")
-    assert_equal 1234, resource.id
+    assert !resource.respond_to?(:first_name)
   end
 
-  should "default unset attributes to nil" do
-    resource = TestResource.new("id" => "1234")
-    assert_equal nil, resource.name
+  should "coerce times" do
+    resource = TestResource.new("created_at" => "2015-06-15T10:00:00Z")
+    assert_equal Time.utc(2015, 6, 15, 10, 0, 0), resource.created_at
   end
 end

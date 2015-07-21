@@ -28,7 +28,7 @@ class Drip::ResponseTest < Drip::TestCase
   context "#==" do
     should "be true if status and body are equal" do
       status = 200
-      body = { "foo" => "bar" }
+      body = { "subscribers" => [{ "foo" => "bar" }] }
 
       subject1 = Drip::Response.new(status, body.clone)
       subject2 = Drip::Response.new(status, body.clone)

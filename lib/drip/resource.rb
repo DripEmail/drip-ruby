@@ -1,3 +1,5 @@
+require "time"
+
 module Drip
   class Resource
     attr_reader :raw_attributes, :attributes
@@ -11,36 +13,30 @@ module Drip
       "resource"
     end
 
-    def attribute_keys
-      []
-    end
-
     def singular?
       true
     end
 
     def respond_to?(method_name, include_private = false)
-      attribute_keys.include?(method_name) || super
+      attributes.keys.include?(method_name.to_s) || super
     end
 
     def method_missing(method_name, *args, &block)
-      attribute_keys.include?(method_name) ? attributes[method_name] : super
+      attributes.keys.include?(method_name.to_s) ? attributes[method_name.to_s] : super
     end
 
   private
 
     def process(attributes)
       {}.tap do |attrs|
-        attribute_keys.each do |key|
-          raw_value = attributes[key.to_s]
-          attrs[key] = process_attribute(key, raw_value)
+        attributes.keys.each do |key|
+          attrs[key] = process_attribute(key, attributes[key])
         end
       end
     end
 
     def process_attribute(key, raw_value)
-      case key
-      when :created_at, :updated_at
+      if key.to_s =~ /_at$/ # auto-coerce times
         raw_value ? Time.parse(raw_value) : nil
       else
         raw_value

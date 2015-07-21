@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../../test_helper.rb'
-require "faraday"
 
 class Drip::Client::EventsTest < Drip::TestCase
   def setup

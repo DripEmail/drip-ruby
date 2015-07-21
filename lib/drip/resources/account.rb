@@ -1,9 +1,9 @@
 require "drip/resource"
 
 module Drip
-  class Error < Resource
+  class Account < Resource
     def self.resource_name
-      "error"
+      "account"
     end
   end
 end
