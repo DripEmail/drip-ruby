@@ -26,6 +26,18 @@ class Drip::ClientTest < Drip::TestCase
 
       assert_equal "1234567", client.account_id
     end
+
+    should "accept options via arguments" do
+      client = Drip::Client.new(
+        account_id: "1234567",
+        api_key: "aaaa",
+        access_token: "bbbb"
+      )
+
+      assert_equal "1234567", client.account_id
+      assert_equal "aaaa", client.api_key
+      assert_equal "bbbb", client.access_token
+    end
   end
 
   context "#generate_resource" do

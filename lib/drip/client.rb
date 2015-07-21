@@ -16,7 +16,10 @@ module Drip
 
     attr_accessor :access_token, :api_key, :account_id
 
-    def initialize
+    def initialize(options = {})
+      @account_id = options[:account_id]
+      @access_token = options[:access_token]
+      @api_key = options[:api_key]
       yield(self) if block_given?
     end
 
