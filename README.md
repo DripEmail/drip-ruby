@@ -83,6 +83,27 @@ for a complete API reference.
 
 Here are some common use cases for the API client.
 
+###Fetching user accounts
+
+Once you have an access token for a Drip user, you can fetch their accounts.
+
+Initialize your client and pull down the user's accounts. To make further calls, set the account_id
+on your client to the account you want to access.
+
+```ruby
+client = Drip::Client.new do |c|
+  c.access_token = "YOUR_ACCESS_TOKEN"
+end
+
+resp = client.accounts
+# => <Drip::Response ...>
+
+account_id = resp.accounts.first.id
+# => "999999"
+
+client.account_id = ACCOUNT_ID
+```
+
 ### Fetching subscriber data
 
 Subscribers can be looked up by their email address or by their Drip subscriber
