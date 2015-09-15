@@ -17,25 +17,58 @@ class Drip::Client::EventsTest < Drip::TestCase
       @email = "derrick@getdrip.com"
       @action = "Signed up"
       @properties = { "foo" => "bar" }
-      @payload = {
-        "events" => [{
-          "email" => @email,
-          "action" => @action,
-          "properties" => @properties
-        }]
-      }.to_json
+    end
 
-      @response_status = 201
-      @response_body = stub
+    context "without options" do
+      setup do
+        @payload = {
+          "events" => [{
+            "email" => @email,
+            "action" => @action,
+            "properties" => @properties
+          }]
+        }.to_json
 
-      @stubs.post "12345/events", @payload do
-        [@response_status, {}, @response_body]
+        @response_status = 201
+        @response_body = stub
+
+        @stubs.post "12345/events", @payload do
+          [@response_status, {}, @response_body]
+        end
+      end
+
+      should "send the right request" do
+        expected = Drip::Response.new(@response_status, @response_body)
+        assert_equal expected, @client.track_event(@email, @action, @properties)
       end
     end
 
-    should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.track_event(@email, @action, @properties)
+    context "with options" do
+      setup do
+        @occurred_at = "2015-09-28T10:00:00Z"
+        @options = { occurred_at: @occurred_at }
+
+        @payload = {
+          "events" => [{
+            "occurred_at" => @occurred_at,
+            "email" => @email,
+            "action" => @action,
+            "properties" => @properties
+          }]
+        }.to_json
+
+        @response_status = 201
+        @response_body = stub
+
+        @stubs.post "12345/events", @payload do
+          [@response_status, {}, @response_body]
+        end
+      end
+
+      should "send the right request" do
+        expected = Drip::Response.new(@response_status, @response_body)
+        assert_equal expected, @client.track_event(@email, @action, @properties, @options)
+      end
     end
   end
 

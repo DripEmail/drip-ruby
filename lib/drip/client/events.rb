@@ -8,11 +8,14 @@ module Drip
       # email      - Required. The String email address of the subscriber.
       # action     - Required. The String event action.
       # properties - Optional. A Hash of event properties.
+      # options    - Optional. A Hash of additional options:
+      #              - prospect    - A Boolean indicating if the subscriber is a prospect.
+      #              - occurred_at - A String time at which the event occurred in ISO-8601 format.
       #
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#record_event
-      def track_event(email, action, properties = {})
-        data = { "email" => email, "action" => action, "properties" => properties }
+      def track_event(email, action, properties = {}, options = {})
+        data = options.merge({ "email" => email, "action" => action, "properties" => properties })
         post "#{account_id}/events", generate_resource("events", data)
       end
 
