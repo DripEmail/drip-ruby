@@ -4,6 +4,7 @@ class Drip::ResourcesTest < Drip::TestCase
   should "find resources" do
     assert_equal Drip::Subscriber, Drip::Resources.find_class("subscriber")
     assert_equal Drip::Error, Drip::Resources.find_class("error")
+    assert_equal Drip::Purchase, Drip::Resources.find_class("purchase")
   end
 
   should "return base resource by default" do
