@@ -1,4 +1,4 @@
-Copyright (c) 2014 Derrick Reimer
+Copyright (c) 2016 Avenue 81, Inc.
 
 MIT License
 
