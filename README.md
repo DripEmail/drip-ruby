@@ -72,6 +72,7 @@ as methods on the client object. The following methods are currently available:
 | Remove a tag               | `#remove_tag(email, tag)`                            |
 | Track an event             | `#track_event(email, action, properties = {})`       |
 | Track a batch of events    | `#track_events(events)`                              |
+| List campaigns             | `#campaigns`                                         |
 
 
 **Note:** We do not have complete API coverage yet. If we are missing an API method
