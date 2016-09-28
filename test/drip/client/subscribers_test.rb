@@ -45,6 +45,23 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     end
   end
 
+  context "#delete_subscriber" do
+    setup do
+      @id = "derrick@getdrip.com"
+      @response_status = 204
+      @response_body = stub
+
+      @stubs.delete "12345/subscribers/#{CGI.escape @id}" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.delete_subscriber(@id)
+    end
+  end
+
   context "#create_or_update_subscriber" do
     setup do
       @email = "derrick@getdrip.com"
