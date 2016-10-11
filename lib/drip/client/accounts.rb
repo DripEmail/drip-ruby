@@ -92,6 +92,16 @@ module Drip
         url = "#{account_id}/campaigns/#{campaign_id}/subscribers"
         post url, generate_resource("subscribers", data)
       end
+
+      # Public: Delete a subscriber.
+      #
+      # id_or_email - Required. The String id or email address of the subscriber.
+      #
+      # Returns No Content.
+      # See https://www.getdrip.com/docs/rest-api#fdelete_subscriber
+      def delete_subscriber(id_or_email)
+        delete "#{account_id}/subscribers/#{CGI.escape id_or_email}"
+      end
     end
   end
 end
