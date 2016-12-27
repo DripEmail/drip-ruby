@@ -5,6 +5,8 @@ A Ruby toolkit for the [Drip](https://www.getdrip.com/) API.
 [![Build Status](https://travis-ci.org/DripEmail/drip-ruby.svg?branch=master)](https://travis-ci.org/DripEmail/drip-ruby)
 [![Code Climate](https://codeclimate.com/github/DripEmail/drip-ruby/badges/gpa.svg)](https://codeclimate.com/github/DripEmail/drip-ruby)
 
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
