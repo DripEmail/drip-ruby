@@ -76,7 +76,9 @@ as methods on the client object. The following methods are currently available:
 | Track an event             | `#track_event(email, action, properties = {})`       |
 | Track a batch of events    | `#track_events(events)`                              |
 | List campaigns             | `#campaigns`                                         |
-
+| Create a purchase          | `#create_purchase(email, amount, options = {})`      |
+| List purchases for a subscriber | `#purchases(email)`                             |
+| Fetch a purchase           | `#purchase(email, id)`                               |
 
 **Note:** We do not have complete API coverage yet. If we are missing an API method
 that you need to use in your application, please file an issue and/or open a
