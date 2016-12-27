@@ -34,37 +34,31 @@ module Drip
     end
 
     def get(url, options = {})
-      build_response do
-        connection.get do |req|
-          req.url url
-          req.params = options
-        end
-      end
+      make_request(:get, url, options)
     end
 
     def post(url, options = {})
-      build_response do
-        connection.post do |req|
-          req.url url
-          req.body = options.to_json
-        end
-      end
+      make_request(:post, url, options)
     end
 
     def put(url, options = {})
-      build_response do
-        connection.put do |req|
-          req.url url
-          req.body = options.to_json
-        end
-      end
+      make_request(:put, url, options)
     end
 
     def delete(url, options = {})
+      make_request(:delete, url, options)
+    end
+
+    def make_request(verb, url, options)
       build_response do
-        connection.delete do |req|
+        connection.send(verb) do |req|
           req.url url
-          req.body = options.to_json
+
+          if verb == :get
+            req.params = options
+          else
+            req.body = options.to_json
+          end
         end
       end
     end
