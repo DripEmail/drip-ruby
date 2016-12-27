@@ -16,11 +16,10 @@ class Drip::Client::PurchasesTest < Drip::TestCase
     setup do
       @email = "derrick@getdrip.com"
       @amount = 3900
-      @properties = [
-        {
-          address: '123 Anywhere St'
-        }
-      ]
+      @properties = {
+        address: '123 Anywhere St'
+      }
+
       @items = [
         {
           name: 'foo',
@@ -31,11 +30,12 @@ class Drip::Client::PurchasesTest < Drip::TestCase
           amount: 200
         }
       ]
+
       @payload = {
         purchases: [{
-          amount: @amount,
           properties: @properties,
-          items: @items
+          items: @items,
+          amount: @amount
         }]
       }.to_json
 
@@ -49,7 +49,10 @@ class Drip::Client::PurchasesTest < Drip::TestCase
 
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.create_purchase(@email, @amount, @properties, @items)
+      assert_equal expected, @client.create_purchase(@email, @amount, {
+        properties: @properties,
+        items: @items
+      })
     end
   end
 

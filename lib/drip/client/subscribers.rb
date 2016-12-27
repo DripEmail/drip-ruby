@@ -31,8 +31,8 @@ module Drip
 
       # Public: Create or update a subscriber.
       #
+      # email   - Required. The String subscriber email address.
       # options - A Hash of options.
-      #           - email         - Required. The String subscriber email address.
       #           - new_email     - Optional. A new email address for the subscriber.
       #                             If provided and a subscriber with the email above
       #                             does not exist, this address will be used to
