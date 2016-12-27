@@ -1,6 +1,7 @@
 require "drip/resources/account"
 require "drip/resources/subscriber"
 require "drip/resources/error"
+require "drip/resources/purchase"
 
 module Drip
   module Resources
@@ -8,7 +9,8 @@ module Drip
       [
         Drip::Account,
         Drip::Subscriber,
-        Drip::Error
+        Drip::Error,
+        Drip::Purchase
       ]
     end
 
