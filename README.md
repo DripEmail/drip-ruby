@@ -71,6 +71,7 @@ as methods on the client object. The following methods are currently available:
 | Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
 | Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
 | Delete                     | `#delete_subscriber(id_or_email)`                    |
+| List tags                  | `#tags`                                         |
 | Apply a tag                | `#apply_tag(email, tag)`                             |
 | Remove a tag               | `#remove_tag(email, tag)`                            |
 | Track an event             | `#track_event(email, action, properties = {})`       |

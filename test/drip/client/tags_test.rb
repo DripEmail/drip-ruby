@@ -12,6 +12,22 @@ class Drip::Client::TagsTest < Drip::TestCase
     @client.expects(:connection).at_least_once.returns(@connection)
   end
 
+  context "#tags" do
+    setup do
+      @response_status = 200
+      @response_body = stub
+
+      @stubs.get "12345/tags" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.tags
+    end
+  end
+
   context "#apply_tag" do
     setup do
       @email = "derrick@getdrip.com"

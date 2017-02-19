@@ -1,5 +1,6 @@
 require "drip/collections/accounts"
 require "drip/collections/subscribers"
+require "drip/collections/tags"
 require "drip/collections/errors"
 require "drip/collections/purchases"
 
@@ -10,6 +11,7 @@ module Drip
         Drip::Accounts,
         Drip::Subscribers,
         Drip::Errors,
+        Drip::Tags,
         Drip::Purchases
       ]
     end
