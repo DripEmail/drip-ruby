@@ -11,7 +11,7 @@ module Drip
         Drip::Account,
         Drip::Subscriber,
         Drip::Error,
-        Drip::Tags,
+        Drip::Tag,
         Drip::Purchase
       ]
     end
