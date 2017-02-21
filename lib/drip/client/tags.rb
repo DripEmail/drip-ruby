@@ -3,6 +3,14 @@ require "cgi"
 module Drip
   class Client
     module Tags
+      # Public: Get all tags for the account.
+      #
+      # Returns a Drip::Response.
+      # See https://www.getdrip.com/docs/rest-api#tags
+      def tags
+        get "#{account_id}/tags"
+      end
+
       # Public: Apply a tag to a subscriber.
       #
       # email - The String email address of the subscriber.

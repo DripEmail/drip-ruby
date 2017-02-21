@@ -1,5 +1,6 @@
 require "drip/resources/account"
 require "drip/resources/subscriber"
+require "drip/resources/tag"
 require "drip/resources/error"
 require "drip/resources/purchase"
 
@@ -10,6 +11,7 @@ module Drip
         Drip::Account,
         Drip::Subscriber,
         Drip::Error,
+        Drip::Tags,
         Drip::Purchase
       ]
     end
