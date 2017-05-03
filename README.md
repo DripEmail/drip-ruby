@@ -90,7 +90,7 @@ for a complete API reference.
 
 Here are some common use cases for the API client.
 
-###Fetching user accounts
+### Fetching user accounts
 
 Once you have an access token for a Drip user, you can fetch their accounts.
 
