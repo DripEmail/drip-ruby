@@ -23,7 +23,7 @@ Or install it yourself as:
 
 ## Authentication
 
-For private integrations, you may use your personal API key (found
+For private integrations, you may use your personal API Token (found
 [here](https://www.getdrip.com/user/edit)) via the `api_key` setting:
 
 ```ruby
