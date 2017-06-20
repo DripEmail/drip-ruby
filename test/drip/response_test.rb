@@ -121,4 +121,16 @@ class Drip::ResponseTest < Drip::TestCase
       assert_equal 1, @subject.subscribers.count
     end
   end
+
+  context "rate limit response" do
+    setup do
+      @body = {"message"=>"API rate limit exceeded. Please try again in an hour."}
+      @subject = Drip::Response.new(429, @body)
+    end
+
+    should "parse correctly" do
+      assert_equal 429, @subject.status
+      assert_equal @body["message"], @subject.message
+    end
+  end
 end

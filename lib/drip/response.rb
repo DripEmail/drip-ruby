@@ -44,16 +44,20 @@ module Drip
     end
 
     def parse_members
-      {}.tap do |members|
-        if body.is_a?(Hash)
-          body.each do |key, value|
-            klass = if value.is_a?(Array)
-              Drip::Collections.find_class(key)
-            else
-              Drip::Resources.find_class(key)
-            end
+      if status == 429
+        body
+      else
+        {}.tap do |members|
+          if body.is_a?(Hash)
+            body.each do |key, value|
+              klass = if value.is_a?(Array)
+                Drip::Collections.find_class(key)
+              else
+                Drip::Resources.find_class(key)
+              end
 
-            members[key] = klass.new(value)
+              members[key] = klass.new(value)
+            end
           end
         end
       end
