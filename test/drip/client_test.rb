@@ -31,12 +31,16 @@ class Drip::ClientTest < Drip::TestCase
       client = Drip::Client.new(
         account_id: "1234567",
         api_key: "aaaa",
-        access_token: "bbbb"
+        access_token: "bbbb",
+        http_open_timeout: 20,
+        http_timeout: 25
       )
 
       assert_equal "1234567", client.account_id
       assert_equal "aaaa", client.api_key
       assert_equal "bbbb", client.access_token
+      assert_equal 20, client.http_open_timeout
+      assert_equal 25, client.http_timeout
     end
   end
 
