@@ -18,12 +18,14 @@ module Drip
     include Campaigns
     include Purchases
 
-    attr_accessor :access_token, :api_key, :account_id
+    attr_accessor :access_token, :api_key, :account_id, :http_open_timeout, :http_timeout
 
     def initialize(options = {})
       @account_id = options[:account_id]
       @access_token = options[:access_token]
       @api_key = options[:api_key]
+      @http_open_timeout = options[:http_open_timeout]
+      @http_timeout = options[:http_timeout]
       yield(self) if block_given?
     end
 
@@ -82,6 +84,9 @@ module Drip
         else
           f.basic_auth api_key, ""
         end
+
+        f.options.open_timeout = @http_open_timeout
+        f.options.timeout = @http_timeout
 
         f.response :json, :content_type => /\bjson$/
         f.adapter :net_http
