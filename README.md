@@ -69,6 +69,11 @@ as methods on the client object. The following methods are currently available:
 
 #### Broadcasts
 
+| Action                     | Method                                               |
+| :------------------------- | :--------------------------------------------------- |
+| List broadcasts            | `#broadcasts`                                        |
+| Fetch a broadcast          | `#broadcast(id)`                                        |
+
 #### Campaigns
 
 | Action                     | Method                                               |
