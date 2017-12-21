@@ -66,6 +66,7 @@ as methods on the client object. The following methods are currently available:
 | Action                     | Method                                               |
 | :------------------------- | :--------------------------------------------------- |
 | List accounts              | `#accounts`                                          |
+| Fetch an account           | `#account(id)`                                       |
 
 #### Broadcasts
 

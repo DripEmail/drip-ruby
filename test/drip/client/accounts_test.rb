@@ -27,4 +27,21 @@ class Drip::Client::AccountsTest < Drip::TestCase
       assert_equal expected, @client.accounts
     end
   end
+
+  context "#account" do
+    setup do
+      @response_status = 200
+      @response_body = stub
+      @id = 9999999
+
+      @stubs.get "accounts/#{@id}" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.account(@id)
+    end
+  end
 end
