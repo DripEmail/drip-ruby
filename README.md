@@ -63,25 +63,28 @@ as methods on the client object. The following methods are currently available:
 
 #### Accounts
 
-| Action                     | Method                                               |
+| Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | List accounts              | `#accounts`                                          |
 | Fetch an account           | `#account(id)`                                       |
 
 #### Broadcasts
 
-| Action                     | Method                                               |
+| Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | List broadcasts            | `#broadcasts`                                        |
 | Fetch a broadcast          | `#broadcast(id)`                                     |
 
 #### Campaigns
 
-| Action                     | Method                                               |
+| Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | List campaigns             | `#campaigns`                                         |
-| Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
-| Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
+| Fetch a campaign           | `#campaign(id)`                                      |
+| Activate a campaign        | `#campaigns`                                         |
+| Pause a campaign           | `#campaigns`                                         |
+| List campaign subscribers  | `#campaigns`                                         |
+| Subscribe to a campaign    | See the `#subscribe` method on "Subscribers" below   |
 
 #### Campaign Subscriptions
 
@@ -91,7 +94,7 @@ as methods on the client object. The following methods are currently available:
 
 #### Events
 
-| Action                     | Method                                               |
+| Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | Track an event             | `#track_event(email, action, properties = {})`       |
 | Track a batch of events    | `#track_events(events)`                              |
@@ -100,7 +103,7 @@ as methods on the client object. The following methods are currently available:
 
 #### Purchases
 
-| Action                     | Method                                               |
+| Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | List purchases for a subscriber | `#purchases(email)`                             |
 | Create a purchase          | `#create_purchase(email, amount, options = {})`      |
@@ -108,17 +111,19 @@ as methods on the client object. The following methods are currently available:
 
 #### Subscribers
 
-| Action                     | Method                                               |
+| Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | List subscribers           | `#subscribers(options = {})`                         |
 | Create/update a subscriber | `#create_or_update_subscriber(email, options = {})`  |
 | Create/update a batch of subscribers | `#create_or_update_subscribers(subscribers)` |
 | Fetch a subscriber         | `#subscriber(id_or_email)`                           |
 | Delete                     | `#delete_subscriber(id_or_email)`                    |
+| Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
+| Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
 
 #### Tags
 
-| Action                     | Method                                               |
+| Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | List tags                  | `#tags`                                              |
 | Apply a tag                | `#apply_tag(email, tag)`                             |

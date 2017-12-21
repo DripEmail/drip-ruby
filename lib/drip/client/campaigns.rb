@@ -16,6 +16,10 @@ module Drip
       def campaigns(options = {})
         get "#{account_id}/campaigns", options
       end
+
+      def campaign(id)
+
+      end
     end
   end
 end

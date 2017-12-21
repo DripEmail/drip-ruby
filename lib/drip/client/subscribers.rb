@@ -79,7 +79,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#unsubscribe
       def unsubscribe(id_or_email, options = {})
-        url = "#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe"
+        url = "#{account_id}/subscribers/#{CGI.escape id_or_email}/remove"
         url += options[:campaign_id] ? "?campaign_id=#{options[:campaign_id]}" : ""
         post url
       end
