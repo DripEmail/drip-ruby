@@ -61,25 +61,68 @@ the "list accounts" endpoint.
 Since the Drip client is a flat API client, most API actions are available
 as methods on the client object. The following methods are currently available:
 
+#### Accounts
+
 | Action                     | Method                                               |
 | :------------------------- | :--------------------------------------------------- |
 | List accounts              | `#accounts`                                          |
+
+#### Broadcasts
+
+#### Campaigns
+
+| Action                     | Method                                               |
+| :------------------------- | :--------------------------------------------------- |
+| List campaigns             | `#campaigns`                                         |
+| Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
+| Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
+
+#### Campaign Subscriptions
+
+#### Conversions
+
+#### Custom Fields
+
+#### Events
+
+| Action                     | Method                                               |
+| :------------------------- | :--------------------------------------------------- |
+| Track an event             | `#track_event(email, action, properties = {})`       |
+| Track a batch of events    | `#track_events(events)`                              |
+
+#### Forms
+
+#### Purchases
+
+| Action                     | Method                                               |
+| :------------------------- | :--------------------------------------------------- |
+| List purchases for a subscriber | `#purchases(email)`                             |
+| Create a purchase          | `#create_purchase(email, amount, options = {})`      |
+| Fetch a purchase           | `#purchase(email, id)`                               |
+
+#### Subscribers
+
+| Action                     | Method                                               |
+| :------------------------- | :--------------------------------------------------- |
 | List subscribers           | `#subscribers(options = {})`                         |
 | Create/update a subscriber | `#create_or_update_subscriber(email, options = {})`  |
 | Create/update a batch of subscribers | `#create_or_update_subscribers(subscribers)` |
 | Fetch a subscriber         | `#subscriber(id_or_email)`                           |
-| Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
-| Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
 | Delete                     | `#delete_subscriber(id_or_email)`                    |
+
+#### Tags
+
+| Action                     | Method                                               |
+| :------------------------- | :--------------------------------------------------- |
 | List tags                  | `#tags`                                              |
 | Apply a tag                | `#apply_tag(email, tag)`                             |
 | Remove a tag               | `#remove_tag(email, tag)`                            |
-| Track an event             | `#track_event(email, action, properties = {})`       |
-| Track a batch of events    | `#track_events(events)`                              |
-| List campaigns             | `#campaigns`                                         |
-| Create a purchase          | `#create_purchase(email, amount, options = {})`      |
-| List purchases for a subscriber | `#purchases(email)`                             |
-| Fetch a purchase           | `#purchase(email, id)`                               |
+
+#### Webhooks
+
+#### Workflows
+
+#### Workflow Triggers
 
 **Note:** We do not have complete API coverage yet. If we are missing an API method
 that you need to use in your application, please file an issue and/or open a
