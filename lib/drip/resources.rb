@@ -1,18 +1,20 @@
 require "drip/resources/account"
-require "drip/resources/subscriber"
-require "drip/resources/tag"
+require "drip/resources/broadcast"
 require "drip/resources/error"
 require "drip/resources/purchase"
+require "drip/resources/subscriber"
+require "drip/resources/tag"
 
 module Drip
   module Resources
     def self.classes
       [
         Drip::Account,
-        Drip::Subscriber,
+        Drip::Broadcast,
         Drip::Error,
-        Drip::Tag,
-        Drip::Purchase
+        Drip::Purchase,
+        Drip::Subscriber,
+        Drip::Tag
       ]
     end
 

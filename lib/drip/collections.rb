@@ -1,18 +1,20 @@
 require "drip/collections/accounts"
-require "drip/collections/subscribers"
-require "drip/collections/tags"
+require "drip/collections/broadcasts"
 require "drip/collections/errors"
 require "drip/collections/purchases"
+require "drip/collections/subscribers"
+require "drip/collections/tags"
 
 module Drip
   module Collections
     def self.classes
       [
         Drip::Accounts,
-        Drip::Subscribers,
+        Drip::Broadcasts,
         Drip::Errors,
-        Drip::Tags,
-        Drip::Purchases
+        Drip::Purchases,
+        Drip::Subscribers,
+        Drip::Tags
       ]
     end
 

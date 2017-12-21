@@ -1,10 +1,11 @@
 require "drip/response"
 require "drip/client/accounts"
+require "drip/client/broadcasts"
+require "drip/client/campaigns"
+require "drip/client/events"
+require "drip/client/purchases"
 require "drip/client/subscribers"
 require "drip/client/tags"
-require "drip/client/events"
-require "drip/client/campaigns"
-require "drip/client/purchases"
 require "faraday"
 require "faraday_middleware"
 require "json"
@@ -12,11 +13,12 @@ require "json"
 module Drip
   class Client
     include Accounts
+    include Broadcasts
+    include Campaigns
+    include Events
+    include Purchases
     include Subscribers
     include Tags
-    include Events
-    include Campaigns
-    include Purchases
 
     attr_accessor :access_token, :api_key, :account_id
 
