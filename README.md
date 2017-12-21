@@ -72,7 +72,7 @@ as methods on the client object. The following methods are currently available:
 | Action                     | Method                                               |
 | :------------------------- | :--------------------------------------------------- |
 | List broadcasts            | `#broadcasts`                                        |
-| Fetch a broadcast          | `#broadcast(id)`                                        |
+| Fetch a broadcast          | `#broadcast(id)`                                     |
 
 #### Campaigns
 

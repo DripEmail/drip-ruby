@@ -27,4 +27,21 @@ class Drip::Client::BroadcastsTest <  Drip::TestCase
       assert_equal expected, @client.broadcasts
     end
   end
+
+  context "#broadcast" do
+    setup do
+      @response_status = 200
+      @response_body = stub
+      @id = 99999
+
+      @stubs.get "12345/broadcasts/#{@id}" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the correct request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.broadcast(@id)
+    end
+  end
 end
