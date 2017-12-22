@@ -152,6 +152,13 @@ as methods on the client object. The following methods are currently available:
 
 #### Webhooks
 
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List webhooks              | `#webhooks`                                          |
+| Fetch a webhook            | `#webhook(id)`                                       |
+| Create a new webhook       | `#create_webhook(post_url, include_received_email, events)` |
+| Delete a webhook           | `#delete_webhook(id)`                                |
+
 #### Workflows
 
 #### Workflow Triggers

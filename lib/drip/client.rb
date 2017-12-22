@@ -10,6 +10,7 @@ require "drip/client/forms"
 require "drip/client/purchases"
 require "drip/client/subscribers"
 require "drip/client/tags"
+require "drip/client/webhooks"
 require "faraday"
 require "faraday_middleware"
 require "json"
@@ -27,6 +28,7 @@ module Drip
     include Purchases
     include Subscribers
     include Tags
+    include Webhooks
 
     attr_accessor :access_token, :api_key, :account_id
 

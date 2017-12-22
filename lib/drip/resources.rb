@@ -6,6 +6,7 @@ require "drip/resources/error"
 require "drip/resources/purchase"
 require "drip/resources/subscriber"
 require "drip/resources/tag"
+require "drip/resources/webhook"
 
 module Drip
   module Resources
@@ -18,7 +19,8 @@ module Drip
         Drip::Error,
         Drip::Purchase,
         Drip::Subscriber,
-        Drip::Tag
+        Drip::Tag,
+        Drip::Webhook
       ]
     end
 

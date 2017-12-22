@@ -6,6 +6,7 @@ require "drip/collections/errors"
 require "drip/collections/purchases"
 require "drip/collections/subscribers"
 require "drip/collections/tags"
+require "drip/collections/webhooks"
 
 module Drip
   module Collections
@@ -18,7 +19,8 @@ module Drip
         Drip::Errors,
         Drip::Purchases,
         Drip::Subscribers,
-        Drip::Tags
+        Drip::Tags,
+        Drip::Webhooks
       ]
     end
 
