@@ -51,13 +51,13 @@ module Drip
       #                             does not exist, this address will be used to
       #                             create a new subscriber.
       #           - id            - Optional. The subscriber's Drip id. Either email or id must be included.
-      #           - user_id       - Optional. A unique identifier for the user in your database, 
+      #           - user_id       - Optional. A unique identifier for the user in your database,
       #                             such as a primary key.
       #           - time_zone     - Optional. The subscriber's time zone (in Olson
       #                             format). Defaults to Etc/UTC.
       #           - custom_fields - Optional. A Hash of custom field data.
       #           - tags          - Optional. An Array of tags.
-      #           - prospect      - Optional. A Boolean specifiying whether we should attach a lead 
+      #           - prospect      - Optional. A Boolean specifiying whether we should attach a lead
       #                             score to the subscriber (when lead scoring is enabled). Defaults to true
       #
       # Returns a Drip::Response.

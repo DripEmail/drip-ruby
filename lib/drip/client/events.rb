@@ -37,12 +37,12 @@ module Drip
       #
       # options - Optional.  A Hash of options
       #           - page   - Optional. The page number. Defaults to 1
-      #           - per_page - Optional. The number of records to be returned 
+      #           - per_page - Optional. The number of records to be returned
       #                        on each page. Defaults to 100. Maximum 1000.
       #
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#events
-      def list_events(options = {})
+      def event_actions(options = {})
         get "#{account_id}/event_actions", options
       end
     end

@@ -66,7 +66,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @email = "derrick@getdrip.com"
       @data = { "time_zone" => "America/Los_Angeles" }
-      @payload = { "subscribers" => [@data.merge(:email => @email)] }.to_json
+      @payload = { "subscribers" => [@data.merge(email: @email)] }.to_json
 
       @response_status = 201
       @response_body = stub
@@ -86,16 +86,16 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @subscribers = [
         {
-          :email => "derrick@getdrip.com",
-          :time_zone => "America/Los_Angeles"
+          email: "derrick@getdrip.com",
+          time_zone: "America/Los_Angeles"
         },
         {
-          :email => "darin@getdrip.com",
-          :time_zone => "America/Los_Angeles"
+          email: "darin@getdrip.com",
+          time_zone: "America/Los_Angeles"
         }
       ]
 
-      @payload = { "batches" => [ { "subscribers" => @subscribers } ] }.to_json
+      @payload = { "batches" => [{ "subscribers" => @subscribers }] }.to_json
       @response_status = 201
       @response_body = stub
 
@@ -121,7 +121,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         }
       ]
 
-      @payload = { "batches" => [ { "subscribers" => @subscribers } ] }.to_json
+      @payload = { "batches" => [{ "subscribers" => @subscribers }] }.to_json
       @response_status = 204
       @response_body = stub
 
@@ -141,7 +141,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       @email = "derrick@getdrip.com"
       @campaign_id = "12345"
       @data = { "time_zone" => "America/Los_Angeles" }
-      @payload = { "subscribers" => [@data.merge(:email => @email)] }.to_json
+      @payload = { "subscribers" => [@data.merge(email: @email)] }.to_json
 
       @response_status = 201
       @response_body = stub

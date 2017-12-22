@@ -99,7 +99,7 @@ module Drip
           f.basic_auth api_key, ""
         end
 
-        f.response :json, :content_type => /\bjson$/
+        f.response :json, content_type: /\bjson$/
         f.adapter :net_http
       end
     end

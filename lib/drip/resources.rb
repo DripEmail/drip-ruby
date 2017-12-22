@@ -29,7 +29,7 @@ module Drip
     end
 
     def self.find_class(name)
-      self.classes.find { |c| c.resource_name == name } || Drip::Resource
+      classes.find { |c| c.resource_name == name } || Drip::Resource
     end
   end
 end

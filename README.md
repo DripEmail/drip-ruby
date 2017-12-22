@@ -111,14 +111,14 @@ as methods on the client object. The following methods are currently available:
 | :------------------------- | :--------------------------------------------------- |
 | Track an event             | `#track_event(email, action, properties = {})`       |
 | Track a batch of events    | `#track_events(events)`                              |
-| List all custom event actions | `#list_events`                                    |
+| List all custom event actions | `#event_actions`                                  |
 
 #### Forms
 
 | Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
-| List all forms            | `#forms`       |
-| Fetch a form              | `#form(id)`                              |
+| List all forms            | `#forms`                                              |
+| Fetch a form              | `#form(id)`                                           |
 
 #### Purchases
 
@@ -139,7 +139,7 @@ as methods on the client object. The following methods are currently available:
 | Fetch a subscriber         | `#subscriber(id_or_email)`                           |
 | Delete                     | `#delete_subscriber(id_or_email)`                    |
 | Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
-| Unsubscribe from all mailings | `#unsubscribe_from_all(id_or_email)`       |
+| Unsubscribe from all mailings | `#unsubscribe_from_all(id_or_email)`              |
 | Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
 
 #### Tags

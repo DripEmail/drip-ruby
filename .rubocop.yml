@@ -1,0 +1,17 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'test/fixtures/**/*'
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/ClosingParenthesisIndentation:
+  Enabled: false
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Style/BracesAroundHashParameters:
+  Enabled: false

@@ -32,11 +32,11 @@ class Drip::Client::WorkflowTriggersTest < Drip::TestCase
   context "#create_workflow_trigger" do
     setup do
       @id = 1234
-      @data  = {
+      @data = {
         "provider" => "leadpages",
         "trigger_type" => "submitted_landing_page",
         "properties" => {
-          "landing_page": "My Landing Page"
+          "landing_page" => "My Landing Page"
         }
       }
 
@@ -59,7 +59,7 @@ class Drip::Client::WorkflowTriggersTest < Drip::TestCase
   context "#update_workflow_trigger" do
     setup do
       @id = 1234
-      @data  = {
+      @data = {
         "provider" => "other_provider",
         "trigger_type" => "submitted_landing_page",
         "properties" => {

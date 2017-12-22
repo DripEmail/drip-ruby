@@ -24,10 +24,10 @@ module Drip
       # include_received_email - Optional. A Boolean specifying whether we should send a
       #                             notification whenever a subscriber receives an email.
       #                             Defaults to false.
-      # events                 - Optional. An Array of which events we should send 
-      #                             notifications for. Eligible events can be found in the 
+      # events                 - Optional. An Array of which events we should send
+      #                             notifications for. Eligible events can be found in the
       #                             webhooks documentation here: https://www.getdrip.com/docs/webhooks#events.
-      #                             By default, we will send notifications for all events except 
+      #                             By default, we will send notifications for all events except
       #                             `subscrber.received_email`.
       #
       # Returns a Drip::Response
@@ -36,7 +36,8 @@ module Drip
         include_received_email = include_received_email ? true : false
         url = "#{account_id}/webhooks"
 
-        post url, generate_resource("webhooks",
+        post url, generate_resource(
+          "webhooks",
           {
             "post_url" => post_url,
             "include_received_email" => include_received_email,

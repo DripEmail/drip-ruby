@@ -45,7 +45,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#create_or_update_subscriber
       def create_or_update_subscriber(email, options = {})
-        data = options.merge(:email => email)
+        data = options.merge(email: email)
         post "#{account_id}/subscribers", generate_resource("subscribers", data)
       end
 

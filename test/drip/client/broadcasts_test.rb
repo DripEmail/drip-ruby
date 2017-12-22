@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper.rb'
 
-class Drip::Client::BroadcastsTest <  Drip::TestCase
+class Drip::Client::BroadcastsTest < Drip::TestCase
   def setup
     @stubs = Faraday::Adapter::Test::Stubs.new
 

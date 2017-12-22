@@ -62,7 +62,7 @@ module Drip
       #                         `id`, `created_at`. Default sorting is `created_at`
       #           - direction - Optional. The direction to sort the results:
       #                         `asc`, `desc`. Defaults to `desc`
-      #           - per_page  - Optional. The number of records to be returned 
+      #           - per_page  - Optional. The number of records to be returned
       #                         on each page. Defaults to 100. Maximum 1000
       #
       # Returns a Drip::Response.

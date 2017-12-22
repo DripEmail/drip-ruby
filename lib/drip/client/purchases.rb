@@ -37,7 +37,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#create_purchase
       def create_purchase(email, amount, options = {})
-        data = options.merge(:amount => amount)
+        data = options.merge(amount: amount)
         post "#{account_id}/subscribers/#{CGI.escape email}/purchases", generate_resource("purchases", data)
       end
 

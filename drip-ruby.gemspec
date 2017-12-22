@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Drip::VERSION
   spec.authors       = ["Derrick Reimer"]
   spec.email         = ["derrickreimer@gmail.com"]
-  spec.summary       = %q{A Ruby gem for interacting with the Drip API}
-  spec.description   = %q{A simple wrapper for the Drip API}
+  spec.summary       = 'A Ruby gem for interacting with the Drip API'
+  spec.description   = 'A simple wrapper for the Drip API'
   spec.homepage      = "http://github.com/DripEmail/drip-ruby"
   spec.license       = "MIT"
 

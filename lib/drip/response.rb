@@ -21,7 +21,7 @@ module Drip
     end
 
     def success?
-      (200..299).include?(status)
+      (200..299).cover?(status)
     end
 
     def respond_to?(method_name, include_private = false)

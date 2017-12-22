@@ -16,7 +16,7 @@ module Drip
       #
       # options - A Hash of options.
       #           - provider      - Required. Required. A String indicating a provider.
-      #           - trigger_type  - Required. A String indicating the automation 
+      #           - trigger_type  - Required. A String indicating the automation
       #                             trigger type.
       #           - properties    - Optional. An Object containing properties for the given trigger.
       #
@@ -31,7 +31,7 @@ module Drip
       #
       # options - A Hash of options.
       #           - provider      - Required. Required. A String indicating a provider.
-      #           - trigger_type  - Required. A String indicating the automation 
+      #           - trigger_type  - Required. A String indicating the automation
       #                             trigger type.
       #           - properties    - Optional. An Object containing properties for the given trigger.
       #
