@@ -7,6 +7,8 @@ require "drip/resources/purchase"
 require "drip/resources/subscriber"
 require "drip/resources/tag"
 require "drip/resources/webhook"
+require "drip/resources/workflow"
+require "drip/resources/workflow_trigger"
 
 module Drip
   module Resources
@@ -20,7 +22,9 @@ module Drip
         Drip::Purchase,
         Drip::Subscriber,
         Drip::Tag,
-        Drip::Webhook
+        Drip::Webhook,
+        Drip::Workflow,
+        Drip::WorkflowTrigger
       ]
     end
 

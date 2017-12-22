@@ -161,12 +161,24 @@ as methods on the client object. The following methods are currently available:
 
 #### Workflows
 
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List workflows             | `#workflows`                                         |
+| Fetch a workflow           | `#workflow(id)`                                      |
+| Activate a workflow        | `#activate_workflow(id)`                             |
+| Pause a workflow           | `#pause_workflow(id)`                                |
+| Start a subscriber on a workflow | `#start_subscriber_workflow(id, options = {})` |
+| Remove a subscriber from a workflow | `#remove_subscriber_workflow(id, id_or_email)` |
+
 #### Workflow Triggers
 
-**Note:** We do not have complete API coverage yet. If we are missing an API method
-that you need to use in your application, please file an issue and/or open a
-pull request. [See the official REST API docs](https://www.getdrip.com/docs/rest-api)
-for a complete API reference.
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List workflow triggers     | `#workflow_triggers(id)`                                 |
+| Create a workflow trigger  | `#create_workflow_trigger(id, options = {})`         |
+| Update a workflow trigger  | `#update_workflow_trigger(id, options = {}`          |
+
+[See the official REST API docs](https://www.getdrip.com/docs/rest-api) for a complete API reference and explanations.
 
 ## Use Cases
 

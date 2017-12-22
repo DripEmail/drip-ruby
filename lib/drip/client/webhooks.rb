@@ -9,7 +9,7 @@ module Drip
         get "#{account_id}/webhooks"
       end
 
-      # Public: List all webhooks.
+      # Public: Fetch a webhook
       # id - Required. The String id of the webhook
       #
       # Returns a Drip::Response.

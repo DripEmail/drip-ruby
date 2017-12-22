@@ -11,6 +11,8 @@ require "drip/client/purchases"
 require "drip/client/subscribers"
 require "drip/client/tags"
 require "drip/client/webhooks"
+require "drip/client/workflows"
+require "drip/client/workflow_triggers"
 require "faraday"
 require "faraday_middleware"
 require "json"
@@ -29,6 +31,8 @@ module Drip
     include Subscribers
     include Tags
     include Webhooks
+    include Workflows
+    include WorkflowTriggers
 
     attr_accessor :access_token, :api_key, :account_id
 

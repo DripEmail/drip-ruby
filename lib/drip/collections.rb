@@ -7,6 +7,8 @@ require "drip/collections/purchases"
 require "drip/collections/subscribers"
 require "drip/collections/tags"
 require "drip/collections/webhooks"
+require "drip/collections/workflows"
+require "drip/collections/workflow_triggers"
 
 module Drip
   module Collections
@@ -20,7 +22,9 @@ module Drip
         Drip::Purchases,
         Drip::Subscribers,
         Drip::Tags,
-        Drip::Webhooks
+        Drip::Webhooks,
+        Drip::Workflows,
+        Drip::WorkflowTriggers
       ]
     end
 
