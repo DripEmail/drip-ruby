@@ -94,6 +94,11 @@ as methods on the client object. The following methods are currently available:
 
 #### Conversions
 
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List all conversions       | `#conversions`                                       |
+| Fetch a conversion         | `#conversion(id)`                                    |
+
 #### Custom Fields
 
 #### Events

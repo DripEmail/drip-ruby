@@ -3,7 +3,7 @@ require "cgi"
 module Drip
   class Client
     module Subscribers
-      # Public: Fetch a subscriber.
+      # Public: List all subscribers.
       #
       # options - A Hash of options.
       #           - status - Optional. Filter by one of the following statuses:
