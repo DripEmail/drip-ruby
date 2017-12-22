@@ -4,6 +4,7 @@ require "drip/client/broadcasts"
 require "drip/client/campaigns"
 require "drip/client/campaign_subscriptions"
 require "drip/client/conversions"
+require "drip/client/custom_fields"
 require "drip/client/events"
 require "drip/client/purchases"
 require "drip/client/subscribers"
@@ -19,6 +20,7 @@ module Drip
     include Campaigns
     include CampaignSubscriptions
     include Conversions
+    include CustomFields
     include Events
     include Purchases
     include Subscribers

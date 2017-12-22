@@ -79,7 +79,7 @@ as methods on the client object. The following methods are currently available:
 
 | Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
-| List campaigns             | `#campaigns`                                         |
+| List campaigns             | `#campaigns(options = {})`                                         |
 | Fetch a campaign           | `#campaign(id)`                                      |
 | Activate a campaign        | `#activate_campaign(id)`                             |
 | Pause a campaign           | `#pause_campaign(id)`                                |
@@ -96,10 +96,14 @@ as methods on the client object. The following methods are currently available:
 
 | Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
-| List all conversions       | `#conversions`                                       |
+| List all conversions       | `#conversions(options = {})`                         |
 | Fetch a conversion         | `#conversion(id)`                                    |
 
 #### Custom Fields
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List all custom fields     | `#custom_fields`                                     |
 
 #### Events
 
