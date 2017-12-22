@@ -139,7 +139,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         @response_status = 201
         @response_body = stub
 
-        @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe" do
+        @stubs.post "12345/subscribers/#{CGI.escape @id}/remove" do
           [@response_status, {}, @response_body]
         end
       end
@@ -158,7 +158,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         @response_status = 201
         @response_body = stub
 
-        @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe?campaign_id=#{@campaign}" do
+        @stubs.post "12345/subscribers/#{CGI.escape @id}/remove?campaign_id=#{@campaign}" do
           [@response_status, {}, @response_body]
         end
       end

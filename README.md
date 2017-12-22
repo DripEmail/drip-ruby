@@ -81,9 +81,9 @@ as methods on the client object. The following methods are currently available:
 | :------------------------- | :--------------------------------------------------- |
 | List campaigns             | `#campaigns`                                         |
 | Fetch a campaign           | `#campaign(id)`                                      |
-| Activate a campaign        | `#campaigns`                                         |
-| Pause a campaign           | `#campaigns`                                         |
-| List campaign subscribers  | `#campaigns`                                         |
+| Activate a campaign        | `#activate_campaign(id)`                             |
+| Pause a campaign           | `#pause_campaign(id)`                                |
+| List campaign subscribers  | `#campaign_subscribers(id)`                              |
 | Subscribe to a campaign    | See the `#subscribe` method on "Subscribers" below   |
 
 #### Campaign Subscriptions
