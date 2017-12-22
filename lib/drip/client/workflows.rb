@@ -72,8 +72,8 @@ module Drip
       #
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
-      def remove_subscriber_workflow(id, id_or_email)
-        delete "#{account_id}/workflows/#{id}/subscribers/#{CGI.escape id_or_email}"
+      def remove_subscriber_workflow(workflow_id, id_or_email)
+        delete "#{account_id}/workflows/#{workflow_id}/subscribers/#{CGI.escape id_or_email}"
       end
     end
   end

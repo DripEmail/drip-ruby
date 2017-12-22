@@ -79,7 +79,7 @@ as methods on the client object. The following methods are currently available:
 
 | Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
-| List campaigns             | `#campaigns(options = {})`                                         |
+| List campaigns             | `#campaigns(options = {})`                           |
 | Fetch a campaign           | `#campaign(id)`                                      |
 | Activate a campaign        | `#activate_campaign(id)`                             |
 | Pause a campaign           | `#pause_campaign(id)`                                |
@@ -168,13 +168,13 @@ as methods on the client object. The following methods are currently available:
 | Activate a workflow        | `#activate_workflow(id)`                             |
 | Pause a workflow           | `#pause_workflow(id)`                                |
 | Start a subscriber on a workflow | `#start_subscriber_workflow(id, options = {})` |
-| Remove a subscriber from a workflow | `#remove_subscriber_workflow(id, id_or_email)` |
+| Remove a subscriber from a workflow | `#remove_subscriber_workflow(workflow_id, id_or_email)` |
 
 #### Workflow Triggers
 
 | Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
-| List workflow triggers     | `#workflow_triggers(id)`                                 |
+| List workflow triggers     | `#workflow_triggers(id)`                             |
 | Create a workflow trigger  | `#create_workflow_trigger(id, options = {})`         |
 | Update a workflow trigger  | `#update_workflow_trigger(id, options = {}`          |
 
