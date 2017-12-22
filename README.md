@@ -135,9 +135,11 @@ as methods on the client object. The following methods are currently available:
 | List subscribers           | `#subscribers(options = {})`                         |
 | Create/update a subscriber | `#create_or_update_subscriber(email, options = {})`  |
 | Create/update a batch of subscribers | `#create_or_update_subscribers(subscribers)` |
+| Unsubscribe a batch of subscribers | `#unsubscribe_subscribers(subscribers)`      |
 | Fetch a subscriber         | `#subscriber(id_or_email)`                           |
 | Delete                     | `#delete_subscriber(id_or_email)`                    |
 | Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
+| Unsubscribe from all mailings | `#unsubscribe_from_all(id_or_email)`       |
 | Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
 
 #### Tags

@@ -110,6 +110,32 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     end
   end
 
+  context "#unsubscribe_subscribers" do
+    setup do
+      @subscribers = [
+        {
+          email: "someone@example.com"
+        },
+        {
+          email: "other@example.com"
+        }
+      ]
+
+      @payload = { "batches" => [ { "subscribers" => @subscribers } ] }.to_json
+      @response_status = 204
+      @response_body = stub
+
+      @stubs.post "12345/unsubscribes/batches", @payload do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.unsubscribe_subscribers(@subscribers)
+    end
+  end
+
   context "#subscribe" do
     setup do
       @email = "derrick@getdrip.com"
@@ -167,6 +193,23 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         expected = Drip::Response.new(@response_status, @response_body)
         assert_equal expected, @client.unsubscribe(@id, campaign_id: @campaign)
       end
+    end
+  end
+
+  context "#unsubscribe_from_all" do
+    setup do
+      @id = "derrick@getdrip.com"
+      @response_status = 200
+      @response_body = stub
+
+      @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe_all" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.unsubscribe_from_all(@id)
     end
   end
 
