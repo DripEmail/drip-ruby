@@ -1,5 +1,7 @@
 require "drip/collections/accounts"
 require "drip/collections/broadcasts"
+require "drip/collections/campaigns"
+require "drip/collections/campaign_subscriptions"
 require "drip/collections/errors"
 require "drip/collections/purchases"
 require "drip/collections/subscribers"
@@ -11,6 +13,8 @@ module Drip
       [
         Drip::Accounts,
         Drip::Broadcasts,
+        Drip::Campaigns,
+        Drip::CampaignSubscriptions,
         Drip::Errors,
         Drip::Purchases,
         Drip::Subscribers,

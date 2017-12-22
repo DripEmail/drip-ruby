@@ -1,5 +1,7 @@
 require "drip/resources/account"
 require "drip/resources/broadcast"
+require "drip/resources/campaign"
+require "drip/resources/campaign_subscription"
 require "drip/resources/error"
 require "drip/resources/purchase"
 require "drip/resources/subscriber"
@@ -11,6 +13,8 @@ module Drip
       [
         Drip::Account,
         Drip::Broadcast,
+        Drip::Campaign,
+        Drip::CampaignSubscription,
         Drip::Error,
         Drip::Purchase,
         Drip::Subscriber,

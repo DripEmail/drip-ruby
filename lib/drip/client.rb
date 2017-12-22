@@ -2,6 +2,7 @@ require "drip/response"
 require "drip/client/accounts"
 require "drip/client/broadcasts"
 require "drip/client/campaigns"
+require "drip/client/campaign_subscriptions"
 require "drip/client/events"
 require "drip/client/purchases"
 require "drip/client/subscribers"
@@ -15,6 +16,7 @@ module Drip
     include Accounts
     include Broadcasts
     include Campaigns
+    include CampaignSubscriptions
     include Events
     include Purchases
     include Subscribers

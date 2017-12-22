@@ -83,10 +83,14 @@ as methods on the client object. The following methods are currently available:
 | Fetch a campaign           | `#campaign(id)`                                      |
 | Activate a campaign        | `#activate_campaign(id)`                             |
 | Pause a campaign           | `#pause_campaign(id)`                                |
-| List campaign subscribers  | `#campaign_subscribers(id)`                              |
+| List campaign subscribers  | `#campaign_subscribers(id)`                          |
 | Subscribe to a campaign    | See the `#subscribe` method on "Subscribers" below   |
 
 #### Campaign Subscriptions
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List subscriber subscriptions | `#campaign_subscriptions(subscriber_id)`          |
 
 #### Conversions
 
