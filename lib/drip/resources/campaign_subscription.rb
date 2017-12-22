@@ -3,7 +3,7 @@ require "drip/resource"
 module Drip
   class CampaignSubscription < Resource
     def self.resource_name
-      "campaign_subscritpion"
+      "campaign_subscription"
     end
   end
 end
