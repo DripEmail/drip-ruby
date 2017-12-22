@@ -99,4 +99,20 @@ class Drip::Client::EventsTest < Drip::TestCase
       assert_equal expected, @client.track_events(@events)
     end
   end
+
+  context "#list_events" do
+    setup do
+      @response_status = 200
+      @response_body = stub
+
+      @stubs.get "12345/event_actions" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.list_events
+    end
+  end
 end

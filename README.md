@@ -111,8 +111,14 @@ as methods on the client object. The following methods are currently available:
 | :------------------------- | :--------------------------------------------------- |
 | Track an event             | `#track_event(email, action, properties = {})`       |
 | Track a batch of events    | `#track_events(events)`                              |
+| List all custom event actions | `#list_events`                                    |
 
 #### Forms
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List all forms            | `#forms`       |
+| Fetch a form              | `#form(id)`                              |
 
 #### Purchases
 

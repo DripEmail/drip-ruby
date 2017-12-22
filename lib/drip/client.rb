@@ -6,6 +6,7 @@ require "drip/client/campaign_subscriptions"
 require "drip/client/conversions"
 require "drip/client/custom_fields"
 require "drip/client/events"
+require "drip/client/forms"
 require "drip/client/purchases"
 require "drip/client/subscribers"
 require "drip/client/tags"
@@ -22,6 +23,7 @@ module Drip
     include Conversions
     include CustomFields
     include Events
+    include Forms
     include Purchases
     include Subscribers
     include Tags
