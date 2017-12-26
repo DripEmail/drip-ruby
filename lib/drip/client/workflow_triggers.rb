@@ -2,6 +2,7 @@ module Drip
   class Client
     module WorkflowTriggers
       # Public: List all workflow triggers.
+      # id - Required. The String id of the workflow
       #
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflow_triggers
