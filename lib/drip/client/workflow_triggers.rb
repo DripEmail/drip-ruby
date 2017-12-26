@@ -11,7 +11,7 @@ module Drip
       end
 
       # Public: Create a workflow trigger.
-      # id - Required. The String id of the workflow trigger
+      # id - Required. The String id of the workflow
       #
       # options - A Hash of options.
       #           - provider      - Required. Required. A String indicating a provider.
