@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper.rb'
 
-class Drip::Client::CampaignsTest < Drip::TestCase
+class Drip::Client::WebhooksTest < Drip::TestCase
   def setup
     @stubs = Faraday::Adapter::Test::Stubs.new
 
@@ -12,87 +12,80 @@ class Drip::Client::CampaignsTest < Drip::TestCase
     @client.expects(:connection).at_least_once.returns(@connection)
   end
 
-  context "#campaigns" do
+  context "#webhooks" do
     setup do
       @response_status = 200
       @response_body = stub
 
-      @stubs.get "12345/campaigns" do
+      @stubs.get "12345/webhooks" do
         [@response_status, {}, @response_body]
       end
     end
 
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.campaigns
+      assert_equal expected, @client.webhooks
     end
   end
 
-  context "#campaign" do
+  context "#webhook" do
     setup do
       @response_status = 200
       @response_body = stub
-      @id = 9999999
+      @id = 1234
 
-      @stubs.get "12345/campaigns/#{@id}" do
+      @stubs.get "12345/webhooks/#{@id}" do
         [@response_status, {}, @response_body]
       end
     end
 
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.campaign(@id)
+      assert_equal expected, @client.webhook(@id)
     end
   end
 
-  context "#activate_campaign" do
+  context "#create_webhook" do
     setup do
-      @response_status = 204
-      @response_body = stub
-      @id = 9999999
+      @post_url = "https://www.example.com"
+      @include_received_email = true
+      @events = ["subscriber.deleted", "subscriber.created"]
 
-      @stubs.post "12345/campaigns/#{@id}/activate" do
+      @options = {
+        "post_url" => @post_url,
+        "include_received_email" => @include_received_email,
+        "events" => @events
+      }
+
+      @payload = { "webhooks" => [@options] }.to_json
+      @response_status = 201
+      @response_body = stub
+
+      @stubs.post "12345/webhooks", @payload do
         [@response_status, {}, @response_body]
       end
     end
 
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.activate_campaign(@id)
+      assert_equal expected, @client.create_webhook(@post_url, @include_received_email, @events)
     end
   end
 
-  context "#pause_campaign" do
-    setup do
-      @response_status = 204
-      @response_body = stub
-      @id = 9999999
-
-      @stubs.post "12345/campaigns/#{@id}/pause" do
-        [@response_status, {}, @response_body]
-      end
-    end
-
-    should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.pause_campaign(@id)
-    end
-  end
-
-  context "#campaign_subscribers" do
+  context "#delete_webhook" do
     setup do
       @response_status = 200
       @response_body = stub
-      @id = 9999999
+      @id = 1234
 
-      @stubs.get "12345/campaigns/#{@id}/subscribers" do
+      @stubs.delete "12345/webhooks/#{@id}" do
         [@response_status, {}, @response_body]
       end
     end
 
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.campaign_subscribers(@id)
+      assert_equal expected, @client.delete_webhook(@id)
     end
   end
 end

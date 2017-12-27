@@ -8,6 +8,16 @@ module Drip
       def accounts
         get "accounts"
       end
+
+      # Public: Fetch an account.
+      #
+      # id - Required. The String id of the account.
+      #
+      # Returns a Drip::Response.
+      # See https://www.getdrip.com/docs/rest-api#accounts
+      def account(id)
+        get "accounts/#{id}"
+      end
     end
   end
 end

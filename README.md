@@ -61,30 +61,124 @@ the "list accounts" endpoint.
 Since the Drip client is a flat API client, most API actions are available
 as methods on the client object. The following methods are currently available:
 
-| Action                     | Method                                               |
+#### Accounts
+
+| Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | List accounts              | `#accounts`                                          |
+| Fetch an account           | `#account(id)`                                       |
+
+#### Broadcasts
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List broadcasts            | `#broadcasts`                                        |
+| Fetch a broadcast          | `#broadcast(id)`                                     |
+
+#### Campaigns
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List campaigns             | `#campaigns(options = {})`                           |
+| Fetch a campaign           | `#campaign(id)`                                      |
+| Activate a campaign        | `#activate_campaign(id)`                             |
+| Pause a campaign           | `#pause_campaign(id)`                                |
+| List campaign subscribers  | `#campaign_subscribers(id)`                          |
+| Subscribe to a campaign    | See the `#subscribe` method on "Subscribers" below   |
+
+#### Campaign Subscriptions
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List subscriber subscriptions | `#campaign_subscriptions(subscriber_id)`          |
+
+#### Conversions
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List all conversions       | `#conversions(options = {})`                         |
+| Fetch a conversion         | `#conversion(id)`                                    |
+
+#### Custom Fields
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List all custom fields     | `#custom_fields`                                     |
+
+#### Events
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| Track an event             | `#track_event(email, action, properties = {})`       |
+| Track a batch of events    | `#track_events(events)`                              |
+| List all custom event actions | `#event_actions`                                  |
+
+#### Forms
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List all forms            | `#forms`                                              |
+| Fetch a form              | `#form(id)`                                           |
+
+#### Purchases
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List purchases for a subscriber | `#purchases(email)`                             |
+| Create a purchase          | `#create_purchase(email, amount, options = {})`      |
+| Fetch a purchase           | `#purchase(email, id)`                               |
+
+#### Subscribers
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
 | List subscribers           | `#subscribers(options = {})`                         |
 | Create/update a subscriber | `#create_or_update_subscriber(email, options = {})`  |
 | Create/update a batch of subscribers | `#create_or_update_subscribers(subscribers)` |
+| Unsubscribe a batch of subscribers | `#unsubscribe_subscribers(subscribers)`      |
 | Fetch a subscriber         | `#subscriber(id_or_email)`                           |
-| Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
-| Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
 | Delete                     | `#delete_subscriber(id_or_email)`                    |
+| Subscribe to a campaign    | `#subscribe(email, campaign_id, options = {})`       |
+| Unsubscribe from all mailings | `#unsubscribe_from_all(id_or_email)`              |
+| Unsubscribe                | `#unsubscribe(id_or_email, options = {})`            |
+
+#### Tags
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
 | List tags                  | `#tags`                                              |
 | Apply a tag                | `#apply_tag(email, tag)`                             |
 | Remove a tag               | `#remove_tag(email, tag)`                            |
-| Track an event             | `#track_event(email, action, properties = {})`       |
-| Track a batch of events    | `#track_events(events)`                              |
-| List campaigns             | `#campaigns`                                         |
-| Create a purchase          | `#create_purchase(email, amount, options = {})`      |
-| List purchases for a subscriber | `#purchases(email)`                             |
-| Fetch a purchase           | `#purchase(email, id)`                               |
 
-**Note:** We do not have complete API coverage yet. If we are missing an API method
-that you need to use in your application, please file an issue and/or open a
-pull request. [See the official REST API docs](https://www.getdrip.com/docs/rest-api)
-for a complete API reference.
+#### Webhooks
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List webhooks              | `#webhooks`                                          |
+| Fetch a webhook            | `#webhook(id)`                                       |
+| Create a new webhook       | `#create_webhook(post_url, include_received_email, events)` |
+| Delete a webhook           | `#delete_webhook(id)`                                |
+
+#### Workflows
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List workflows             | `#workflows`                                         |
+| Fetch a workflow           | `#workflow(id)`                                      |
+| Activate a workflow        | `#activate_workflow(id)`                             |
+| Pause a workflow           | `#pause_workflow(id)`                                |
+| Start a subscriber on a workflow | `#start_subscriber_workflow(id, options = {})` |
+| Remove a subscriber from a workflow | `#remove_subscriber_workflow(workflow_id, id_or_email)` |
+
+#### Workflow Triggers
+
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| List workflow triggers     | `#workflow_triggers(id)`                             |
+| Create a workflow trigger  | `#create_workflow_trigger(id, options = {})`         |
+| Update a workflow trigger  | `#update_workflow_trigger(id, options = {}`          |
+
+[See the official REST API docs](https://www.getdrip.com/docs/rest-api) for a complete API reference and explanations.
 
 ## Use Cases
 

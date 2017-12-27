@@ -1,10 +1,18 @@
 require "drip/response"
 require "drip/client/accounts"
+require "drip/client/broadcasts"
+require "drip/client/campaigns"
+require "drip/client/campaign_subscriptions"
+require "drip/client/conversions"
+require "drip/client/custom_fields"
+require "drip/client/events"
+require "drip/client/forms"
+require "drip/client/purchases"
 require "drip/client/subscribers"
 require "drip/client/tags"
-require "drip/client/events"
-require "drip/client/campaigns"
-require "drip/client/purchases"
+require "drip/client/webhooks"
+require "drip/client/workflows"
+require "drip/client/workflow_triggers"
 require "faraday"
 require "faraday_middleware"
 require "json"
@@ -12,11 +20,19 @@ require "json"
 module Drip
   class Client
     include Accounts
+    include Broadcasts
+    include Campaigns
+    include CampaignSubscriptions
+    include Conversions
+    include CustomFields
+    include Events
+    include Forms
+    include Purchases
     include Subscribers
     include Tags
-    include Events
-    include Campaigns
-    include Purchases
+    include Webhooks
+    include Workflows
+    include WorkflowTriggers
 
     attr_accessor :access_token, :api_key, :account_id
 
@@ -83,7 +99,7 @@ module Drip
           f.basic_auth api_key, ""
         end
 
-        f.response :json, :content_type => /\bjson$/
+        f.response :json, content_type: /\bjson$/
         f.adapter :net_http
       end
     end

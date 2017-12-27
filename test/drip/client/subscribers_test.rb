@@ -66,7 +66,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @email = "derrick@getdrip.com"
       @data = { "time_zone" => "America/Los_Angeles" }
-      @payload = { "subscribers" => [@data.merge(:email => @email)] }.to_json
+      @payload = { "subscribers" => [@data.merge(email: @email)] }.to_json
 
       @response_status = 201
       @response_body = stub
@@ -86,16 +86,16 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @subscribers = [
         {
-          :email => "derrick@getdrip.com",
-          :time_zone => "America/Los_Angeles"
+          email: "derrick@getdrip.com",
+          time_zone: "America/Los_Angeles"
         },
         {
-          :email => "darin@getdrip.com",
-          :time_zone => "America/Los_Angeles"
+          email: "darin@getdrip.com",
+          time_zone: "America/Los_Angeles"
         }
       ]
 
-      @payload = { "batches" => [ { "subscribers" => @subscribers } ] }.to_json
+      @payload = { "batches" => [{ "subscribers" => @subscribers }] }.to_json
       @response_status = 201
       @response_body = stub
 
@@ -110,12 +110,38 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     end
   end
 
+  context "#unsubscribe_subscribers" do
+    setup do
+      @subscribers = [
+        {
+          email: "someone@example.com"
+        },
+        {
+          email: "other@example.com"
+        }
+      ]
+
+      @payload = { "batches" => [{ "subscribers" => @subscribers }] }.to_json
+      @response_status = 204
+      @response_body = stub
+
+      @stubs.post "12345/unsubscribes/batches", @payload do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.unsubscribe_subscribers(@subscribers)
+    end
+  end
+
   context "#subscribe" do
     setup do
       @email = "derrick@getdrip.com"
       @campaign_id = "12345"
       @data = { "time_zone" => "America/Los_Angeles" }
-      @payload = { "subscribers" => [@data.merge(:email => @email)] }.to_json
+      @payload = { "subscribers" => [@data.merge(email: @email)] }.to_json
 
       @response_status = 201
       @response_body = stub
@@ -139,7 +165,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         @response_status = 201
         @response_body = stub
 
-        @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe" do
+        @stubs.post "12345/subscribers/#{CGI.escape @id}/remove" do
           [@response_status, {}, @response_body]
         end
       end
@@ -158,7 +184,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         @response_status = 201
         @response_body = stub
 
-        @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe?campaign_id=#{@campaign}" do
+        @stubs.post "12345/subscribers/#{CGI.escape @id}/remove?campaign_id=#{@campaign}" do
           [@response_status, {}, @response_body]
         end
       end
@@ -167,6 +193,23 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         expected = Drip::Response.new(@response_status, @response_body)
         assert_equal expected, @client.unsubscribe(@id, campaign_id: @campaign)
       end
+    end
+  end
+
+  context "#unsubscribe_from_all" do
+    setup do
+      @id = "derrick@getdrip.com"
+      @response_status = 200
+      @response_body = stub
+
+      @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe_all" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.unsubscribe_from_all(@id)
     end
   end
 

@@ -76,16 +76,16 @@ class Drip::Client::EventsTest < Drip::TestCase
     setup do
       @events = [
         {
-          :email => "derrick@getdrip.com",
-          :action => "subscribed"
+          email: "derrick@getdrip.com",
+          action: "subscribed"
         },
         {
-          :email => "darin@getdrip.com",
-          :action => "unsubscribed"
+          email: "darin@getdrip.com",
+          action: "unsubscribed"
         }
       ]
 
-      @payload = { "batches" => [ { "events" => @events } ] }.to_json
+      @payload = { "batches" => [{ "events" => @events }] }.to_json
       @response_status = 201
       @response_body = stub
 
@@ -97,6 +97,22 @@ class Drip::Client::EventsTest < Drip::TestCase
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
       assert_equal expected, @client.track_events(@events)
+    end
+  end
+
+  context "#event_actions" do
+    setup do
+      @response_status = 200
+      @response_body = stub
+
+      @stubs.get "12345/event_actions" do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.event_actions
     end
   end
 end

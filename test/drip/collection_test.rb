@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 
 class Drip::CollectionTest < Drip::TestCase
   should "yield resources of the correct type" do
-    raw_data = [ load_json_fixture("resources/subscriber.json") ]
+    raw_data = [load_json_fixture("resources/subscriber.json")]
     collection = TestCollection.new(raw_data)
 
     collection.each do |item|

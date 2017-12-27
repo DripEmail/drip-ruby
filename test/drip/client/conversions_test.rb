@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper.rb'
 
-class Drip::Client::AccountsTest < Drip::TestCase
+class Drip::Client::ConversionsTest < Drip::TestCase
   def setup
     @stubs = Faraday::Adapter::Test::Stubs.new
 
@@ -8,40 +8,40 @@ class Drip::Client::AccountsTest < Drip::TestCase
       builder.adapter :test, @stubs
     end
 
-    @client = Drip::Client.new
+    @client = Drip::Client.new { |c| c.account_id = "12345" }
     @client.expects(:connection).at_least_once.returns(@connection)
   end
 
-  context "#accounts" do
+  context "#conversions" do
     setup do
       @response_status = 200
       @response_body = stub
 
-      @stubs.get "accounts" do
+      @stubs.get "12345/goals" do
         [@response_status, {}, @response_body]
       end
     end
 
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.accounts
+      assert_equal expected, @client.conversions
     end
   end
 
-  context "#account" do
+  context "#conversion" do
     setup do
       @response_status = 200
       @response_body = stub
       @id = 9999999
 
-      @stubs.get "accounts/#{@id}" do
+      @stubs.get "12345/goals/#{@id}" do
         [@response_status, {}, @response_body]
       end
     end
 
     should "send the right request" do
       expected = Drip::Response.new(@response_status, @response_body)
-      assert_equal expected, @client.account(@id)
+      assert_equal expected, @client.conversion(@id)
     end
   end
 end

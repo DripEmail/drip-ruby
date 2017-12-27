@@ -90,5 +90,4 @@ class Drip::Client::PurchasesTest < Drip::TestCase
       assert_equal expected, @client.purchase(@email, @id)
     end
   end
-
 end

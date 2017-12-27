@@ -111,7 +111,7 @@ class Drip::ResponseTest < Drip::TestCase
 
   context "members" do
     setup do
-      @members = [ load_json_fixture("resources/subscriber.json") ]
+      @members = [load_json_fixture("resources/subscriber.json")]
       @body = { "subscribers" => @members }
       @subject = Drip::Response.new(200, @body)
     end
@@ -124,7 +124,7 @@ class Drip::ResponseTest < Drip::TestCase
 
   context "rate limit response" do
     setup do
-      @body = {"message"=>"API rate limit exceeded. Please try again in an hour."}
+      @body = { "message" => "API rate limit exceeded. Please try again in an hour." }
       @subject = Drip::Response.new(429, @body)
     end
 

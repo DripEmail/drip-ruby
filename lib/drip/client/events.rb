@@ -32,6 +32,19 @@ module Drip
         url = "#{account_id}/events/batches"
         post url, generate_resource("batches", { "events" => events })
       end
+
+      # Public: Fetch all custom event actions.
+      #
+      # options - Optional.  A Hash of options
+      #           - page   - Optional. The page number. Defaults to 1
+      #           - per_page - Optional. The number of records to be returned
+      #                        on each page. Defaults to 100. Maximum 1000.
+      #
+      # Returns a Drip::Response.
+      # See https://www.getdrip.com/docs/rest-api#events
+      def event_actions(options = {})
+        get "#{account_id}/event_actions", options
+      end
     end
   end
 end

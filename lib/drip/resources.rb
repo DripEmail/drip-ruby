@@ -1,23 +1,35 @@
 require "drip/resources/account"
-require "drip/resources/subscriber"
-require "drip/resources/tag"
+require "drip/resources/broadcast"
+require "drip/resources/campaign"
+require "drip/resources/campaign_subscription"
 require "drip/resources/error"
 require "drip/resources/purchase"
+require "drip/resources/subscriber"
+require "drip/resources/tag"
+require "drip/resources/webhook"
+require "drip/resources/workflow"
+require "drip/resources/workflow_trigger"
 
 module Drip
   module Resources
     def self.classes
       [
         Drip::Account,
-        Drip::Subscriber,
+        Drip::Broadcast,
+        Drip::Campaign,
+        Drip::CampaignSubscription,
         Drip::Error,
+        Drip::Purchase,
+        Drip::Subscriber,
         Drip::Tag,
-        Drip::Purchase
+        Drip::Webhook,
+        Drip::Workflow,
+        Drip::WorkflowTrigger
       ]
     end
 
     def self.find_class(name)
-      self.classes.find { |c| c.resource_name == name } || Drip::Resource
+      classes.find { |c| c.resource_name == name } || Drip::Resource
     end
   end
 end

@@ -3,7 +3,7 @@ require "cgi"
 module Drip
   class Client
     module Subscribers
-      # Public: Fetch a subscriber.
+      # Public: List all subscribers.
       #
       # options - A Hash of options.
       #           - status - Optional. Filter by one of the following statuses:
@@ -37,7 +37,7 @@ module Drip
       #                             If provided and a subscriber with the email above
       #                             does not exist, this address will be used to
       #                             create a new subscriber.
-      #           - time_zone     - Optional. The subscriber's time zone (in Olsen
+      #           - time_zone     - Optional. The subscriber's time zone (in Olson
       #                             format). Defaults to Etc/UTC.
       #           - custom_fields - Optional. A Hash of custom field data.
       #           - tags          - Optional. An Array of tags.
@@ -45,7 +45,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#create_or_update_subscriber
       def create_or_update_subscriber(email, options = {})
-        data = options.merge(:email => email)
+        data = options.merge(email: email)
         post "#{account_id}/subscribers", generate_resource("subscribers", data)
       end
 
@@ -57,7 +57,7 @@ module Drip
       #                                 If provided and a subscriber with the email above
       #                                 does not exist, this address will be used to
       #                                 create a new subscriber.
-      #               - time_zone     - Optional. The subscriber's time zone (in Olsen
+      #               - time_zone     - Optional. The subscriber's time zone (in Olson
       #                                 format). Defaults to Etc/UTC.
       #               - custom_fields - Optional. A Hash of custom field data.
       #               - tags          - Optional. An Array of tags.
@@ -66,6 +66,18 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches
       def create_or_update_subscribers(subscribers)
         url = "#{account_id}/subscribers/batches"
+        post url, generate_resource("batches", { "subscribers" => subscribers })
+      end
+
+      # Public: Unsubscribe a collection of subscribers.
+      #
+      # subscribers - Required. An Array of between 1 and 1000 Hashes of subscriber data.
+      #               - email - Required. The String subscriber email address.
+      #
+      # Returns a Drip::Response
+      # See https://www.getdrip.com/docs/rest-api#subscriber_batches
+      def unsubscribe_subscribers(subscribers)
+        url = "#{account_id}/unsubscribes/batches"
         post url, generate_resource("batches", { "subscribers" => subscribers })
       end
 
@@ -79,7 +91,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#unsubscribe
       def unsubscribe(id_or_email, options = {})
-        url = "#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe"
+        url = "#{account_id}/subscribers/#{CGI.escape id_or_email}/remove"
         url += options[:campaign_id] ? "?campaign_id=#{options[:campaign_id]}" : ""
         post url
       end
@@ -95,7 +107,7 @@ module Drip
       #                                 on the campaign.
       #               - starting_email_index - Optional. The index (zero-based) of
       #                                 the email to send first. Defaults to 0.
-      #               - time_zone     - Optional. The subscriber's time zone (in Olsen
+      #               - time_zone     - Optional. The subscriber's time zone (in Olson
       #                                 format). Defaults to Etc/UTC.
       #               - custom_fields - Optional. A Hash of custom field data.
       #               - tags          - Optional. An Array of tags.
@@ -121,6 +133,16 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#fdelete_subscriber
       def delete_subscriber(id_or_email)
         delete "#{account_id}/subscribers/#{CGI.escape id_or_email}"
+      end
+
+      # Public: Unsubscribe a subscriber from all mailings.
+      #
+      # id_or_email - Required. The String id or email address of the subscriber.
+      #
+      # Returns No Content.
+      # See https://www.getdrip.com/docs/rest-api#fdelete_subscriber
+      def unsubscribe_from_all(id_or_email)
+        post "#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe_all"
       end
     end
   end
