@@ -120,13 +120,13 @@ as methods on the client object. The following methods are currently available:
 | List all forms            | `#forms`                                              |
 | Fetch a form              | `#form(id)`                                           |
 
-#### Purchases
+#### Orders
 
 | Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
-| List purchases for a subscriber | `#purchases(email)`                             |
-| Create a purchase          | `#create_purchase(email, amount, options = {})`      |
-| Fetch a purchase           | `#purchase(email, id)`                               |
+| Create or update an order  | `#create_or_update_order(email, options = {})`       |
+| Create or update a batch of orders  | `#create_or_update_orders(orders = {})`     |
+| Create or update a refund  | `#create_or_update_refund(order_id, amount, options = {})` |
 
 #### Subscribers
 
