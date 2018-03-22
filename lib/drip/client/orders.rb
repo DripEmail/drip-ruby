@@ -37,7 +37,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#create-or-update-a-refund
       def create_or_update_refund(order_id, amount, options)
-        data = options.merge(order_id: order_id)
+        data = options.merge(amount: amount)
         post "#{account_id}/orders/#{order_id}/refunds", generate_resource("refunds", data)
       end
     end

@@ -16,6 +16,7 @@ class Drip::Client::OrdersTest < Drip::TestCase
     setup do
       @email = "drippy@drip.com"
       @options = {
+        "email": @email,
         "provider": "shopify",
         "upstream_id": "abcdef",
         "amount": 4900,
@@ -28,7 +29,7 @@ class Drip::Client::OrdersTest < Drip::TestCase
           "color": "red"
         }
       }
-      @payload = { "orders" => [@options.merge(email: @email)] }.to_json
+      @payload = { "orders" => [@options] }.to_json
       @response_status = 202
       @response_body = stub
 
@@ -94,7 +95,27 @@ class Drip::Client::OrdersTest < Drip::TestCase
 
   context "#create_or_update_refund" do
     setup do
-      @email = "drippy@drip.com"
+      @amount = 4900
+      @order_id = "98457h"
+      @options = {
+        "amount": @amount,
+        "upstream_id": "tuvwx",
+        "note": "Incorrect size",
+        "processed_at": "2013-06-22T10:41:11Z"
+      }
+
+      @payload = { "refunds" => [@options] }.to_json
+      @response_status = 202
+      @response_body = stub
+
+      @stubs.post "12345/orders/#{@order_id}/refunds", @payload do
+        [@response_status, {}, @response_body]
+      end
+    end
+
+    should "send the correct request" do
+      expected = Drip::Response.new(@response_status, @response_body)
+      assert_equal expected, @client.create_or_update_refund(@order_id, @amount, @options)
     end
   end
 end
