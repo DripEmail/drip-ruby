@@ -6,6 +6,7 @@ class Drip::ResourcesTest < Drip::TestCase
     assert_equal Drip::Campaign, Drip::Resources.find_class("campaign")
     assert_equal Drip::CampaignSubscription, Drip::Resources.find_class("campaign_subscription")
     assert_equal Drip::Error, Drip::Resources.find_class("error")
+    assert_equal Drip::Order, Drip::Resources.find_class("order")
     assert_equal Drip::Purchase, Drip::Resources.find_class("purchase")
     assert_equal Drip::Subscriber, Drip::Resources.find_class("subscriber")
     assert_equal Drip::Tag, Drip::Resources.find_class("tag")
