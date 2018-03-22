@@ -46,7 +46,6 @@ class Drip::Client::OrdersTest < Drip::TestCase
 
   context "#create_or_update_orders" do
     setup do
-      @email = "drippy@drip.com"
       @orders = [
         {
           "email": "drippy@drip.com",
