@@ -122,6 +122,8 @@ as methods on the client object. The following methods are currently available:
 
 #### Orders
 
+**Note:** The beta purchases endpoint has been deprecated and its methods have been removed from the gem except `create_purchase`, which now sends requests to the Order creation endpoint [here](https://developer.drip.com/#orders)
+
 | Actions                    | Methods                                              |
 | :------------------------- | :--------------------------------------------------- |
 | Create or update an order  | `#create_or_update_order(email, options = {})`       |

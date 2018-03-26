@@ -9,7 +9,12 @@ module Drip
       #                      Drip API docs for the required schema.
       # Returns a Drip::Response.
       # See https://developer.drip.com/#orders
+      #
+      # DEPRECATED: The beta Purchase endpoint has been deprecated and this method now sends
+      # requests to the Order creation endpoint. Please use `create_or_update_order` instead
       def create_purchase(email, amount, options = {})
+        warn "[DEPRECATED] `create_purchase` is deprecated. Please use `create_or_update_order` instead."
+
         data = options.merge({ amount: amount, email: email })
         post "#{account_id}/orders", generate_resource("orders", data)
       end
