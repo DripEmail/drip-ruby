@@ -26,19 +26,19 @@ module Drip
 
       # Public: Create or update a refund.
       #
-      # order_id     - Required. The String id of the order.
-      # amount	     - Required. The amount of the refund.
-      # options      - Optional. A Hash of refund properties
-      #                 upstream_id	 - The unique id of refund in the order management system.
-      #                 note	       - A note about the refund.
-      #                 processed_at - The String time at which the refund was processed in 
-      #                                ISO-8601 format.
+      # options      - Required. A Hash of refund properties
+      #                 amount	            - Required. The amount of the refund.
+      #                 provider            - Required. The provider for the Order being refunded.
+      #                 order_upstream_id   - Required. The upstream_id for the Order being refunded.
+      #                 upstream_id	        - The unique id of refund in the order management system.
+      #                 note	              - A note about the refund.
+      #                 processed_at        - The String time at which the refund was processed in 
+      #                                       ISO-8601 format.
       #
       # Returns a Drip::Response.
       # See https://developer.drip.com/#create-or-update-a-refund
-      def create_or_update_refund(order_id, amount, options)
-        data = options.merge(amount: amount)
-        post "#{account_id}/orders/#{order_id}/refunds", generate_resource("refunds", data)
+      def create_or_update_refund(options)
+        post "#{account_id}/refunds", generate_resource("refunds", options)
       end
     end
   end

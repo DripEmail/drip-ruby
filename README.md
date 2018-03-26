@@ -126,7 +126,7 @@ as methods on the client object. The following methods are currently available:
 | :------------------------- | :--------------------------------------------------- |
 | Create or update an order  | `#create_or_update_order(email, options = {})`       |
 | Create or update a batch of orders  | `#create_or_update_orders(orders = {})`     |
-| Create or update a refund  | `#create_or_update_refund(order_id, amount, options = {})` |
+| Create or update a refund  | `#create_or_update_refund(options = {})`             |
 
 #### Subscribers
 
