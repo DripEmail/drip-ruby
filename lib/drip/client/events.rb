@@ -1,5 +1,3 @@
-require "cgi"
-
 module Drip
   class Client
     module Events

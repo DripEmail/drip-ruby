@@ -3,6 +3,7 @@ require "drip/collections/broadcasts"
 require "drip/collections/campaigns"
 require "drip/collections/campaign_subscriptions"
 require "drip/collections/errors"
+require "drip/collections/orders"
 require "drip/collections/purchases"
 require "drip/collections/subscribers"
 require "drip/collections/tags"
@@ -19,6 +20,7 @@ module Drip
         Drip::Campaigns,
         Drip::CampaignSubscriptions,
         Drip::Errors,
+        Drip::Orders,
         Drip::Purchases,
         Drip::Subscribers,
         Drip::Tags,
