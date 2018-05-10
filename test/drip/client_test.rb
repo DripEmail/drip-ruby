@@ -11,6 +11,19 @@ class Drip::ClientTest < Drip::TestCase
       assert_equal "aaaa", client.api_key
     end
 
+    should "accept url prefix" do
+      client = Drip::Client.new do |config|
+        config.url_prefix = "aaaa"
+      end
+
+      assert_equal "aaaa", client.url_prefix
+    end
+
+    should "have default url prefix" do
+      client = Drip::Client.new
+      assert_equal "https://api.getdrip.com/v2/", client.url_prefix
+    end
+
     should "accept access token" do
       client = Drip::Client.new do |config|
         config.access_token = "aaaa"
@@ -63,6 +76,21 @@ class Drip::ClientTest < Drip::TestCase
     should "use Basic authentication" do
       header = "Basic #{Base64.encode64(@key + ":")}".strip
       assert_equal header, @client.connection.headers["Authorization"]
+    end
+  end
+
+  context "given a different url prefix" do
+    setup do
+      @key = "aaaa"
+      @url_prefix = "https://api.example.com/v9001/"
+      @client = Drip::Client.new do |config|
+        config.api_key = @key
+        config.url_prefix = @url_prefix
+      end
+    end
+
+    should "connect to alternate prefix" do
+      assert_equal @url_prefix, @client.connection.url_prefix.to_s
     end
   end
 
