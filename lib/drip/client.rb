@@ -36,12 +36,13 @@ module Drip
     include Workflows
     include WorkflowTriggers
 
-    attr_accessor :access_token, :api_key, :account_id
+    attr_accessor :access_token, :api_key, :account_id, :url_prefix
 
     def initialize(options = {})
       @account_id = options[:account_id]
       @access_token = options[:access_token]
       @api_key = options[:api_key]
+      @url_prefix = options[:url_prefix] || "https://api.getdrip.com/v2/"
       yield(self) if block_given?
     end
 
@@ -90,7 +91,7 @@ module Drip
 
     def connection
       @connection ||= Faraday.new do |f|
-        f.url_prefix = "https://api.getdrip.com/v2/"
+        f.url_prefix = url_prefix
         f.headers['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
         f.headers['Content-Type'] = content_type
         f.headers['Accept'] = "*/*"
