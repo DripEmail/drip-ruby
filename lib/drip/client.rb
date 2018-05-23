@@ -1,3 +1,4 @@
+require "drip/errors"
 require "drip/response"
 require "drip/client/accounts"
 require "drip/client/broadcasts"
@@ -19,8 +20,6 @@ require "uri"
 require "json"
 
 module Drip
-  class TooManyRedirectsError < StandardError; end
-
   class Client
     include Accounts
     include Broadcasts
