@@ -74,8 +74,13 @@ class Drip::ClientTest < Drip::TestCase
     end
 
     should "use Basic authentication" do
+      stub_request(:get, "https://api.getdrip.com/v2/testpath").
+        to_return(status: 200, body: "", headers: {})
+
+      @client.get("testpath")
+
       header = "Basic #{Base64.encode64(@key + ":")}".strip
-      assert_equal header, @client.connection.headers["Authorization"]
+      assert_requested :get, "https://api.getdrip.com/v2/testpath", headers: { 'Authorization' => header }
     end
   end
 
@@ -90,7 +95,11 @@ class Drip::ClientTest < Drip::TestCase
     end
 
     should "connect to alternate prefix" do
-      assert_equal @url_prefix, @client.connection.url_prefix.to_s
+      stub_request(:get, "https://api.example.com/v9001/testpath").
+        to_return(status: 200, body: "", headers: {})
+      @client.get("testpath")
+
+      assert_requested :get, "https://api.example.com/v9001/testpath"
     end
   end
 
@@ -103,8 +112,11 @@ class Drip::ClientTest < Drip::TestCase
     end
 
     should "use Bearer token authentication" do
+      stub_request(:get, "https://api.getdrip.com/v2/testpath").
+        to_return(status: 200, body: "", headers: {})
+      @client.get("testpath")
       header = "Bearer #{@key}"
-      assert_equal header, @client.connection.headers["Authorization"]
+      assert_requested :get, "https://api.getdrip.com/v2/testpath", headers: { 'Authorization' => header }
     end
   end
 end

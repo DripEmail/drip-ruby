@@ -14,8 +14,8 @@ require "drip/client/tags"
 require "drip/client/webhooks"
 require "drip/client/workflows"
 require "drip/client/workflow_triggers"
-require "faraday"
-require "faraday_middleware"
+require "net/http"
+require "uri"
 require "json"
 
 module Drip
@@ -38,6 +38,13 @@ module Drip
 
     attr_accessor :access_token, :api_key, :account_id, :url_prefix
 
+    VERB_MAPPING = {
+      get: Net::HTTP::Get,
+      post: Net::HTTP::Post,
+      put: Net::HTTP::Put,
+      delete: Net::HTTP::Delete
+    }.freeze
+
     def initialize(options = {})
       @account_id = options[:account_id]
       @access_token = options[:access_token]
@@ -55,56 +62,55 @@ module Drip
     end
 
     def get(url, options = {})
-      make_request(:get, url, options)
+      make_request(Net::HTTP::Get, url, options)
     end
 
     def post(url, options = {})
-      make_request(:post, url, options)
+      make_request(Net::HTTP::Post, url, options)
     end
 
     def put(url, options = {})
-      make_request(:put, url, options)
+      make_request(Net::HTTP::Put, url, options)
     end
 
     def delete(url, options = {})
-      make_request(:delete, url, options)
+      make_request(Net::HTTP::Delete, url, options)
     end
 
-    def make_request(verb, url, options)
-      build_response do
-        connection.send(verb) do |req|
-          req.url url
+  private
 
-          if verb == :get
-            req.params = options
-          else
-            req.body = options.to_json
+    def make_request(verb_klass, url, options)
+      build_response do
+        uri = URI(url_prefix) + URI(url)
+        Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+          if verb_klass.is_a? Net::HTTP::Get
+            uri.query = URI.encode_www_form(options)
           end
+
+          request = verb_klass.new uri
+
+          unless verb_klass.is_a? Net::HTTP::Get
+            request.body = options.to_json
+          end
+          
+          request['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
+          request['Content-Type'] = content_type
+          request['Accept'] = "*/*"
+
+          if access_token
+            request['Authorization'] = "Bearer #{access_token}"
+          else
+            request.basic_auth api_key, ""
+          end
+
+          http.request request
         end
       end
     end
 
     def build_response(&block)
       response = yield
-      Drip::Response.new(response.status, response.body)
-    end
-
-    def connection
-      @connection ||= Faraday.new do |f|
-        f.url_prefix = url_prefix
-        f.headers['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
-        f.headers['Content-Type'] = content_type
-        f.headers['Accept'] = "*/*"
-
-        if access_token
-          f.headers['Authorization'] = "Bearer #{access_token}"
-        else
-          f.basic_auth api_key, ""
-        end
-
-        f.response :json, content_type: /\bjson$/
-        f.adapter :net_http
-      end
+      Drip::Response.new(response.code.to_i, response.body)
     end
   end
 end
