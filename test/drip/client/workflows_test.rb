@@ -2,24 +2,16 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class Drip::Client::WorkflowsTest < Drip::TestCase
   def setup
-    @stubs = Faraday::Adapter::Test::Stubs.new
-
-    @connection = Faraday.new do |builder|
-      builder.adapter :test, @stubs
-    end
-
     @client = Drip::Client.new { |c| c.account_id = "12345" }
-    @client.expects(:connection).at_least_once.returns(@connection)
   end
 
   context "#workflows" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.get "12345/workflows" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/workflows").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -31,12 +23,11 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
   context "#workflow" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
       @id = 1234
 
-      @stubs.get "12345/workflows/#{@id}" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/workflows/#{@id}").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -48,12 +39,11 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
   context "#activate_workflow" do
     setup do
       @response_status = 204
-      @response_body = stub
+      @response_body = nil
       @id = 1234
 
-      @stubs.post "12345/workflows/#{@id}/activate" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/workflows/#{@id}/activate").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -65,12 +55,11 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
   context "#pause_workflow" do
     setup do
       @response_status = 204
-      @response_body = stub
+      @response_body = nil
       @id = 1234
 
-      @stubs.post "12345/workflows/#{@id}/pause" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/workflows/#{@id}/pause").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -89,11 +78,10 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
       @payload = { "subscribers" => [@data] }.to_json
 
       @response_status = 204
-      @response_body = stub
+      @response_body = nil
 
-      @stubs.post "12345/workflows/#{@id}/subscribers", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/workflows/#{@id}/subscribers").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -105,13 +93,12 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
   context "#remove_subscriber_workflow" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
       @id = 1234
       @email = "someone@example.com"
 
-      @stubs.delete "12345/workflows/#{@id}/subscribers/#{CGI.escape @email}" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:delete, "https://api.getdrip.com/v2/12345/workflows/#{@id}/subscribers/#{CGI.escape @email}").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
