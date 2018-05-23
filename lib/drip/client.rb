@@ -19,6 +19,8 @@ require "uri"
 require "json"
 
 module Drip
+  class TooManyRedirectsError < StandardError; end
+
   class Client
     include Accounts
     include Broadcasts
@@ -36,14 +38,9 @@ module Drip
     include Workflows
     include WorkflowTriggers
 
-    attr_accessor :access_token, :api_key, :account_id, :url_prefix
+    REDIRECT_LIMIT = 10
 
-    VERB_MAPPING = {
-      get: Net::HTTP::Get,
-      post: Net::HTTP::Post,
-      put: Net::HTTP::Put,
-      delete: Net::HTTP::Delete
-    }.freeze
+    attr_accessor :access_token, :api_key, :account_id, :url_prefix
 
     def initialize(options = {})
       @account_id = options[:account_id]
@@ -62,26 +59,31 @@ module Drip
     end
 
     def get(url, options = {})
-      make_request(Net::HTTP::Get, url, options)
+      make_request(Net::HTTP::Get, make_uri(url), options)
     end
 
     def post(url, options = {})
-      make_request(Net::HTTP::Post, url, options)
+      make_request(Net::HTTP::Post, make_uri(url), options)
     end
 
     def put(url, options = {})
-      make_request(Net::HTTP::Put, url, options)
+      make_request(Net::HTTP::Put, make_uri(url), options)
     end
 
     def delete(url, options = {})
-      make_request(Net::HTTP::Delete, url, options)
+      make_request(Net::HTTP::Delete, make_uri(url), options)
     end
 
   private
 
-    def make_request(verb_klass, url, options)
+    def make_uri(path)
+      URI(url_prefix) + URI(path)
+    end
+
+    def make_request(verb_klass, uri, options, step = 0)
+      raise TooManyRedirectsError, 'too many HTTP redirects' if step >= REDIRECT_LIMIT
+
       build_response do
-        uri = URI(url_prefix) + URI(url)
         Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
           if verb_klass.is_a? Net::HTTP::Get
             uri.query = URI.encode_www_form(options)
@@ -92,7 +94,7 @@ module Drip
           unless verb_klass.is_a? Net::HTTP::Get
             request.body = options.to_json
           end
-          
+
           request['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
           request['Content-Type'] = content_type
           request['Accept'] = "*/*"
@@ -103,7 +105,12 @@ module Drip
             request.basic_auth api_key, ""
           end
 
-          http.request request
+          response = http.request request
+          if response.is_a?(Net::HTTPRedirection)
+            return make_request(verb_klass, URI(response["Location"]), options, step + 1)
+          else
+            response
+          end
         end
       end
     end
