@@ -26,7 +26,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "mocha", "~> 1.1"
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "webmock", "~> 3.4"
-
-  spec.add_runtime_dependency "faraday", "~> 0.13"
-  spec.add_runtime_dependency "faraday_middleware", "~> 0.12"
 end
