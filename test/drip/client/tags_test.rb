@@ -2,24 +2,16 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class Drip::Client::TagsTest < Drip::TestCase
   def setup
-    @stubs = Faraday::Adapter::Test::Stubs.new
-
-    @connection = Faraday.new do |builder|
-      builder.adapter :test, @stubs
-    end
-
     @client = Drip::Client.new { |c| c.account_id = "12345" }
-    @client.expects(:connection).at_least_once.returns(@connection)
   end
 
   context "#tags" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.get "12345/tags" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/tags").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -35,11 +27,10 @@ class Drip::Client::TagsTest < Drip::TestCase
       @payload = { "tags" => [{ "email" => @email, "tag" => @tag }] }.to_json
 
       @response_status = 201
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/tags", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/tags").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -54,11 +45,10 @@ class Drip::Client::TagsTest < Drip::TestCase
       @tag = "Customer"
 
       @response_status = 204
-      @response_body = stub
+      @response_body = nil
 
-      @stubs.delete "12345/subscribers/#{CGI.escape @email}/tags/#{CGI.escape @tag}" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:delete, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @email}/tags/#{CGI.escape @tag}").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
