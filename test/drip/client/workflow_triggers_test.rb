@@ -2,25 +2,17 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class Drip::Client::WorkflowTriggersTest < Drip::TestCase
   def setup
-    @stubs = Faraday::Adapter::Test::Stubs.new
-
-    @connection = Faraday.new do |builder|
-      builder.adapter :test, @stubs
-    end
-
     @client = Drip::Client.new { |c| c.account_id = "12345" }
-    @client.expects(:connection).at_least_once.returns(@connection)
   end
 
   context "#workflow_triggers" do
     setup do
       @id = 9999999
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.get "12345/workflows/#{@id}/triggers" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/workflows/#{@id}/triggers").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -43,11 +35,10 @@ class Drip::Client::WorkflowTriggersTest < Drip::TestCase
       @payload = { "triggers" => [@data] }.to_json
 
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/workflows/#{@id}/triggers", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/workflows/#{@id}/triggers").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -70,11 +61,10 @@ class Drip::Client::WorkflowTriggersTest < Drip::TestCase
       @payload = { "triggers" => [@data] }.to_json
 
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.put "12345/workflows/#{@id}/triggers", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:put, "https://api.getdrip.com/v2/12345/workflows/#{@id}/triggers").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
