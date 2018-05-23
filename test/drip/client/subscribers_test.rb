@@ -2,24 +2,16 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class Drip::Client::SubscribersTest < Drip::TestCase
   def setup
-    @stubs = Faraday::Adapter::Test::Stubs.new
-
-    @connection = Faraday.new do |builder|
-      builder.adapter :test, @stubs
-    end
-
     @client = Drip::Client.new { |c| c.account_id = "12345" }
-    @client.expects(:connection).at_least_once.returns(@connection)
   end
 
   context "#subscribers" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.get "12345/subscribers" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/subscribers").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -32,11 +24,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @id = "derrick@getdrip.com"
       @response_status = 201
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.get "12345/subscribers/#{CGI.escape @id}" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -49,11 +40,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @id = "derrick@getdrip.com"
       @response_status = 204
-      @response_body = stub
+      @response_body = nil
 
-      @stubs.delete "12345/subscribers/#{CGI.escape @id}" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:delete, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -69,11 +59,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       @payload = { "subscribers" => [@data.merge(email: @email)] }.to_json
 
       @response_status = 201
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/subscribers", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -97,11 +86,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
 
       @payload = { "batches" => [{ "subscribers" => @subscribers }] }.to_json
       @response_status = 201
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/subscribers/batches", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/batches").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -123,11 +111,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
 
       @payload = { "batches" => [{ "subscribers" => @subscribers }] }.to_json
       @response_status = 204
-      @response_body = stub
+      @response_body = nil
 
-      @stubs.post "12345/unsubscribes/batches", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/unsubscribes/batches").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -144,11 +131,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       @payload = { "subscribers" => [@data.merge(email: @email)] }.to_json
 
       @response_status = 201
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/campaigns/#{@campaign_id}/subscribers", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/campaigns/#{@campaign_id}/subscribers").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -163,11 +149,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         @id = "derrick@getdrip.com"
 
         @response_status = 201
-        @response_body = stub
+        @response_body = "stub"
 
-        @stubs.post "12345/subscribers/#{CGI.escape @id}/remove" do
-          [@response_status, {}, @response_body]
-        end
+        stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}/remove").
+          to_return(status: @response_status, body: @response_body, headers: {})
       end
 
       should "send the right request" do
@@ -182,11 +167,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         @campaign = "12345"
 
         @response_status = 201
-        @response_body = stub
+        @response_body = "stub"
 
-        @stubs.post "12345/subscribers/#{CGI.escape @id}/remove?campaign_id=#{@campaign}" do
-          [@response_status, {}, @response_body]
-        end
+        stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}/remove?campaign_id=#{@campaign}").
+          to_return(status: @response_status, body: @response_body, headers: {})
       end
 
       should "send the right request" do
@@ -200,11 +184,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @id = "derrick@getdrip.com"
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/subscribers/#{CGI.escape @id}/unsubscribe_all" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}/unsubscribe_all").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -220,11 +203,10 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       @payload = { "tags" => [{ "email" => @email, "tag" => @tag }] }.to_json
 
       @response_status = 201
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/tags", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/tags").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
