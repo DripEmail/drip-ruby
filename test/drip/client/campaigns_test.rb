@@ -2,24 +2,16 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class Drip::Client::CampaignsTest < Drip::TestCase
   def setup
-    @stubs = Faraday::Adapter::Test::Stubs.new
-
-    @connection = Faraday.new do |builder|
-      builder.adapter :test, @stubs
-    end
-
     @client = Drip::Client.new { |c| c.account_id = "12345" }
-    @client.expects(:connection).at_least_once.returns(@connection)
   end
 
   context "#campaigns" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.get "12345/campaigns" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/campaigns").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -31,12 +23,11 @@ class Drip::Client::CampaignsTest < Drip::TestCase
   context "#campaign" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
       @id = 9999999
 
-      @stubs.get "12345/campaigns/#{@id}" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/campaigns/#{@id}").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -48,12 +39,11 @@ class Drip::Client::CampaignsTest < Drip::TestCase
   context "#activate_campaign" do
     setup do
       @response_status = 204
-      @response_body = stub
+      @response_body = nil
       @id = 9999999
 
-      @stubs.post "12345/campaigns/#{@id}/activate" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/campaigns/#{@id}/activate").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -65,12 +55,11 @@ class Drip::Client::CampaignsTest < Drip::TestCase
   context "#pause_campaign" do
     setup do
       @response_status = 204
-      @response_body = stub
+      @response_body = nil
       @id = 9999999
 
-      @stubs.post "12345/campaigns/#{@id}/pause" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/campaigns/#{@id}/pause").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -82,12 +71,11 @@ class Drip::Client::CampaignsTest < Drip::TestCase
   context "#campaign_subscribers" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
       @id = 9999999
 
-      @stubs.get "12345/campaigns/#{@id}/subscribers" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/12345/campaigns/#{@id}/subscribers").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
