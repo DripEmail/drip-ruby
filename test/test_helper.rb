@@ -4,14 +4,7 @@ require "drip"
 require "minitest/autorun"
 require "shoulda-context"
 require "mocha/setup"
-# require "webmock/minitest"
-# require "vcr"
-require "faraday"
-
-# VCR.configure do |c|
-#   c.cassette_library_dir = 'test/cassettes'
-#   c.hook_into :webmock # or :fakeweb
-# end
+require "webmock/minitest"
 
 class Drip::TestCase < Minitest::Test
   def expand_fixture_path(path)
