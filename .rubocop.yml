@@ -16,3 +16,6 @@ Layout/DotPosition:
 
 Style/BracesAroundHashParameters:
   Enabled: false
+
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
