@@ -8,12 +8,6 @@
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Layout/ElseAlignment:
-  Exclude:
-    - 'lib/drip/response.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Layout/EmptyLineAfterMagicComment:
   Exclude:
     - 'drip-ruby.gemspec'

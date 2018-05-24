@@ -51,10 +51,10 @@ module Drip
           if body.is_a?(Hash)
             body.each do |key, value|
               klass = if value.is_a?(Array)
-                Drip::Collections.find_class(key)
-              else
-                Drip::Resources.find_class(key)
-              end
+                        Drip::Collections.find_class(key)
+                      else
+                        Drip::Resources.find_class(key)
+                      end
 
               members[key] = klass.new(value)
             end
