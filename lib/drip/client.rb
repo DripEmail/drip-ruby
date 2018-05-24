@@ -9,7 +9,6 @@ require "drip/client/custom_fields"
 require "drip/client/events"
 require "drip/client/forms"
 require "drip/client/orders"
-require "drip/client/purchases"
 require "drip/client/subscribers"
 require "drip/client/tags"
 require "drip/client/webhooks"
@@ -30,7 +29,6 @@ module Drip
     include Events
     include Forms
     include Orders
-    include Purchases
     include Subscribers
     include Tags
     include Webhooks
