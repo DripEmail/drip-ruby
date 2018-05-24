@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Your contribution here!
 
+### Added
+- `Drip::Client#url_prefix` method to enable pointing client at different endpoints (mostly useful for internal testing and mocking).
+
+### Changed
+- Switched from Faraday to Net::HTTP. This also removes the `Drip::Client#connection` method, as it directly exposed Faraday.
+
+### Removed
+- Removed deprecated `#create_purchase` call.
+
 ## [2.0.0] - 2018-03-27
 
 [2.0.0]: https://github.com/DripEmail/drip-ruby/compare/v1.0.0...v2.0.0
