@@ -79,7 +79,7 @@ class Drip::ClientTest < Drip::TestCase
 
       @client.get("testpath")
 
-      header = "Basic #{Base64.encode64(@key + ":")}".strip
+      header = "Basic #{Base64.encode64(@key + ':')}".strip
       assert_requested :get, "https://api.getdrip.com/v2/testpath", headers: { 'Authorization' => header }
     end
   end
@@ -127,7 +127,7 @@ class Drip::ClientTest < Drip::TestCase
 
     should "follow redirect" do
       stub_request(:get, "https://api.getdrip.com/v2/testpath").
-        to_return(status: 301, body: "", headers: {"Location" => "https://api.example.com/mytestpath"})
+        to_return(status: 301, body: "", headers: { "Location" => "https://api.example.com/mytestpath" })
       stub_request(:get, "https://api.example.com/mytestpath").
         to_return(status: 200, body: "mybody")
       response = @client.get("testpath")
@@ -138,9 +138,9 @@ class Drip::ClientTest < Drip::TestCase
 
     should "not follow too many redirects" do
       stub_request(:get, "https://api.getdrip.com/v2/testpath").
-        to_return(status: 301, body: "", headers: {"Location" => "https://api.example.com/mytestpath"})
+        to_return(status: 301, body: "", headers: { "Location" => "https://api.example.com/mytestpath" })
       stub_request(:get, "https://api.example.com/mytestpath").
-        to_return(status: 302, body: "", headers: {"Location" => "https://api.getdrip.com/v2/testpath"})
+        to_return(status: 302, body: "", headers: { "Location" => "https://api.getdrip.com/v2/testpath" })
       assert_raises(Drip::TooManyRedirectsError) { @client.get("testpath") }
       assert_requested :get, "https://api.getdrip.com/v2/testpath", times: 5
       assert_requested :get, "https://api.example.com/mytestpath", times: 5

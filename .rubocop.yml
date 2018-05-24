@@ -19,3 +19,6 @@ Style/BracesAroundHashParameters:
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
+
+Metrics/LineLength:
+  Enabled: false

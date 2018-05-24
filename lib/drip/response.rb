@@ -65,7 +65,7 @@ module Drip
 
     def member_map
       @member_map ||= {}.tap do |map|
-        members.each { |key, value| map[key.to_sym] = key }
+        members.each { |key, _value| map[key.to_sym] = key }
       end
     end
   end
