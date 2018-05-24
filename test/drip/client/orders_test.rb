@@ -9,17 +9,17 @@ class Drip::Client::OrdersTest < Drip::TestCase
     setup do
       @email = "drippy@drip.com"
       @options = {
-        "email": @email,
-        "provider": "shopify",
-        "upstream_id": "abcdef",
-        "amount": 4900,
-        "tax": 100,
-        "fees": 0,
-        "discount": 0,
-        "currency_code": "USD",
-        "properties": {
-          "size": "medium",
-          "color": "red"
+        "email" => @email,
+        "provider" => "shopify",
+        "upstream_id" => "abcdef",
+        "amount" => 4900,
+        "tax" => 100,
+        "fees" => 0,
+        "discount" => 0,
+        "currency_code" => "USD",
+        "properties" => {
+          "size" => "medium",
+          "color" => "red"
         }
       }
       @payload = { "orders" => [@options] }.to_json
@@ -40,31 +40,31 @@ class Drip::Client::OrdersTest < Drip::TestCase
     setup do
       @orders = [
         {
-          "email": "drippy@drip.com",
-          "provider": "shopify",
-          "upstream_id": "abcdef",
-          "amount": 4900,
-          "tax": 100,
-          "fees": 0,
-          "discount": 0,
-          "currency_code": "USD",
-          "properties": {
-            "size": "medium",
-            "color": "red"
+          "email" => "drippy@drip.com",
+          "provider" => "shopify",
+          "upstream_id" => "abcdef",
+          "amount" => 4900,
+          "tax" => 100,
+          "fees" => 0,
+          "discount" => 0,
+          "currency_code" => "USD",
+          "properties" => {
+            "size" => "medium",
+            "color" => "red"
           }
         },
         {
-          "email": "dripster@drip.com",
-          "provider": "shopify",
-          "upstream_id": "abcdef",
-          "amount": 1500,
-          "tax": 10,
-          "fees": 0,
-          "discount": 0,
-          "currency_code": "SGD",
-          "properties": {
-            "size": "medium",
-            "color": "black"
+          "email" => "dripster@drip.com",
+          "provider" => "shopify",
+          "upstream_id" => "abcdef",
+          "amount" => 1500,
+          "tax" => 10,
+          "fees" => 0,
+          "discount" => 0,
+          "currency_code" => "SGD",
+          "properties" => {
+            "size" => "medium",
+            "color" => "black"
           }
         }
       ]
@@ -86,12 +86,12 @@ class Drip::Client::OrdersTest < Drip::TestCase
   context "#create_or_update_refund" do
     setup do
       @options = {
-        "provider": "shopify",
-        "order_upstream_id": "abcdef",
-        "amount": 4900,
-        "upstream_id": "tuvwx",
-        "note": "Incorrect size",
-        "processed_at": "2013-06-22T10:41:11Z"
+        "provider" => "shopify",
+        "order_upstream_id" => "abcdef",
+        "amount" => 4900,
+        "upstream_id" => "tuvwx",
+        "note" => "Incorrect size",
+        "processed_at" => "2013-06-22T10:41:11Z"
       }
 
       @payload = { "refunds" => [@options] }.to_json

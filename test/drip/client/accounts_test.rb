@@ -10,8 +10,8 @@ class Drip::Client::AccountsTest < Drip::TestCase
       @response_status = 200
       @response_body = "stub"
 
-    stub_request(:get, "https://api.getdrip.com/v2/accounts").
-      to_return(status: @response_status, body: @response_body, headers: {})
+      stub_request(:get, "https://api.getdrip.com/v2/accounts").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do

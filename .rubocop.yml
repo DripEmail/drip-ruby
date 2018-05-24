@@ -1,6 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
+  TargetRubyVersion: '2.1'
   Exclude:
     - 'test/fixtures/**/*'
 
@@ -15,3 +16,15 @@ Layout/DotPosition:
 
 Style/BracesAroundHashParameters:
   Enabled: false
+
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Metrics/LineLength:
+  Enabled: false
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: 'indented'
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: 'indented'

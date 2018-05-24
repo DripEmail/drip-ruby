@@ -27,12 +27,12 @@ module Drip
       # Public: Create or update a refund.
       #
       # options      - Required. A Hash of refund properties
-      #                 amount	            - Required. The amount of the refund.
+      #                 amount              - Required. The amount of the refund.
       #                 provider            - Required. The provider for the Order being refunded.
       #                 order_upstream_id   - Required. The upstream_id for the Order being refunded.
-      #                 upstream_id	        - The unique id of refund in the order management system.
-      #                 note	              - A note about the refund.
-      #                 processed_at        - The String time at which the refund was processed in 
+      #                 upstream_id         - The unique id of refund in the order management system.
+      #                 note                - A note about the refund.
+      #                 processed_at        - The String time at which the refund was processed in
       #                                       ISO-8601 format.
       #
       # Returns a Drip::Response.
