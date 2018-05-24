@@ -1,3 +1,4 @@
+require "drip/errors"
 require "drip/response"
 require "drip/client/accounts"
 require "drip/client/broadcasts"
@@ -14,8 +15,8 @@ require "drip/client/tags"
 require "drip/client/webhooks"
 require "drip/client/workflows"
 require "drip/client/workflow_triggers"
-require "faraday"
-require "faraday_middleware"
+require "net/http"
+require "uri"
 require "json"
 
 module Drip
@@ -36,6 +37,8 @@ module Drip
     include Workflows
     include WorkflowTriggers
 
+    REDIRECT_LIMIT = 10
+
     attr_accessor :access_token, :api_key, :account_id, :url_prefix
 
     def initialize(options = {})
@@ -55,30 +58,57 @@ module Drip
     end
 
     def get(url, options = {})
-      make_request(:get, url, options)
+      make_request(Net::HTTP::Get, make_uri(url), options)
     end
 
     def post(url, options = {})
-      make_request(:post, url, options)
+      make_request(Net::HTTP::Post, make_uri(url), options)
     end
 
     def put(url, options = {})
-      make_request(:put, url, options)
+      make_request(Net::HTTP::Put, make_uri(url), options)
     end
 
     def delete(url, options = {})
-      make_request(:delete, url, options)
+      make_request(Net::HTTP::Delete, make_uri(url), options)
     end
 
-    def make_request(verb, url, options)
-      build_response do
-        connection.send(verb) do |req|
-          req.url url
+  private
 
-          if verb == :get
-            req.params = options
+    def make_uri(path)
+      URI(url_prefix) + URI(path)
+    end
+
+    def make_request(verb_klass, uri, options, step = 0)
+      raise TooManyRedirectsError, 'too many HTTP redirects' if step >= REDIRECT_LIMIT
+
+      build_response do
+        Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+          if verb_klass.is_a? Net::HTTP::Get
+            uri.query = URI.encode_www_form(options)
+          end
+
+          request = verb_klass.new uri
+
+          unless verb_klass.is_a? Net::HTTP::Get
+            request.body = options.to_json
+          end
+
+          request['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
+          request['Content-Type'] = content_type
+          request['Accept'] = "*/*"
+
+          if access_token
+            request['Authorization'] = "Bearer #{access_token}"
           else
-            req.body = options.to_json
+            request.basic_auth api_key, ""
+          end
+
+          response = http.request request
+          if response.is_a?(Net::HTTPRedirection)
+            return make_request(verb_klass, URI(response["Location"]), options, step + 1)
+          else
+            response
           end
         end
       end
@@ -86,25 +116,7 @@ module Drip
 
     def build_response(&block)
       response = yield
-      Drip::Response.new(response.status, response.body)
-    end
-
-    def connection
-      @connection ||= Faraday.new do |f|
-        f.url_prefix = url_prefix
-        f.headers['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
-        f.headers['Content-Type'] = content_type
-        f.headers['Accept'] = "*/*"
-
-        if access_token
-          f.headers['Authorization'] = "Bearer #{access_token}"
-        else
-          f.basic_auth api_key, ""
-        end
-
-        f.response :json, content_type: /\bjson$/
-        f.adapter :net_http
-      end
+      Drip::Response.new(response.code.to_i, response.body)
     end
   end
 end

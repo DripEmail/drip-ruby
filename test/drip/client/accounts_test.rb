@@ -2,24 +2,16 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class Drip::Client::AccountsTest < Drip::TestCase
   def setup
-    @stubs = Faraday::Adapter::Test::Stubs.new
-
-    @connection = Faraday.new do |builder|
-      builder.adapter :test, @stubs
-    end
-
     @client = Drip::Client.new
-    @client.expects(:connection).at_least_once.returns(@connection)
   end
 
   context "#accounts" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.get "accounts" do
-        [@response_status, {}, @response_body]
-      end
+    stub_request(:get, "https://api.getdrip.com/v2/accounts").
+      to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
@@ -31,12 +23,11 @@ class Drip::Client::AccountsTest < Drip::TestCase
   context "#account" do
     setup do
       @response_status = 200
-      @response_body = stub
+      @response_body = "stub"
       @id = 9999999
 
-      @stubs.get "accounts/#{@id}" do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:get, "https://api.getdrip.com/v2/accounts/#{@id}").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do

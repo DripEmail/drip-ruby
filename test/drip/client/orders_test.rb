@@ -2,14 +2,7 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class Drip::Client::OrdersTest < Drip::TestCase
   def setup
-    @stubs = Faraday::Adapter::Test::Stubs.new
-
-    @connection = Faraday.new do |builder|
-      builder.adapter :test, @stubs
-    end
-
     @client = Drip::Client.new { |c| c.account_id = "12345" }
-    @client.expects(:connection).at_least_once.returns(@connection)
   end
 
   context "#create_or_update_order" do
@@ -31,11 +24,10 @@ class Drip::Client::OrdersTest < Drip::TestCase
       }
       @payload = { "orders" => [@options] }.to_json
       @response_status = 202
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/orders", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/orders").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the correct request" do
@@ -79,11 +71,10 @@ class Drip::Client::OrdersTest < Drip::TestCase
 
       @payload = { "batches" => [{ "orders" => @orders }] }.to_json
       @response_status = 202
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/orders/batches", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/orders/batches").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the correct request" do
@@ -105,11 +96,10 @@ class Drip::Client::OrdersTest < Drip::TestCase
 
       @payload = { "refunds" => [@options] }.to_json
       @response_status = 202
-      @response_body = stub
+      @response_body = "stub"
 
-      @stubs.post "12345/refunds", @payload do
-        [@response_status, {}, @response_body]
-      end
+      stub_request(:post, "https://api.getdrip.com/v2/12345/refunds").
+        to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the correct request" do
