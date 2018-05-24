@@ -22,3 +22,9 @@ Layout/AccessModifierIndentation:
 
 Metrics/LineLength:
   Enabled: false
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: 'indented'
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: 'indented'

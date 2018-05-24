@@ -19,7 +19,7 @@ module Drip
 
     def item_class
       @item_class ||= Drip::Resources.
-                      find_class(self.class.resource_name)
+        find_class(self.class.resource_name)
     end
 
     def parse_items
