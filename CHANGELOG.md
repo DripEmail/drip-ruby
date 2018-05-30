@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Your contribution here!
 
+### Added
+- [#43](https://github.com/DripEmail/drip-ruby/pull/43): Additional timeout parameters for client - [@tboyko](https://github.com/tboyko)
+
 ## [3.0.0] - 2018-05-29
 
 [3.0.0]: https://github.com/DripEmail/drip-ruby/compare/v2.0.0...v3.0.0
