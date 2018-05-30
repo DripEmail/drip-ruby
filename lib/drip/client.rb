@@ -37,13 +37,15 @@ module Drip
 
     REDIRECT_LIMIT = 10
 
-    attr_accessor :access_token, :api_key, :account_id, :url_prefix
+    attr_accessor :access_token, :api_key, :account_id, :url_prefix, :http_open_timeout, :http_timeout
 
     def initialize(options = {})
       @account_id = options[:account_id]
       @access_token = options[:access_token]
       @api_key = options[:api_key]
       @url_prefix = options[:url_prefix] || "https://api.getdrip.com/v2/"
+      @http_open_timeout = options[:http_open_timeout]
+      @http_timeout = options[:http_timeout]
       yield(self) if block_given?
     end
 
@@ -71,7 +73,7 @@ module Drip
       make_request(Net::HTTP::Delete, make_uri(url), options)
     end
 
-  private
+    private
 
     def make_uri(path)
       URI(url_prefix) + URI(path)
@@ -81,7 +83,7 @@ module Drip
       raise TooManyRedirectsError, 'too many HTTP redirects' if step >= REDIRECT_LIMIT
 
       build_response do
-        Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+        Net::HTTP.start(uri.host, uri.port, connection_options(uri.scheme)) do |http|
           if verb_klass.is_a? Net::HTTP::Get
             uri.query = URI.encode_www_form(options)
           end
@@ -115,6 +117,19 @@ module Drip
     def build_response(&block)
       response = yield
       Drip::Response.new(response.code.to_i, response.body)
+    end
+
+    def connection_options uri_scheme
+      options = { use_ssl: uri_scheme == "https" }
+
+      if @http_open_timeout
+        options[:open_timeout] = @http_open_timeout
+        options[:ssl_timeout] = @http_open_timeout
+      end
+
+      options[:read_timeout] = @http_timeout if @http_timeout
+
+      options
     end
   end
 end
