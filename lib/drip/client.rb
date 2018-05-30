@@ -73,7 +73,7 @@ module Drip
       make_request(Net::HTTP::Delete, make_uri(url), options)
     end
 
-    private
+  private
 
     def make_uri(path)
       URI(url_prefix) + URI(path)
@@ -119,7 +119,7 @@ module Drip
       Drip::Response.new(response.code.to_i, response.body)
     end
 
-    def connection_options uri_scheme
+    def connection_options(uri_scheme)
       options = { use_ssl: uri_scheme == "https" }
 
       if @http_open_timeout
