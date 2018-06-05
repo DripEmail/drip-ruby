@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Your contribution here!
 
+### Fixed
+- [#46](https://github.com/DripEmail/drip-ruby/pull/46): Fix verb class equality check - [@marcinbunsch](https://github.com/marcinbunsch)
+
 ### Added
 - [#43](https://github.com/DripEmail/drip-ruby/pull/43): Additional timeout parameters for client - [@tboyko](https://github.com/tboyko)
 
