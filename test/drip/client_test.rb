@@ -150,4 +150,34 @@ class Drip::ClientTest < Drip::TestCase
       assert_requested :get, "https://api.example.com/mytestpath", times: 5
     end
   end
+
+  context "given a get request" do
+    setup do
+      @client = Drip::Client.new
+      @response = mock
+      @response.stubs(:code).returns('200')
+      @response.stubs(:body).returns('mybody')
+
+      @http = mock
+      @http.expects(:request).returns(@response)
+
+      @request = mock
+      @request.stubs(:[]=)
+      @request.stubs(:basic_auth)
+    end
+
+    should "encode query and not set body" do
+      stub_request(:get, "https://api.getdrip.com/v2/testpath").
+        to_return(status: 200, body: "mybody")
+
+      Net::HTTP::Get.expects(:new).returns(@request)
+      Net::HTTP.expects(:start).yields(@http).returns(@response)
+
+      @request.expects(:body=).never
+      URI.expects(:encode_www_form).once
+
+      response = @client.get("testpath")
+      assert_equal "mybody", response.body
+    end
+  end
 end
