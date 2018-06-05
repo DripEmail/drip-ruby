@@ -84,13 +84,13 @@ module Drip
 
       build_response do
         Net::HTTP.start(uri.host, uri.port, connection_options(uri.scheme)) do |http|
-          if verb_klass.is_a? Net::HTTP::Get
+          if verb_klass == Net::HTTP::Get
             uri.query = URI.encode_www_form(options)
           end
 
           request = verb_klass.new uri
 
-          unless verb_klass.is_a? Net::HTTP::Get
+          unless verb_klass == Net::HTTP::Get
             request.body = options.to_json
           end
 
