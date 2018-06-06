@@ -103,6 +103,14 @@ class Drip::ClientTest < Drip::TestCase
       response = @client.subscriber('jdoe@example.com')
       assert_equal('randomid', response.subscribers.first.id)
     end
+
+    should "handle empty string" do
+      stub_request(:get, "https://api.getdrip.com/v2/12345/subscribers/jdoe%40example.com").
+        to_return(status: 200, body: "")
+
+      response = @client.subscriber('jdoe@example.com')
+      assert_nil(response.body)
+    end
   end
 
   context "given a different url prefix" do
