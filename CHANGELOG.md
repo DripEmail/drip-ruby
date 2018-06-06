@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Your contribution here!
 
+## [3.1.1] - 2018-06-06
+
+[3.1.1]: https://github.com/DripEmail/drip-ruby/compare/v3.1.0...v3.1.1
+
 ### Fixed
 
 - [#48](https://github.com/DripEmail/drip-ruby/issues/48): Repair json parsing to work correctly
