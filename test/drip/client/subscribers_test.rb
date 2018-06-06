@@ -8,14 +8,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
   context "#subscribers" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/subscribers").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.subscribers
     end
   end
@@ -24,14 +24,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @id = "derrick@getdrip.com"
       @response_status = 201
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.subscriber(@id)
     end
   end
@@ -59,14 +59,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       @payload = { "subscribers" => [@data.merge(email: @email)] }.to_json
 
       @response_status = 201
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_or_update_subscriber(@email, @data)
     end
   end
@@ -86,14 +86,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
 
       @payload = { "batches" => [{ "subscribers" => @subscribers }] }.to_json
       @response_status = 201
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/batches").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_or_update_subscribers(@subscribers)
     end
   end
@@ -131,14 +131,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       @payload = { "subscribers" => [@data.merge(email: @email)] }.to_json
 
       @response_status = 201
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/campaigns/#{@campaign_id}/subscribers").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.subscribe(@email, @campaign_id, @data)
     end
   end
@@ -149,14 +149,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         @id = "derrick@getdrip.com"
 
         @response_status = 201
-        @response_body = "stub"
+        @response_body = "{}"
 
         stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}/remove").
           to_return(status: @response_status, body: @response_body, headers: {})
       end
 
       should "send the right request" do
-        expected = Drip::Response.new(@response_status, @response_body)
+        expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
         assert_equal expected, @client.unsubscribe(@id)
       end
     end
@@ -167,14 +167,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
         @campaign = "12345"
 
         @response_status = 201
-        @response_body = "stub"
+        @response_body = "{}"
 
         stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}/remove?campaign_id=#{@campaign}").
           to_return(status: @response_status, body: @response_body, headers: {})
       end
 
       should "send the right request" do
-        expected = Drip::Response.new(@response_status, @response_body)
+        expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
         assert_equal expected, @client.unsubscribe(@id, campaign_id: @campaign)
       end
     end
@@ -184,14 +184,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     setup do
       @id = "derrick@getdrip.com"
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}/unsubscribe_all").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.unsubscribe_from_all(@id)
     end
   end
@@ -203,14 +203,14 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       @payload = { "tags" => [{ "email" => @email, "tag" => @tag }] }.to_json
 
       @response_status = 201
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/tags").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.apply_tag(@email, @tag)
     end
   end

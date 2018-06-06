@@ -116,7 +116,9 @@ module Drip
 
     def build_response(&block)
       response = yield
-      Drip::Response.new(response.code.to_i, response.body)
+      Drip::Response.new(response.code.to_i, response.body || response.body == "" ? JSON.parse(response.body) : nil)
+    rescue JSON::ParserError
+      Drip::Response.new(response.code.to_i, nil)
     end
 
     def connection_options(uri_scheme)

@@ -8,7 +8,7 @@ class Drip::Client::CampaignSubscriptionsTest < Drip::TestCase
   context "#campaign_subscriptions" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
       @subscriber_id = "abc123"
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/subscribers/#{@subscriber_id}/campaign_subscriptions").
@@ -16,7 +16,7 @@ class Drip::Client::CampaignSubscriptionsTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.campaign_subscriptions(@subscriber_id)
     end
   end

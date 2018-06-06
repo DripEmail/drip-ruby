@@ -8,14 +8,14 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
   context "#workflows" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/workflows").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.workflows
     end
   end
@@ -23,7 +23,7 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
   context "#workflow" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
       @id = 1234
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/workflows/#{@id}").
@@ -31,7 +31,7 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.workflow(@id)
     end
   end
@@ -93,7 +93,7 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
   context "#remove_subscriber_workflow" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
       @id = 1234
       @email = "someone@example.com"
 
@@ -102,7 +102,7 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.remove_subscriber_workflow(@id, @email)
     end
   end

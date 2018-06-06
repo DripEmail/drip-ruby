@@ -8,14 +8,14 @@ class Drip::Client::AccountsTest < Drip::TestCase
   context "#accounts" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:get, "https://api.getdrip.com/v2/accounts").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.accounts
     end
   end
@@ -23,7 +23,7 @@ class Drip::Client::AccountsTest < Drip::TestCase
   context "#account" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
       @id = 9999999
 
       stub_request(:get, "https://api.getdrip.com/v2/accounts/#{@id}").
@@ -31,7 +31,7 @@ class Drip::Client::AccountsTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.account(@id)
     end
   end
