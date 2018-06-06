@@ -23,14 +23,14 @@ class Drip::Client::EventsTest < Drip::TestCase
         }.to_json
 
         @response_status = 201
-        @response_body = "stub"
+        @response_body = "{}"
 
         stub_request(:post, "https://api.getdrip.com/v2/12345/events").
           to_return(status: @response_status, body: @response_body, headers: {})
       end
 
       should "send the right request" do
-        expected = Drip::Response.new(@response_status, @response_body)
+        expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
         assert_equal expected, @client.track_event(@email, @action, @properties)
       end
     end
@@ -50,14 +50,14 @@ class Drip::Client::EventsTest < Drip::TestCase
         }.to_json
 
         @response_status = 201
-        @response_body = "stub"
+        @response_body = "{}"
 
         stub_request(:post, "https://api.getdrip.com/v2/12345/events").
           to_return(status: @response_status, body: @response_body, headers: {})
       end
 
       should "send the right request" do
-        expected = Drip::Response.new(@response_status, @response_body)
+        expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
         assert_equal expected, @client.track_event(@email, @action, @properties, @options)
       end
     end
@@ -78,14 +78,14 @@ class Drip::Client::EventsTest < Drip::TestCase
 
       @payload = { "batches" => [{ "events" => @events }] }.to_json
       @response_status = 201
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/events/batches").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.track_events(@events)
     end
   end
@@ -93,14 +93,14 @@ class Drip::Client::EventsTest < Drip::TestCase
   context "#event_actions" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/event_actions").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.event_actions
     end
   end

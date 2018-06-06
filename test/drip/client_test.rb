@@ -88,6 +88,23 @@ class Drip::ClientTest < Drip::TestCase
     end
   end
 
+  context "given a basic request" do
+    setup do
+      @client = Drip::Client.new do |config|
+        config.api_key = "Hello world"
+        config.account_id = 12345
+      end
+    end
+
+    should "return objects" do
+      stub_request(:get, "https://api.getdrip.com/v2/12345/subscribers/jdoe%40example.com").
+        to_return(status: 200, body: "{\"links\":{\"subscribers.account\":\"https://api.getdrip.com/v2/accounts/{subscribers.account}\"},\"subscribers\":[{\"id\":\"randomid\",\"href\":\"https://api.getdrip.com/v2/1234/subscribers/randomid\",\"status\":\"active\",\"email\":\"jdoe@example.com\",\"time_zone\":null,\"utc_offset\":0,\"visitor_uuid\":null,\"custom_fields\":{\"first_name\":\"John\"},\"tags\":[\"customer\"],\"created_at\":\"2018-06-04T21:29:49Z\",\"ip_address\":null,\"user_agent\":null,\"lifetime_value\":null,\"original_referrer\":null,\"landing_url\":null,\"prospect\":null,\"base_lead_score\":null,\"eu_consent\":\"unknown\",\"lead_score\":null,\"user_id\":\"123\",\"links\":{\"account\":\"1234\"}}]}")
+
+      response = @client.subscriber('jdoe@example.com')
+      assert_equal('randomid', response.subscribers.first.id)
+    end
+  end
+
   context "given a different url prefix" do
     setup do
       @key = "aaaa"
@@ -133,11 +150,11 @@ class Drip::ClientTest < Drip::TestCase
       stub_request(:get, "https://api.getdrip.com/v2/testpath").
         to_return(status: 301, body: "", headers: { "Location" => "https://api.example.com/mytestpath" })
       stub_request(:get, "https://api.example.com/mytestpath").
-        to_return(status: 200, body: "mybody")
+        to_return(status: 200, body: "{}")
       response = @client.get("testpath")
       assert_requested :get, "https://api.getdrip.com/v2/testpath"
       assert_requested :get, "https://api.example.com/mytestpath"
-      assert_equal "mybody", response.body
+      assert_equal({}, response.body)
     end
 
     should "not follow too many redirects" do
@@ -156,7 +173,7 @@ class Drip::ClientTest < Drip::TestCase
       @client = Drip::Client.new
       @response = mock
       @response.stubs(:code).returns('200')
-      @response.stubs(:body).returns('mybody')
+      @response.stubs(:body).returns('{}')
 
       @http = mock
       @http.expects(:request).returns(@response)
@@ -167,9 +184,6 @@ class Drip::ClientTest < Drip::TestCase
     end
 
     should "encode query and not set body" do
-      stub_request(:get, "https://api.getdrip.com/v2/testpath").
-        to_return(status: 200, body: "mybody")
-
       Net::HTTP::Get.expects(:new).returns(@request)
       Net::HTTP.expects(:start).yields(@http).returns(@response)
 
@@ -177,7 +191,7 @@ class Drip::ClientTest < Drip::TestCase
       URI.expects(:encode_www_form).once
 
       response = @client.get("testpath")
-      assert_equal "mybody", response.body
+      assert_equal({}, response.body)
     end
   end
 end

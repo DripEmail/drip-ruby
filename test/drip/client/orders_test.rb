@@ -24,14 +24,14 @@ class Drip::Client::OrdersTest < Drip::TestCase
       }
       @payload = { "orders" => [@options] }.to_json
       @response_status = 202
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/orders").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the correct request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_or_update_order(@email, @options)
     end
   end
@@ -71,14 +71,14 @@ class Drip::Client::OrdersTest < Drip::TestCase
 
       @payload = { "batches" => [{ "orders" => @orders }] }.to_json
       @response_status = 202
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/orders/batches").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the correct request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_or_update_orders(@orders)
     end
   end
@@ -96,14 +96,14 @@ class Drip::Client::OrdersTest < Drip::TestCase
 
       @payload = { "refunds" => [@options] }.to_json
       @response_status = 202
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/refunds").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the correct request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_or_update_refund(@options)
     end
   end

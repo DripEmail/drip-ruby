@@ -8,14 +8,14 @@ class Drip::Client::WebhooksTest < Drip::TestCase
   context "#webhooks" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/webhooks").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.webhooks
     end
   end
@@ -23,7 +23,7 @@ class Drip::Client::WebhooksTest < Drip::TestCase
   context "#webhook" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
       @id = 1234
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/webhooks/#{@id}").
@@ -31,7 +31,7 @@ class Drip::Client::WebhooksTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.webhook(@id)
     end
   end
@@ -50,14 +50,14 @@ class Drip::Client::WebhooksTest < Drip::TestCase
 
       @payload = { "webhooks" => [@options] }.to_json
       @response_status = 201
-      @response_body = "stub"
+      @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v2/12345/webhooks").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_webhook(@post_url, @include_received_email, @events)
     end
   end
@@ -65,7 +65,7 @@ class Drip::Client::WebhooksTest < Drip::TestCase
   context "#delete_webhook" do
     setup do
       @response_status = 200
-      @response_body = "stub"
+      @response_body = "{}"
       @id = 1234
 
       stub_request(:delete, "https://api.getdrip.com/v2/12345/webhooks/#{@id}").
@@ -73,7 +73,7 @@ class Drip::Client::WebhooksTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, @response_body)
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.delete_webhook(@id)
     end
   end
