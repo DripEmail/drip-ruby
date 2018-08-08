@@ -6,8 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[master]: https://github.com/DripEmail/drip-ruby/compare/v3.0.0...HEAD
+[master]: https://github.com/DripEmail/drip-ruby/compare/v3.1.1...HEAD
 
+- Allow `#create_or_update_subscriber` to work with Drip id. Fixes [#50](https://github.com/DripEmail/drip-ruby/issues/50)
 - Your contribution here!
 
 ## [3.1.1] - 2018-06-06

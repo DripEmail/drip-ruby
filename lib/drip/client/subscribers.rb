@@ -31,8 +31,10 @@ module Drip
 
       # Public: Create or update a subscriber.
       #
-      # email   - Required. The String subscriber email address.
+      # email   - Optional. The String subscriber email address. (Deprecated in favor of a hash argument)
       # options - A Hash of options.
+      #           - email         - Required (or id). Lookup the subscriber by email.
+      #           - id            - Required (or email). Lookup the subscriber by Drip ID.
       #           - new_email     - Optional. A new email address for the subscriber.
       #                             If provided and a subscriber with the email above
       #                             does not exist, this address will be used to
@@ -44,8 +46,11 @@ module Drip
       #
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#create_or_update_subscriber
-      def create_or_update_subscriber(email, options = {})
-        data = options.merge(email: email)
+      def create_or_update_subscriber(*args)
+        data = {}
+        data[:email] = args[0] if args[0].is_a? String
+        data.merge!(args.last) if args.last.is_a? Hash
+        raise ArgumentError, 'email: or id: parameter required' if !data.key?(:email) && !data.key?(:id)
         post "#{account_id}/subscribers", generate_resource("subscribers", data)
       end
 
