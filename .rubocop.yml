@@ -28,3 +28,7 @@ Layout/MultilineOperationIndentation:
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: 'indented'
+
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*'
