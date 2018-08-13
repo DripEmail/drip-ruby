@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [master]: https://github.com/DripEmail/drip-ruby/compare/v3.1.1...HEAD
 
 - Allow `#create_or_update_subscriber` to work with Drip id. Fixes [#50](https://github.com/DripEmail/drip-ruby/issues/50)
+- [#52](https://github.com/DripEmail/drip-ruby/pull/52): Fix `#custom_fields` to accept the API response without error. Fixes [#30](https://github.com/DripEmail/drip-ruby/issues/30)
 - Your contribution here!
 
 ## [3.1.1] - 2018-06-06
