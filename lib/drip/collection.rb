@@ -24,7 +24,7 @@ module Drip
 
     def parse_items
       raw_items.map do |raw_item|
-        item_class.new(raw_item)
+        raw_item.is_a?(String) ? raw_item : item_class.new(raw_item)
       end
     end
 
