@@ -21,7 +21,7 @@ class Drip::ClientTest < Drip::TestCase
 
     should "have default url prefix" do
       client = Drip::Client.new
-      assert_equal "https://api.getdrip.com/v2/", client.url_prefix
+      assert_equal "https://api.getdrip.com/", client.url_prefix
     end
 
     should "accept access token" do
@@ -81,7 +81,7 @@ class Drip::ClientTest < Drip::TestCase
       stub_request(:get, "https://api.getdrip.com/v2/testpath").
         to_return(status: 200, body: "", headers: {})
 
-      @client.get("testpath")
+      @client.get("v2/testpath")
 
       header = "Basic #{Base64.encode64(@key + ':')}".strip
       assert_requested :get, "https://api.getdrip.com/v2/testpath", headers: { 'Authorization' => header }
@@ -123,12 +123,14 @@ class Drip::ClientTest < Drip::TestCase
       end
     end
 
-    should "connect to alternate prefix" do
-      stub_request(:get, "https://api.example.com/v9001/testpath").
+    should "connect to alternate prefix with prepended v2" do
+      stub_request(:get, "https://api.example.com/v9001/v2/testpath").
         to_return(status: 200, body: "", headers: {})
-      @client.get("testpath")
+      assert_output(nil, /\A\[DEPRECATED\] Automatically prepended path/) do
+        @client.get("testpath")
+      end
 
-      assert_requested :get, "https://api.example.com/v9001/testpath"
+      assert_requested :get, "https://api.example.com/v9001/v2/testpath"
     end
   end
 
@@ -143,7 +145,7 @@ class Drip::ClientTest < Drip::TestCase
     should "use Bearer token authentication" do
       stub_request(:get, "https://api.getdrip.com/v2/testpath").
         to_return(status: 200, body: "", headers: {})
-      @client.get("testpath")
+      @client.get("v2/testpath")
       header = "Bearer #{@key}"
       assert_requested :get, "https://api.getdrip.com/v2/testpath", headers: { 'Authorization' => header }
     end
@@ -159,7 +161,7 @@ class Drip::ClientTest < Drip::TestCase
         to_return(status: 301, body: "", headers: { "Location" => "https://api.example.com/mytestpath" })
       stub_request(:get, "https://api.example.com/mytestpath").
         to_return(status: 200, body: "{}")
-      response = @client.get("testpath")
+      response = @client.get("v2/testpath")
       assert_requested :get, "https://api.getdrip.com/v2/testpath"
       assert_requested :get, "https://api.example.com/mytestpath"
       assert_equal({}, response.body)
@@ -170,7 +172,7 @@ class Drip::ClientTest < Drip::TestCase
         to_return(status: 301, body: "", headers: { "Location" => "https://api.example.com/mytestpath" })
       stub_request(:get, "https://api.example.com/mytestpath").
         to_return(status: 302, body: "", headers: { "Location" => "https://api.getdrip.com/v2/testpath" })
-      assert_raises(Drip::TooManyRedirectsError) { @client.get("testpath") }
+      assert_raises(Drip::TooManyRedirectsError) { @client.get("v2/testpath") }
       assert_requested :get, "https://api.getdrip.com/v2/testpath", times: 5
       assert_requested :get, "https://api.example.com/mytestpath", times: 5
     end
@@ -198,7 +200,7 @@ class Drip::ClientTest < Drip::TestCase
       @request.expects(:body=).never
       URI.expects(:encode_www_form).once
 
-      response = @client.get("testpath")
+      response = @client.get("v2/testpath")
       assert_equal({}, response.body)
     end
   end

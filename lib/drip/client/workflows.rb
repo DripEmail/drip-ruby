@@ -12,7 +12,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def workflows(options = {})
-        get "#{account_id}/workflows", options
+        get "v2/#{account_id}/workflows", options
       end
 
       # Public: Fetch a workflow.
@@ -21,7 +21,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def workflow(id)
-        get "#{account_id}/workflows/#{id}"
+        get "v2/#{account_id}/workflows/#{id}"
       end
 
       # Public: Activate a workflow.
@@ -30,7 +30,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def activate_workflow(id)
-        post "#{account_id}/workflows/#{id}/activate"
+        post "v2/#{account_id}/workflows/#{id}/activate"
       end
 
       # Public: Pause a workflow.
@@ -39,7 +39,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def pause_workflow(id)
-        post "#{account_id}/workflows/#{id}/pause"
+        post "v2/#{account_id}/workflows/#{id}/pause"
       end
 
       # Public: Start someone on a workflow.
@@ -63,7 +63,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def start_subscriber_workflow(id, options = {})
-        post "#{account_id}/workflows/#{id}/subscribers", generate_resource("subscribers", options)
+        post "v2/#{account_id}/workflows/#{id}/subscribers", generate_resource("subscribers", options)
       end
 
       # Public: Remove someone from a workflow.
@@ -73,7 +73,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def remove_subscriber_workflow(workflow_id, id_or_email)
-        delete "#{account_id}/workflows/#{workflow_id}/subscribers/#{CGI.escape id_or_email}"
+        delete "v2/#{account_id}/workflows/#{workflow_id}/subscribers/#{CGI.escape id_or_email}"
       end
     end
   end

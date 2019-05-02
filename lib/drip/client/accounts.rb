@@ -6,7 +6,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#accounts
       def accounts
-        get "accounts"
+        get "v2/accounts"
       end
 
       # Public: Fetch an account.
@@ -16,7 +16,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#accounts
       def account(id)
-        get "accounts/#{id}"
+        get "v2/accounts/#{id}"
       end
     end
   end

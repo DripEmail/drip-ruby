@@ -6,7 +6,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#webhooks
       def webhooks
-        get "#{account_id}/webhooks"
+        get "v2/#{account_id}/webhooks"
       end
 
       # Public: Fetch a webhook
@@ -15,7 +15,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#webhooks
       def webhook(id)
-        get "#{account_id}/webhooks/#{id}"
+        get "v2/#{account_id}/webhooks/#{id}"
       end
 
       # Public: Create a webhook.
@@ -34,7 +34,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches
       def create_webhook(post_url, include_received_email, events)
         include_received_email = include_received_email ? true : false
-        url = "#{account_id}/webhooks"
+        url = "v2/#{account_id}/webhooks"
 
         post url, generate_resource(
           "webhooks",
@@ -52,7 +52,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#webhooks
       def delete_webhook(id)
-        delete "#{account_id}/webhooks/#{id}"
+        delete "v2/#{account_id}/webhooks/#{id}"
       end
     end
   end

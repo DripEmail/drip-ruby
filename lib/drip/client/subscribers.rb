@@ -16,7 +16,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#list_subscribers
       def subscribers(options = {})
-        get "#{account_id}/subscribers", options
+        get "v2/#{account_id}/subscribers", options
       end
 
       # Public: Fetch a subscriber.
@@ -26,7 +26,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#fetch_subscriber
       def subscriber(id_or_email)
-        get "#{account_id}/subscribers/#{CGI.escape id_or_email}"
+        get "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}"
       end
 
       # Public: Create or update a subscriber.
@@ -51,7 +51,7 @@ module Drip
         data[:email] = args[0] if args[0].is_a? String
         data.merge!(args.last) if args.last.is_a? Hash
         raise ArgumentError, 'email: or id: parameter required' if !data.key?(:email) && !data.key?(:id)
-        post "#{account_id}/subscribers", generate_resource("subscribers", data)
+        post "v2/#{account_id}/subscribers", generate_resource("subscribers", data)
       end
 
       # Public: Create or update a collection of subscribers.
@@ -70,7 +70,7 @@ module Drip
       # Returns a Drip::Response
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches
       def create_or_update_subscribers(subscribers)
-        url = "#{account_id}/subscribers/batches"
+        url = "v2/#{account_id}/subscribers/batches"
         post url, generate_resource("batches", { "subscribers" => subscribers })
       end
 
@@ -82,7 +82,7 @@ module Drip
       # Returns a Drip::Response
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches
       def unsubscribe_subscribers(subscribers)
-        url = "#{account_id}/unsubscribes/batches"
+        url = "v2/#{account_id}/unsubscribes/batches"
         post url, generate_resource("batches", { "subscribers" => subscribers })
       end
 
@@ -96,7 +96,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#unsubscribe
       def unsubscribe(id_or_email, options = {})
-        url = "#{account_id}/subscribers/#{CGI.escape id_or_email}/remove"
+        url = "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}/remove"
         url += options[:campaign_id] ? "?campaign_id=#{options[:campaign_id]}" : ""
         post url
       end
@@ -126,7 +126,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#subscribe
       def subscribe(email, campaign_id, options = {})
         data = options.merge("email" => email)
-        url = "#{account_id}/campaigns/#{campaign_id}/subscribers"
+        url = "v2/#{account_id}/campaigns/#{campaign_id}/subscribers"
         post url, generate_resource("subscribers", data)
       end
 
@@ -137,7 +137,7 @@ module Drip
       # Returns No Content.
       # See https://www.getdrip.com/docs/rest-api#fdelete_subscriber
       def delete_subscriber(id_or_email)
-        delete "#{account_id}/subscribers/#{CGI.escape id_or_email}"
+        delete "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}"
       end
 
       # Public: Unsubscribe a subscriber from all mailings.
@@ -147,7 +147,7 @@ module Drip
       # Returns No Content.
       # See https://www.getdrip.com/docs/rest-api#fdelete_subscriber
       def unsubscribe_from_all(id_or_email)
-        post "#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe_all"
+        post "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe_all"
       end
     end
   end
