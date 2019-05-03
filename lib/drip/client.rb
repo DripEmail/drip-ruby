@@ -12,6 +12,7 @@ require "drip/client/events"
 require "drip/client/forms"
 require "drip/client/http_client"
 require "drip/client/orders"
+require "drip/client/shopper_activity"
 require "drip/client/subscribers"
 require "drip/client/tags"
 require "drip/client/webhooks"
@@ -32,6 +33,7 @@ module Drip
     include Events
     include Forms
     include Orders
+    include ShopperActivity
     include Subscribers
     include Tags
     include Webhooks
