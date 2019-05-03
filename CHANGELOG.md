@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [master]: https://github.com/DripEmail/drip-ruby/compare/v3.2.0...HEAD
 
+- Drop support for Ruby 2.1.
+
 - Your contribution here!
 
 ## [3.2.0] - 2018-08-15
