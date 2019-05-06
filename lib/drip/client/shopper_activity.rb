@@ -32,6 +32,23 @@ module Drip
         data[:occurred_at] = Time.now.iso8601 if !data.key?(:occurred_at)
         post "v3/#{account_id}/shopper_activity/order", data
       end
+
+      # Public: Create a product activity event.
+      #
+      # options    - Required. A Hash of additional product options. Refer to the
+      #                       Drip API docs for the required schema.
+      #
+      # Returns a Drip::Response.
+      # See https://developer.drip.com/#product-activity
+      def create_product_activity_event(data = {})
+        raise ArgumentError, 'provider: parameter required' if !data.key?(:provider)
+        raise ArgumentError, 'action: parameter required' if !data.key?(:action)
+        raise ArgumentError, 'product_id: parameter required' if !data.key?(:product_id)
+        raise ArgumentError, 'name: parameter required' if !data.key?(:name)
+        raise ArgumentError, 'price: parameter required' if !data.key?(:price)
+        data[:occurred_at] = Time.now.iso8601 if !data.key?(:occurred_at)
+        post "v3/#{account_id}/shopper_activity/product", data
+      end
     end
   end
 end
