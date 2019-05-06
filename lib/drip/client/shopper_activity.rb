@@ -11,7 +11,7 @@ module Drip
       def create_cart_activity_event(data = {})
         raise ArgumentError, 'email: or person_id: parameter required' if !data.key?(:email) && !data.key?(:person_id)
 
-        %i[provider action cart_id].each do |key|
+        %i[provider action cart_id cart_url].each do |key|
           raise ArgumentError, "#{key}: parameter required" unless data.key?(key)
         end
 
