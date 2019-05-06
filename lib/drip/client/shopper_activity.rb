@@ -9,7 +9,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#cart-activity
       def create_cart_activity_event(data = {})
-        raise ArgumentError, 'email: or id: parameter required' if !data.key?(:email) && !data.key?(:person_id)
+        raise ArgumentError, 'email: or person_id: parameter required' if !data.key?(:email) && !data.key?(:person_id)
 
         %i[provider action cart_id].each do |key|
           raise ArgumentError, "#{key}: parameter required" unless data.key?(key)
@@ -27,7 +27,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#order-activity
       def create_order_activity_event(data = {})
-        raise ArgumentError, 'email: or id: parameter required' if !data.key?(:email) && !data.key?(:person_id)
+        raise ArgumentError, 'email: or person_id: parameter required' if !data.key?(:email) && !data.key?(:person_id)
 
         %i[provider action order_id].each do |key|
           raise ArgumentError, "#{key}: parameter required" unless data.key?(key)
