@@ -43,7 +43,7 @@ module Drip
       @account_id = options[:account_id]
       @access_token = options[:access_token]
       @api_key = options[:api_key]
-      @url_prefix = options[:url_prefix] || "https://api.getdrip.com/v2/"
+      @url_prefix = options[:url_prefix] || "https://api.getdrip.com/"
       @http_open_timeout = options[:http_open_timeout]
       @http_timeout = options[:http_timeout]
       yield(self) if block_given?
@@ -76,6 +76,10 @@ module Drip
   private
 
     def make_uri(path)
+      if !path.start_with?("v2/") && !path.start_with?("v3/")
+        warn "[DEPRECATED] Automatically prepended path with 'v2/'"
+        path = "v2/#{path}"
+      end
       URI(url_prefix) + URI(path)
     end
 

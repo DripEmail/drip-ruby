@@ -8,7 +8,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#tags
       def tags
-        get "#{account_id}/tags"
+        get "v2/#{account_id}/tags"
       end
 
       # Public: Apply a tag to a subscriber.
@@ -20,7 +20,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#apply_tag
       def apply_tag(email, tag)
         data = { "email" => email, "tag" => tag }
-        post "#{account_id}/tags", generate_resource("tags", data)
+        post "v2/#{account_id}/tags", generate_resource("tags", data)
       end
 
       # Public: Remove a tag from a subscriber.
@@ -31,7 +31,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#remove_tag
       def remove_tag(email, tag)
-        delete "#{account_id}/subscribers/#{CGI.escape email}/tags/#{CGI.escape tag}"
+        delete "v2/#{account_id}/subscribers/#{CGI.escape email}/tags/#{CGI.escape tag}"
       end
     end
   end
