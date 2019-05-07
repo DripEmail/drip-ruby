@@ -13,6 +13,7 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
         action: "created",
         provider: "shopify",
         cart_id: "abcdef",
+        cart_url: "https://www.example.com/mythingy",
         amount: 4900,
         tax: 100,
         fees: 0,
@@ -33,6 +34,11 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     should "send the right request" do
       expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_cart_activity_event(@options)
+    end
+
+    should "return error when missing fields" do
+      @options.delete(:cart_id)
+      assert_raises(ArgumentError) { @client.create_cart_activity_event(@options) }
     end
   end
 
@@ -64,6 +70,11 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     should "send the right request" do
       expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_order_activity_event(@options)
+    end
+
+    should "return error when missing fields" do
+      @options.delete(:order_id)
+      assert_raises(ArgumentError) { @client.create_order_activity_event(@options) }
     end
   end
 
@@ -97,6 +108,11 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     should "send the right request" do
       expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.create_product_activity_event(@options)
+    end
+
+    should "return error when missing fields" do
+      @options.delete(:product_id)
+      assert_raises(ArgumentError) { @client.create_product_activity_event(@options) }
     end
   end
 end
