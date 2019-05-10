@@ -55,6 +55,9 @@ module Drip
     JSON_API_CONTENT_TYPE = "application/vnd.api+json".freeze
     private_constant :JSON_API_CONTENT_TYPE
 
+    JSON_CONTENT_TYPE = "application/json".freeze
+    private_constant :JSON_CONTENT_TYPE
+
     def initialize(options = {})
       @config = Drip::Client::Configuration.new(options)
       yield(@config) if block_given?
@@ -81,6 +84,10 @@ module Drip
 
     def make_json_api_request(http_verb, path, options = {})
       make_request Drip::Request.new(http_verb, make_uri(path), options, JSON_API_CONTENT_TYPE)
+    end
+
+    def make_v3_request(http_verb, path, options = {})
+      make_request Drip::Request.new(http_verb, make_uri(path), options, JSON_CONTENT_TYPE)
     end
 
     def private_generate_resource(key, *args)

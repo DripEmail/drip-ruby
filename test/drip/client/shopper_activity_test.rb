@@ -28,6 +28,7 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
       @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v3/12345/shopper_activity/cart").
+        with(headers: { "Content-Type" => "application/json" }).
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
@@ -64,6 +65,7 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
       @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v3/12345/shopper_activity/order").
+        with(headers: { "Content-Type" => "application/json" }).
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
@@ -102,6 +104,7 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
       @response_body = "{}"
 
       stub_request(:post, "https://api.getdrip.com/v3/12345/shopper_activity/product").
+        with(headers: { "Content-Type" => "application/json" }).
         to_return(status: @response_status, body: @response_body, headers: {})
     end
 
