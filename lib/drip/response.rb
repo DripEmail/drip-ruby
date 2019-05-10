@@ -48,8 +48,11 @@ module Drip
       {}.tap do |members|
         if body.is_a?(Hash)
           body.each do |key, value|
-            klass = if value.is_a?(Array)
+            klass = case value
+                    when Array
                       Drip::Collections.find_class(key)
+                    when String
+                      String
                     else
                       Drip::Resources.find_class(key)
                     end
