@@ -1,4 +1,5 @@
 require "drip/errors"
+require "drip/request"
 require "drip/response"
 require "drip/client/accounts"
 require "drip/client/broadcasts"

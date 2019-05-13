@@ -1,3 +1,5 @@
+require "net/http"
+
 module Drip
   class Request
     attr_reader :http_verb, :url, :options, :content_type
