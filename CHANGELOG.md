@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `Drip::Client#content_type` is deprecated and will be removed in a future version. It is no longer used internally, effective immediately.
 - When using the block form of parameter initialization, a configuration object is provided instead of the client itself.
 - Calling configuration setters on `Drip::Client` is deprecated.
+- `Drip::Client::REDIRECT_LIMIT` constant is now private. This is supposed to be an implementation detail and shouldn't leak.
 
 ### Removed
 - Drop support for Ruby 2.1.
