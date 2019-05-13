@@ -37,6 +37,7 @@ module Drip
     include WorkflowTriggers
 
     REDIRECT_LIMIT = 10
+    private_constant :REDIRECT_LIMIT
 
     Drip::Client::Configuration::CONFIGURATION_FIELDS.each do |config_key|
       define_method(config_key) do
@@ -68,20 +69,11 @@ module Drip
       JSON_API_CONTENT_TYPE
     end
 
-    def get(url, options = {})
-      make_request(Net::HTTP::Get, make_uri(url), options)
-    end
-
-    def post(url, options = {})
-      make_request(Net::HTTP::Post, make_uri(url), options)
-    end
-
-    def put(url, options = {})
-      make_request(Net::HTTP::Put, make_uri(url), options)
-    end
-
-    def delete(url, options = {})
-      make_request(Net::HTTP::Delete, make_uri(url), options)
+    Drip::Request::VERB_CLASS_MAPPING.keys.each do |verb|
+      define_method(verb) do |url, options = {}|
+        warn "[DEPRECATED] Drip::Client##{verb} please use the API endpoint specific methods"
+        make_request Drip::Request.new(verb, make_uri(url), options, content_type)
+      end
     end
 
   private
@@ -99,39 +91,44 @@ module Drip
       URI(@config.url_prefix) + URI(path)
     end
 
-    def make_request(verb_klass, uri, options, step = 0)
+    def make_request(drip_request, redirected_url: nil, step: 0)
       raise TooManyRedirectsError, 'too many HTTP redirects' if step >= REDIRECT_LIMIT
+
+      uri = redirected_url || drip_request.url.tap do |orig_url|
+        next if drip_request.http_verb != :get
+
+        orig_url.query = URI.encode_www_form(drip_request.options)
+      end
 
       build_response do
         Net::HTTP.start(uri.host, uri.port, connection_options(uri.scheme)) do |http|
-          if verb_klass == Net::HTTP::Get
-            uri.query = URI.encode_www_form(options)
-          end
+          request = drip_request.verb_klass.new uri
+          request.body = drip_request.body
 
-          request = verb_klass.new uri
-
-          unless verb_klass == Net::HTTP::Get
-            request.body = options.to_json
-          end
-
-          request['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
-          request['Content-Type'] = JSON_API_CONTENT_TYPE
-          request['Accept'] = "*/*"
-
-          if @config.access_token
-            request['Authorization'] = "Bearer #{@config.access_token}"
-          else
-            request.basic_auth @config.api_key, ""
-          end
+          add_standard_headers(request)
+          request['Content-Type'] = drip_request.content_type
 
           response = http.request request
           if response.is_a?(Net::HTTPRedirection)
-            return make_request(verb_klass, URI(response["Location"]), options, step + 1)
+            return make_request(drip_request, redirected_url: URI(response["Location"]), step: step + 1)
           else
             response
           end
         end
       end
+    end
+
+    def add_standard_headers(request)
+      request['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
+      request['Accept'] = "*/*"
+
+      if @config.access_token
+        request['Authorization'] = "Bearer #{@config.access_token}"
+      else
+        request.basic_auth @config.api_key, ""
+      end
+
+      request
     end
 
     def build_response(&block)
