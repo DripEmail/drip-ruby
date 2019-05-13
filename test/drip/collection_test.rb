@@ -54,6 +54,7 @@ class Drip::CollectionTest < Drip::TestCase
     end
   end
 
+  # :nocov:
   class TestCollection < Drip::Collection
     def self.collection_name
       "subscribers"
@@ -63,4 +64,5 @@ class Drip::CollectionTest < Drip::TestCase
       "subscriber"
     end
   end
+  # :nocov:
 end

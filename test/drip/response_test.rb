@@ -120,6 +120,12 @@ class Drip::ResponseTest < Drip::TestCase
       assert @subject.subscribers.is_a?(Drip::Subscribers)
       assert_equal 1, @subject.subscribers.count
     end
+
+    should "parse resource" do
+      body = { "subscriber" => @members[0] }
+      subject = Drip::Response.new(200, body)
+      assert_equal "john@acme.com", subject.subscriber.email
+    end
   end
 
   context "rate limit response" do
@@ -131,6 +137,22 @@ class Drip::ResponseTest < Drip::TestCase
     should "parse correctly" do
       assert_equal 429, @subject.status
       assert_equal @body["message"], @subject.message
+    end
+  end
+
+  context "#respond_to?" do
+    setup do
+      @members = [load_json_fixture("resources/subscriber.json")]
+      @body = { "subscribers" => @members }
+      @subject = Drip::Response.new(200, @body)
+    end
+
+    should "respond to fixture members" do
+      assert @subject.respond_to?(:subscribers)
+    end
+
+    should "not respond to randomness" do
+      refute @subject.respond_to?(:blahdeblah)
     end
   end
 end
