@@ -68,7 +68,7 @@ class Drip::Client::HTTPClientTest < Drip::TestCase
 
   context "given a get request" do
     setup do
-      @config = Drip::Client::Configuration.new
+      @config = Drip::Client::Configuration.new(http_open_timeout: 20)
       @client = Drip::Client::HTTPClient.new(@config)
       @response = mock
       @response.stubs(:code).returns('200')
