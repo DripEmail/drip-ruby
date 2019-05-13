@@ -71,9 +71,9 @@ module Drip
     end
 
     Drip::Request::VERB_CLASS_MAPPING.keys.each do |verb|
-      define_method(verb) do |url, options = {}|
+      define_method(verb) do |path, options = {}|
         warn "[DEPRECATED] Drip::Client##{verb} please use the API endpoint specific methods"
-        make_request Drip::Request.new(verb, make_uri(url), options, content_type)
+        make_request Drip::Request.new(verb, make_uri("v2/#{path}"), options, content_type)
       end
     end
 
@@ -85,10 +85,6 @@ module Drip
     end
 
     def make_uri(path)
-      if !path.start_with?("v2/") && !path.start_with?("v3/")
-        warn "[DEPRECATED] Automatically prepended path with 'v2/'"
-        path = "v2/#{path}"
-      end
       URI(@config.url_prefix) + URI(path)
     end
 

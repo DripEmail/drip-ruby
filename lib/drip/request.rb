@@ -11,7 +11,7 @@ module Drip
       delete: Net::HTTP::Delete
     }.freeze
 
-    def initialize(http_verb, url, options, content_type)
+    def initialize(http_verb, url, options = {}, content_type = nil)
       @http_verb = http_verb
       @url = url
       @options = options

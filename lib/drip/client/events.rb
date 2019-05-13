@@ -14,7 +14,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#record_event
       def track_event(email, action, properties = {}, options = {})
         data = options.merge({ "email" => email, "action" => action, "properties" => properties })
-        post "v2/#{account_id}/events", private_generate_resource("events", data)
+        make_request Drip::Request.new(:post, make_uri("v2/#{account_id}/events"), private_generate_resource("events", data))
       end
 
       # Public: Track a collection of events all at once.
@@ -28,7 +28,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#event_batches
       def track_events(events)
         url = "v2/#{account_id}/events/batches"
-        post url, private_generate_resource("batches", { "events" => events })
+        make_request Drip::Request.new(:post, make_uri(url), private_generate_resource("batches", { "events" => events }))
       end
 
       # Public: Fetch all custom event actions.
@@ -41,7 +41,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#events
       def event_actions(options = {})
-        get "v2/#{account_id}/event_actions", options
+        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/event_actions"), options)
       end
     end
   end
