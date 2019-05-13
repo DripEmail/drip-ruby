@@ -10,6 +10,7 @@ require "drip/client/conversions"
 require "drip/client/custom_fields"
 require "drip/client/events"
 require "drip/client/forms"
+require "drip/client/http_client"
 require "drip/client/orders"
 require "drip/client/subscribers"
 require "drip/client/tags"
@@ -88,44 +89,10 @@ module Drip
       URI(@config.url_prefix) + URI(path)
     end
 
-    def make_request(drip_request, redirected_url: nil, step: 0)
-      raise TooManyRedirectsError, 'too many HTTP redirects' if step >= REDIRECT_LIMIT
-
-      uri = redirected_url || drip_request.url.tap do |orig_url|
-        next if drip_request.http_verb != :get
-
-        orig_url.query = URI.encode_www_form(drip_request.options)
-      end
-
+    def make_request(drip_request)
       build_response do
-        Net::HTTP.start(uri.host, uri.port, connection_options(uri.scheme)) do |http|
-          request = drip_request.verb_klass.new uri
-          request.body = drip_request.body
-
-          add_standard_headers(request)
-          request['Content-Type'] = drip_request.content_type
-
-          response = http.request request
-          if response.is_a?(Net::HTTPRedirection)
-            return make_request(drip_request, redirected_url: URI(response["Location"]), step: step + 1)
-          else
-            response
-          end
-        end
+        Drip::Client::HTTPClient.new(@config).make_request(drip_request)
       end
-    end
-
-    def add_standard_headers(request)
-      request['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
-      request['Accept'] = "*/*"
-
-      if @config.access_token
-        request['Authorization'] = "Bearer #{@config.access_token}"
-      else
-        request.basic_auth @config.api_key, ""
-      end
-
-      request
     end
 
     def build_response(&block)
@@ -133,19 +100,6 @@ module Drip
       Drip::Response.new(response.code.to_i, response.body || response.body == "" ? JSON.parse(response.body) : nil)
     rescue JSON::ParserError
       Drip::Response.new(response.code.to_i, nil)
-    end
-
-    def connection_options(uri_scheme)
-      options = { use_ssl: uri_scheme == "https" }
-
-      if @config.http_open_timeout
-        options[:open_timeout] = @config.http_open_timeout
-        options[:ssl_timeout] = @config.http_open_timeout
-      end
-
-      options[:read_timeout] = @config.http_timeout if @config.http_timeout
-
-      options
     end
   end
 end
