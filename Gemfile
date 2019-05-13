@@ -10,4 +10,5 @@ gem "rake", "~> 12.0"
 gem "rubocop", "~> 0.67.2"
 gem "rubocop-performance", "~> 1.1.0"
 gem "shoulda-context", "~> 1.0"
+gem "simplecov", require: false
 gem "webmock", "~> 3.4"
