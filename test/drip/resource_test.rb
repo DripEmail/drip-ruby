@@ -19,4 +19,16 @@ class Drip::ResourceTest < Drip::TestCase
     resource = TestResource.new("created_at" => "2015-06-15T10:00:00Z")
     assert_equal Time.utc(2015, 6, 15, 10, 0, 0), resource.created_at
   end
+
+  context ".resource_name" do
+    should "return default value" do
+      assert_equal "resource", Drip::Resource.resource_name
+    end
+  end
+
+  context "#singular?" do
+    should "return default value" do
+      assert_equal true, Drip::Resource.new({}).singular?
+    end
+  end
 end
