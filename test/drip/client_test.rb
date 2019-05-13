@@ -52,40 +52,6 @@ class Drip::ClientTest < Drip::TestCase
     end
   end
 
-  context "#generate_resource" do
-    # Deprecated
-    setup do
-      @key = "subscribers"
-      @data = { "email" => "foo" }
-      @client = Drip::Client.new
-    end
-
-    should "return a JSON API payload" do
-      assert_output(nil, /^\[DEPRECATED\] Drip\:\:Client\#generate_resource is deprecated/) do
-        assert_equal({ @key => [@data] }, @client.generate_resource(@key, @data))
-      end
-    end
-  end
-
-  context "given a personal api key" do
-    setup do
-      @key = "aaaa"
-      @client = Drip::Client.new do |config|
-        config.api_key = @key
-      end
-    end
-
-    should "use Basic authentication" do
-      stub_request(:get, "https://api.getdrip.com/v2/testpath").
-        to_return(status: 200, body: "", headers: {})
-
-      @client.get("testpath")
-
-      header = "Basic #{Base64.encode64(@key + ':')}".strip
-      assert_requested :get, "https://api.getdrip.com/v2/testpath", headers: { 'Authorization' => header }
-    end
-  end
-
   context "given a basic request" do
     setup do
       @client = Drip::Client.new do |config|
@@ -122,84 +88,11 @@ class Drip::ClientTest < Drip::TestCase
     end
 
     should "connect to alternate prefix with prepended v2" do
-      stub_request(:get, "https://api.example.com/v9001/v2/testpath").
+      stub_request(:get, "https://api.example.com/v9001/v2/subscribers/blah").
         to_return(status: 200, body: "", headers: {})
-      assert_output(nil, /^\[DEPRECATED\] Drip::Client#get please use the API endpoint specific methods/) do
-        @client.get("testpath")
-      end
+      @client.subscriber("blah")
 
-      assert_requested :get, "https://api.example.com/v9001/v2/testpath"
-    end
-  end
-
-  context "given a OAuth access token" do
-    setup do
-      @key = "aaaa"
-      @client = Drip::Client.new do |config|
-        config.access_token = @key
-      end
-    end
-
-    should "use Bearer token authentication" do
-      stub_request(:get, "https://api.getdrip.com/v2/testpath").
-        to_return(status: 200, body: "", headers: {})
-      @client.get("testpath")
-      header = "Bearer #{@key}"
-      assert_requested :get, "https://api.getdrip.com/v2/testpath", headers: { 'Authorization' => header }
-    end
-  end
-
-  context "given a redirecting url" do
-    setup do
-      @client = Drip::Client.new
-    end
-
-    should "follow redirect" do
-      stub_request(:get, "https://api.getdrip.com/v2/testpath").
-        to_return(status: 301, body: "", headers: { "Location" => "https://api.example.com/mytestpath" })
-      stub_request(:get, "https://api.example.com/mytestpath").
-        to_return(status: 200, body: "{}")
-      response = @client.get("testpath")
-      assert_requested :get, "https://api.getdrip.com/v2/testpath"
-      assert_requested :get, "https://api.example.com/mytestpath"
-      assert_equal({}, response.body)
-    end
-
-    should "not follow too many redirects" do
-      stub_request(:get, "https://api.getdrip.com/v2/accounts").
-        to_return(status: 301, body: "", headers: { "Location" => "https://api.example.com/mytestpath" })
-      stub_request(:get, "https://api.example.com/mytestpath").
-        to_return(status: 302, body: "", headers: { "Location" => "https://api.getdrip.com/v2/accounts" })
-      assert_raises(Drip::TooManyRedirectsError) { @client.accounts }
-      assert_requested :get, "https://api.getdrip.com/v2/accounts", times: 5
-      assert_requested :get, "https://api.example.com/mytestpath", times: 5
-    end
-  end
-
-  context "given a get request" do
-    setup do
-      @client = Drip::Client.new
-      @response = mock
-      @response.stubs(:code).returns('200')
-      @response.stubs(:body).returns('{}')
-
-      @http = mock
-      @http.expects(:request).returns(@response)
-
-      @request = mock
-      @request.stubs(:[]=)
-      @request.stubs(:basic_auth)
-    end
-
-    should "encode query and not set body" do
-      Net::HTTP::Get.expects(:new).returns(@request)
-      Net::HTTP.expects(:start).yields(@http).returns(@response)
-
-      @request.expects(:body=).with(nil)
-      URI.expects(:encode_www_form).once
-
-      response = @client.get("testpath")
-      assert_equal({}, response.body)
+      assert_requested :get, "https://api.example.com/v9001/v2/subscribers/blah"
     end
   end
 end

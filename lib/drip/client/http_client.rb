@@ -29,6 +29,8 @@ module Drip
         response
       end
 
+    private
+
       def add_standard_headers(request)
         request['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
         request['Accept'] = "*/*"
