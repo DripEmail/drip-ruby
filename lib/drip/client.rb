@@ -73,7 +73,7 @@ module Drip
     Drip::Request::VERB_CLASS_MAPPING.keys.each do |verb|
       define_method(verb) do |path, options = {}|
         warn "[DEPRECATED] Drip::Client##{verb} please use the API endpoint specific methods"
-        make_request Drip::Request.new(verb, make_uri("v2/#{path}"), options, content_type)
+        make_request Drip::Request.new(verb, make_uri("v2/#{path}"), options, JSON_API_CONTENT_TYPE)
       end
     end
 
