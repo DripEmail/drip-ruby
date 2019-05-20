@@ -20,7 +20,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#apply_tag
       def apply_tag(email, tag)
         data = { "email" => email, "tag" => tag }
-        post "v2/#{account_id}/tags", generate_resource("tags", data)
+        post "v2/#{account_id}/tags", private_generate_resource("tags", data)
       end
 
       # Public: Remove a tag from a subscriber.

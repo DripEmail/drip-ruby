@@ -22,7 +22,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def create_workflow_trigger(id, options = {})
-        post "v2/#{account_id}/workflows/#{id}/triggers", generate_resource("triggers", options)
+        post "v2/#{account_id}/workflows/#{id}/triggers", private_generate_resource("triggers", options)
       end
 
       # Public: Update a workflow trigger.
@@ -37,7 +37,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def update_workflow_trigger(id, options = {})
-        put "v2/#{account_id}/workflows/#{id}/triggers", generate_resource("triggers", options)
+        put "v2/#{account_id}/workflows/#{id}/triggers", private_generate_resource("triggers", options)
       end
     end
   end

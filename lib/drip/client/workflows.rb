@@ -63,7 +63,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def start_subscriber_workflow(id, options = {})
-        post "v2/#{account_id}/workflows/#{id}/subscribers", generate_resource("subscribers", options)
+        post "v2/#{account_id}/workflows/#{id}/subscribers", private_generate_resource("subscribers", options)
       end
 
       # Public: Remove someone from a workflow.

@@ -51,7 +51,7 @@ module Drip
         data[:email] = args[0] if args[0].is_a? String
         data.merge!(args.last) if args.last.is_a? Hash
         raise ArgumentError, 'email: or id: parameter required' if !data.key?(:email) && !data.key?(:id)
-        post "v2/#{account_id}/subscribers", generate_resource("subscribers", data)
+        post "v2/#{account_id}/subscribers", private_generate_resource("subscribers", data)
       end
 
       # Public: Create or update a collection of subscribers.
@@ -71,7 +71,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches
       def create_or_update_subscribers(subscribers)
         url = "v2/#{account_id}/subscribers/batches"
-        post url, generate_resource("batches", { "subscribers" => subscribers })
+        post url, private_generate_resource("batches", { "subscribers" => subscribers })
       end
 
       # Public: Unsubscribe a collection of subscribers.
@@ -83,7 +83,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches
       def unsubscribe_subscribers(subscribers)
         url = "v2/#{account_id}/unsubscribes/batches"
-        post url, generate_resource("batches", { "subscribers" => subscribers })
+        post url, private_generate_resource("batches", { "subscribers" => subscribers })
       end
 
       # Public: Unsubscribe a subscriber globally or from a specific campaign.
@@ -127,7 +127,7 @@ module Drip
       def subscribe(email, campaign_id, options = {})
         data = options.merge("email" => email)
         url = "v2/#{account_id}/campaigns/#{campaign_id}/subscribers"
-        post url, generate_resource("subscribers", data)
+        post url, private_generate_resource("subscribers", data)
       end
 
       # Public: Delete a subscriber.

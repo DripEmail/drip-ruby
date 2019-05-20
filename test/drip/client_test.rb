@@ -58,6 +58,7 @@ class Drip::ClientTest < Drip::TestCase
   end
 
   context "#generate_resource" do
+    # Deprecated
     setup do
       @key = "subscribers"
       @data = { "email" => "foo" }
@@ -65,7 +66,9 @@ class Drip::ClientTest < Drip::TestCase
     end
 
     should "return a JSON API payload" do
-      assert_equal({ @key => [@data] }, @client.generate_resource(@key, @data))
+      assert_output(nil, /^\[DEPRECATED\] Drip\:\:Client\#generate_resource is deprecated/) do
+        assert_equal({ @key => [@data] }, @client.generate_resource(@key, @data))
+      end
     end
   end
 
