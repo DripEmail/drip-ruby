@@ -118,7 +118,7 @@ module Drip
           request['Content-Type'] = JSON_API_CONTENT_TYPE
           request['Accept'] = "*/*"
 
-          if access_token
+          if @config.access_token
             request['Authorization'] = "Bearer #{@config.access_token}"
           else
             request.basic_auth @config.api_key, ""
