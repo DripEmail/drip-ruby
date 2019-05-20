@@ -14,7 +14,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs.rest-api#campaigns
       def campaigns(options = {})
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/campaigns"), options)
+        make_v2_request :get, "v2/#{account_id}/campaigns", options
       end
 
       # Public: Fetch a campaign.
@@ -24,7 +24,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#campaigns
       def campaign(id)
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/campaigns/#{id}"))
+        make_v2_request :get, "v2/#{account_id}/campaigns/#{id}"
       end
 
       # Public: Activate a campaign.
@@ -34,7 +34,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#campaigns
       def activate_campaign(id)
-        make_request Drip::Request.new(:post, make_uri("v2/#{account_id}/campaigns/#{id}/activate"))
+        make_v2_request :post, "v2/#{account_id}/campaigns/#{id}/activate"
       end
 
       # Public: Pause a campaign.
@@ -44,7 +44,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#campaigns
       def pause_campaign(id)
-        make_request Drip::Request.new(:post, make_uri("v2/#{account_id}/campaigns/#{id}/pause"))
+        make_v2_request :post, "v2/#{account_id}/campaigns/#{id}/pause"
       end
 
       # Public: List everyone subscribed to a campaign.
@@ -68,7 +68,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#campaigns
       def campaign_subscribers(id, options = {})
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/campaigns/#{id}/subscribers"), options)
+        make_v2_request :get, "v2/#{account_id}/campaigns/#{id}/subscribers", options
       end
     end
   end

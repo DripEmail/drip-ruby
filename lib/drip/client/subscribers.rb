@@ -16,7 +16,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#list_subscribers
       def subscribers(options = {})
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/subscribers"), options)
+        make_v2_request :get, "v2/#{account_id}/subscribers", options
       end
 
       # Public: Fetch a subscriber.
@@ -26,7 +26,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#fetch_subscriber
       def subscriber(id_or_email)
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/subscribers/#{CGI.escape id_or_email}"))
+        make_v2_request :get, "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}"
       end
 
       # Public: Create or update a subscriber.
@@ -51,7 +51,7 @@ module Drip
         data[:email] = args[0] if args[0].is_a? String
         data.merge!(args.last) if args.last.is_a? Hash
         raise ArgumentError, 'email: or id: parameter required' if !data.key?(:email) && !data.key?(:id)
-        make_request Drip::Request.new(:post, make_uri("v2/#{account_id}/subscribers"), private_generate_resource("subscribers", data))
+        make_v2_request :post, "v2/#{account_id}/subscribers", private_generate_resource("subscribers", data)
       end
 
       # Public: Create or update a collection of subscribers.
@@ -71,7 +71,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches
       def create_or_update_subscribers(subscribers)
         url = "v2/#{account_id}/subscribers/batches"
-        make_request Drip::Request.new(:post, make_uri(url), private_generate_resource("batches", { "subscribers" => subscribers }))
+        make_v2_request :post, url, private_generate_resource("batches", { "subscribers" => subscribers })
       end
 
       # Public: Unsubscribe a collection of subscribers.
@@ -83,7 +83,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#subscriber_batches
       def unsubscribe_subscribers(subscribers)
         url = "v2/#{account_id}/unsubscribes/batches"
-        make_request Drip::Request.new(:post, make_uri(url), private_generate_resource("batches", { "subscribers" => subscribers }))
+        make_v2_request :post, url, private_generate_resource("batches", { "subscribers" => subscribers })
       end
 
       # Public: Unsubscribe a subscriber globally or from a specific campaign.
@@ -98,7 +98,7 @@ module Drip
       def unsubscribe(id_or_email, options = {})
         url = "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}/remove"
         url += options[:campaign_id] ? "?campaign_id=#{options[:campaign_id]}" : ""
-        make_request Drip::Request.new(:post, make_uri(url))
+        make_v2_request :post, url
       end
 
       # Public: Subscribe to a campaign.
@@ -127,7 +127,7 @@ module Drip
       def subscribe(email, campaign_id, options = {})
         data = options.merge("email" => email)
         url = "v2/#{account_id}/campaigns/#{campaign_id}/subscribers"
-        make_request Drip::Request.new(:post, make_uri(url), private_generate_resource("subscribers", data))
+        make_v2_request :post, url, private_generate_resource("subscribers", data)
       end
 
       # Public: Delete a subscriber.
@@ -137,7 +137,7 @@ module Drip
       # Returns No Content.
       # See https://www.getdrip.com/docs/rest-api#fdelete_subscriber
       def delete_subscriber(id_or_email)
-        make_request Drip::Request.new(:delete, make_uri("v2/#{account_id}/subscribers/#{CGI.escape id_or_email}"))
+        make_v2_request :delete, "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}"
       end
 
       # Public: Unsubscribe a subscriber from all mailings.
@@ -147,7 +147,7 @@ module Drip
       # Returns No Content.
       # See https://www.getdrip.com/docs/rest-api#fdelete_subscriber
       def unsubscribe_from_all(id_or_email)
-        make_request Drip::Request.new(:post, make_uri("v2/#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe_all"))
+        make_v2_request :post, "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe_all"
       end
     end
   end

@@ -69,6 +69,7 @@ class Drip::ClientTest < Drip::TestCase
 
     should "return objects" do
       stub_request(:get, "https://api.getdrip.com/v2/12345/subscribers/jdoe%40example.com").
+        with(headers: { "Content-Type" => "application/vnd.api+json" }).
         to_return(status: 200, body: "{\"links\":{\"subscribers.account\":\"https://api.getdrip.com/v2/accounts/{subscribers.account}\"},\"subscribers\":[{\"id\":\"randomid\",\"href\":\"https://api.getdrip.com/v2/1234/subscribers/randomid\",\"status\":\"active\",\"email\":\"jdoe@example.com\",\"time_zone\":null,\"utc_offset\":0,\"visitor_uuid\":null,\"custom_fields\":{\"first_name\":\"John\"},\"tags\":[\"customer\"],\"created_at\":\"2018-06-04T21:29:49Z\",\"ip_address\":null,\"user_agent\":null,\"lifetime_value\":null,\"original_referrer\":null,\"landing_url\":null,\"prospect\":null,\"base_lead_score\":null,\"eu_consent\":\"unknown\",\"lead_score\":null,\"user_id\":\"123\",\"links\":{\"account\":\"1234\"}}]}")
 
       response = @client.subscriber('jdoe@example.com')

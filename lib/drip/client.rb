@@ -74,11 +74,15 @@ module Drip
     Drip::Request::VERB_CLASS_MAPPING.keys.each do |verb|
       define_method(verb) do |path, options = {}|
         warn "[DEPRECATED] Drip::Client##{verb} please use the API endpoint specific methods"
-        make_request Drip::Request.new(verb, make_uri("v2/#{path}"), options, JSON_API_CONTENT_TYPE)
+        make_v2_request(verb, "v2/#{path}", options)
       end
     end
 
   private
+
+    def make_v2_request(http_verb, path, options = {})
+      make_request Drip::Request.new(http_verb, make_uri(path), options, JSON_API_CONTENT_TYPE)
+    end
 
     def private_generate_resource(key, *args)
       # No reason for this to be part of the public API, so making a duplicate method to make it private.

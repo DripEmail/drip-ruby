@@ -10,7 +10,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#conversions
       def conversions(options = {})
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/goals"), options)
+        make_v2_request :get, "v2/#{account_id}/goals", options
       end
 
       # Public: Fetch a conversion.
@@ -20,7 +20,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#conversions
       def conversion(id)
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/goals/#{id}"))
+        make_v2_request :get, "v2/#{account_id}/goals/#{id}"
       end
     end
   end

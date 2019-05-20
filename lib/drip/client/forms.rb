@@ -6,7 +6,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#forms
       def forms
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/forms"))
+        make_v2_request :get, "v2/#{account_id}/forms"
       end
 
       # Public: Fetch a form.
@@ -16,7 +16,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#forms
       def form(id)
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/forms/#{id}"))
+        make_v2_request :get, "v2/#{account_id}/forms/#{id}"
       end
     end
   end

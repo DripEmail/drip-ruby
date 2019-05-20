@@ -8,7 +8,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs.rest-api#campaign_subscriptions
       def campaign_subscriptions(subscriber_id)
-        make_request Drip::Request.new(:get, make_uri("v2/#{account_id}/subscribers/#{subscriber_id}/campaign_subscriptions"))
+        make_v2_request :get, "v2/#{account_id}/subscribers/#{subscriber_id}/campaign_subscriptions"
       end
     end
   end
