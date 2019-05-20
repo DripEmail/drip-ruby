@@ -50,7 +50,8 @@ module Drip
     end
 
     def generate_resource(key, *args)
-      { key => args }
+      warn "[DEPRECATED] Drip::Client#generate_resource is deprecated and will be removed in a future version"
+      private_generate_resource(key, *args)
     end
 
     def content_type
@@ -74,6 +75,11 @@ module Drip
     end
 
   private
+
+    def private_generate_resource(key, *args)
+      # No reason for this to be part of the public API, so making a duplicate method to make it private.
+      { key => args }
+    end
 
     def make_uri(path)
       if !path.start_with?("v2/") && !path.start_with?("v3/")

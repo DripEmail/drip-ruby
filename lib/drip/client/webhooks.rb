@@ -36,7 +36,7 @@ module Drip
         include_received_email = include_received_email ? true : false
         url = "v2/#{account_id}/webhooks"
 
-        post url, generate_resource(
+        post url, private_generate_resource(
           "webhooks",
           {
             "post_url" => post_url,
