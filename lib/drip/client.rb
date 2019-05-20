@@ -38,9 +38,6 @@ module Drip
     include Workflows
     include WorkflowTriggers
 
-    REDIRECT_LIMIT = 10
-    private_constant :REDIRECT_LIMIT
-
     Drip::Client::Configuration::CONFIGURATION_FIELDS.each do |config_key|
       define_method(config_key) do
         @config.public_send(config_key)

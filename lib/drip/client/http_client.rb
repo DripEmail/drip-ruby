@@ -1,6 +1,9 @@
 module Drip
   class Client
     class HTTPClient
+      REDIRECT_LIMIT = 10
+      private_constant :REDIRECT_LIMIT
+
       def initialize(config)
         @config = config
       end
