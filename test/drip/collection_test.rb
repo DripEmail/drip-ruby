@@ -42,6 +42,19 @@ class Drip::CollectionTest < Drip::TestCase
     end
   end
 
+  context ".collection_name" do
+    should "return default value" do
+      assert_equal "resources", Drip::Collection.collection_name
+    end
+  end
+
+  context ".resource_name" do
+    should "return default value" do
+      assert_equal "resource", Drip::Collection.resource_name
+    end
+  end
+
+  # :nocov:
   class TestCollection < Drip::Collection
     def self.collection_name
       "subscribers"
@@ -51,4 +64,5 @@ class Drip::CollectionTest < Drip::TestCase
       "subscriber"
     end
   end
+  # :nocov:
 end
