@@ -12,6 +12,9 @@ module Drip
         remainder = options.keys - CONFIGURATION_FIELDS
         raise ArgumentError, "unknown keyword#{'s' if remainder.size > 1}: #{remainder.join(', ')}" unless remainder.empty?
 
+        # Initialize this variable to suppress Ruby warning.
+        @url_prefix = nil
+
         options.each do |k, v|
           public_send("#{k}=".to_sym, v)
         end
