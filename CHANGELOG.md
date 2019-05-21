@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `Drip::Client#url_prefix` parameter no longer includes `/vN` part of the URL in order to prepare for Shopper Activity API. This breaks backwards compatibility for this option, but there is no expected production usage of this parameter.
 - `Drip::Client#get`, `Drip::Client#post`, `Drip::Client#put`, and `Drip::Client#delete` methods no longer auto-prepend `/v2` if the given path starts with `v2/` or `v3/`. This behavior is deprecated and will produce a warning. If you are using one of these methods and get this warning, just add `v2/` to the beginning of the path when you call it.
 - `Drip::Client#generate_resource` is deprecated and will be removed in a future version.
+- `Drip::Client#content_type` is deprecated and will be removed in a future version. It is no longer used internally, effective immediately.
 
 ### Removed
 - Drop support for Ruby 2.1.

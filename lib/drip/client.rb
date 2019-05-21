@@ -19,7 +19,7 @@ require "uri"
 require "json"
 
 module Drip
-  class Client
+  class Client # rubocop:disable Metrics/ClassLength
     include Accounts
     include Broadcasts
     include Campaigns
@@ -39,6 +39,9 @@ module Drip
 
     attr_accessor :access_token, :api_key, :account_id, :url_prefix, :http_open_timeout, :http_timeout
 
+    JSON_API_CONTENT_TYPE = "application/vnd.api+json".freeze
+    private_constant :JSON_API_CONTENT_TYPE
+
     def initialize(options = {})
       @account_id = options[:account_id]
       @access_token = options[:access_token]
@@ -55,7 +58,8 @@ module Drip
     end
 
     def content_type
-      'application/vnd.api+json'
+      warn "[DEPRECATED] Drip::Client#content_type is deprecated and will be removed in a future version"
+      JSON_API_CONTENT_TYPE
     end
 
     def get(url, options = {})
@@ -105,7 +109,7 @@ module Drip
           end
 
           request['User-Agent'] = "Drip Ruby v#{Drip::VERSION}"
-          request['Content-Type'] = content_type
+          request['Content-Type'] = JSON_API_CONTENT_TYPE
           request['Accept'] = "*/*"
 
           if access_token
