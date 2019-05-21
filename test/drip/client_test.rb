@@ -92,15 +92,16 @@ class Drip::ClientTest < Drip::TestCase
       @client = Drip::Client.new do |config|
         config.api_key = @key
         config.url_prefix = @url_prefix
+        config.account_id = "12345"
       end
     end
 
     should "connect to alternate prefix with prepended v2" do
-      stub_request(:get, "https://api.example.com/v9001/v2/subscribers/blah").
+      stub_request(:get, "https://api.example.com/v9001/v2/12345/subscribers/blah").
         to_return(status: 200, body: "", headers: {})
       @client.subscriber("blah")
 
-      assert_requested :get, "https://api.example.com/v9001/v2/subscribers/blah"
+      assert_requested :get, "https://api.example.com/v9001/v2/12345/subscribers/blah"
     end
   end
 
