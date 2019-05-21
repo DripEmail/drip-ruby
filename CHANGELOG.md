@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Support for the cart, order, and product endpoints in the shopper activity API.
-- `Drip::Client#get`, `Drip::Client#post`, `Drip::Client#put`, and `Drip::Client#delete` take a final `content_type` parameter. This is for internal usage and should not be used by consumers.
 
 ### Changed
 - `Drip::Client#url_prefix` parameter no longer includes `/vN` part of the URL in order to prepare for Shopper Activity API. This breaks backwards compatibility for this option, but there is no expected production usage of this parameter.
