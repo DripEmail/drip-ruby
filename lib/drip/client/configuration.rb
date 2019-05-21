@@ -8,13 +8,17 @@ module Drip
 
       attr_accessor(*CONFIGURATION_FIELDS)
 
-      def initialize(access_token: nil, api_key: nil, account_id: nil, url_prefix: DEFAULT_URL_PREFIX, http_open_timeout: nil, http_timeout: nil) # rubocop:disable Metrics/ParameterLists
-        @access_token = access_token
-        @api_key = api_key
-        @account_id = account_id
-        @url_prefix = url_prefix
-        @http_open_timeout = http_open_timeout
-        @http_timeout = http_timeout
+      def initialize(**options)
+        remainder = options.keys - CONFIGURATION_FIELDS
+        raise ArgumentError, "unknown keyword#{'s' if remainder.size > 1}: #{remainder.join(', ')}" unless remainder.empty?
+
+        options.each do |k, v|
+          public_send("#{k}=".to_sym, v)
+        end
+      end
+
+      def url_prefix
+        @url_prefix || DEFAULT_URL_PREFIX
       end
     end
   end
