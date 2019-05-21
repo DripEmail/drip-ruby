@@ -22,7 +22,7 @@ require "uri"
 require "json"
 
 module Drip
-  class Client # rubocop:disable Metrics/ClassLength
+  class Client
     include Accounts
     include Broadcasts
     include Campaigns
