@@ -16,7 +16,7 @@ module Drip
         @url_prefix = nil
 
         options.each do |k, v|
-          public_send("#{k}=".to_sym, v)
+          public_send("#{k}=", v)
         end
       end
 
