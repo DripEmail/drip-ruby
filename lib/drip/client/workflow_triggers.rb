@@ -7,7 +7,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflow_triggers
       def workflow_triggers(id)
-        make_v2_request :get, "v2/#{account_id}/workflows/#{id}/triggers"
+        make_json_api_request :get, "v2/#{account_id}/workflows/#{id}/triggers"
       end
 
       # Public: Create a workflow trigger.
@@ -22,7 +22,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def create_workflow_trigger(id, options = {})
-        make_v2_request :post, "v2/#{account_id}/workflows/#{id}/triggers", private_generate_resource("triggers", options)
+        make_json_api_request :post, "v2/#{account_id}/workflows/#{id}/triggers", private_generate_resource("triggers", options)
       end
 
       # Public: Update a workflow trigger.
@@ -37,7 +37,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def update_workflow_trigger(id, options = {})
-        make_v2_request :put, "v2/#{account_id}/workflows/#{id}/triggers", private_generate_resource("triggers", options)
+        make_json_api_request :put, "v2/#{account_id}/workflows/#{id}/triggers", private_generate_resource("triggers", options)
       end
     end
   end
