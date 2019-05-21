@@ -16,7 +16,7 @@ module Drip
         end
 
         data[:occurred_at] = Time.now.iso8601 unless data.key?(:occurred_at)
-        make_v3_request :post, "v3/#{account_id}/shopper_activity/cart", data
+        make_json_request :post, "v3/#{account_id}/shopper_activity/cart", data
       end
 
       # Public: Create an order activity event.
@@ -34,7 +34,7 @@ module Drip
         end
 
         data[:occurred_at] = Time.now.iso8601 unless data.key?(:occurred_at)
-        make_v3_request :post, "v3/#{account_id}/shopper_activity/order", data
+        make_json_request :post, "v3/#{account_id}/shopper_activity/order", data
       end
 
       # Public: Create a product activity event.
@@ -50,7 +50,7 @@ module Drip
         end
 
         data[:occurred_at] = Time.now.iso8601 unless data.key?(:occurred_at)
-        make_v3_request :post, "v3/#{account_id}/shopper_activity/product", data
+        make_json_request :post, "v3/#{account_id}/shopper_activity/product", data
       end
     end
   end

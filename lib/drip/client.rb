@@ -86,7 +86,7 @@ module Drip
       make_request Drip::Request.new(http_verb, make_uri(path), options, JSON_API_CONTENT_TYPE)
     end
 
-    def make_v3_request(http_verb, path, options = {})
+    def make_json_request(http_verb, path, options = {})
       make_request Drip::Request.new(http_verb, make_uri(path), options, JSON_CONTENT_TYPE)
     end
 
