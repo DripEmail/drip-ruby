@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `Drip::Client#get`, `Drip::Client#post`, `Drip::Client#put`, and `Drip::Client#delete` methods no longer auto-prepend `/v2` if the given path starts with `v2/` or `v3/`. This behavior is deprecated and will produce a warning. If you are using one of these methods and get this warning, just add `v2/` to the beginning of the path when you call it.
 - `Drip::Client#generate_resource` is deprecated and will be removed in a future version.
 - `Drip::Client#content_type` is deprecated and will be removed in a future version. It is no longer used internally, effective immediately.
+- When using the block form of parameter initialization, a configuration object is provided instead of the client itself.
+- Calling configuration setters on `Drip::Client` is deprecated.
 
 ### Removed
 - Drop support for Ruby 2.1.

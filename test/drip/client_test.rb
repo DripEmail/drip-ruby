@@ -19,11 +19,6 @@ class Drip::ClientTest < Drip::TestCase
       assert_equal "aaaa", client.url_prefix
     end
 
-    should "have default url prefix" do
-      client = Drip::Client.new
-      assert_equal "https://api.getdrip.com/", client.url_prefix
-    end
-
     should "accept access token" do
       client = Drip::Client.new do |config|
         config.access_token = "aaaa"

@@ -4,6 +4,7 @@ require "drip/client/accounts"
 require "drip/client/broadcasts"
 require "drip/client/campaigns"
 require "drip/client/campaign_subscriptions"
+require "drip/client/configuration"
 require "drip/client/conversions"
 require "drip/client/custom_fields"
 require "drip/client/events"
@@ -37,19 +38,24 @@ module Drip
 
     REDIRECT_LIMIT = 10
 
-    attr_accessor :access_token, :api_key, :account_id, :url_prefix, :http_open_timeout, :http_timeout
+    Drip::Client::Configuration::CONFIGURATION_FIELDS.each do |config_key|
+      define_method(config_key) do
+        @config.public_send(config_key)
+      end
+
+      setter_name = "#{config_key}=".to_sym
+      define_method(setter_name) do |val|
+        warn "[DEPRECATED] Setting configuration on Drip::Client after initialization will be removed in a future version"
+        @config.public_send(setter_name, val)
+      end
+    end
 
     JSON_API_CONTENT_TYPE = "application/vnd.api+json".freeze
     private_constant :JSON_API_CONTENT_TYPE
 
     def initialize(options = {})
-      @account_id = options[:account_id]
-      @access_token = options[:access_token]
-      @api_key = options[:api_key]
-      @url_prefix = options[:url_prefix] || "https://api.getdrip.com/"
-      @http_open_timeout = options[:http_open_timeout]
-      @http_timeout = options[:http_timeout]
-      yield(self) if block_given?
+      @config = Drip::Client::Configuration.new(options)
+      yield(@config) if block_given?
     end
 
     def generate_resource(key, *args)
@@ -90,7 +96,7 @@ module Drip
         warn "[DEPRECATED] Automatically prepended path with 'v2/'"
         path = "v2/#{path}"
       end
-      URI(url_prefix) + URI(path)
+      URI(@config.url_prefix) + URI(path)
     end
 
     def make_request(verb_klass, uri, options, step = 0)
@@ -112,10 +118,10 @@ module Drip
           request['Content-Type'] = JSON_API_CONTENT_TYPE
           request['Accept'] = "*/*"
 
-          if access_token
-            request['Authorization'] = "Bearer #{access_token}"
+          if @config.access_token
+            request['Authorization'] = "Bearer #{@config.access_token}"
           else
-            request.basic_auth api_key, ""
+            request.basic_auth @config.api_key, ""
           end
 
           response = http.request request
@@ -138,12 +144,12 @@ module Drip
     def connection_options(uri_scheme)
       options = { use_ssl: uri_scheme == "https" }
 
-      if @http_open_timeout
-        options[:open_timeout] = @http_open_timeout
-        options[:ssl_timeout] = @http_open_timeout
+      if @config.http_open_timeout
+        options[:open_timeout] = @config.http_open_timeout
+        options[:ssl_timeout] = @config.http_open_timeout
       end
 
-      options[:read_timeout] = @http_timeout if @http_timeout
+      options[:read_timeout] = @config.http_timeout if @config.http_timeout
 
       options
     end
