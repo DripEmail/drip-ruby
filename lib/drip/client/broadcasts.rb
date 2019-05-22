@@ -12,7 +12,7 @@ module Drip
       # Returns a Drip::Response
       # See https://www.getdrip.com/docs/rest-api#broadcasts
       def broadcasts(options = {})
-        get "v2/#{account_id}/broadcasts", options
+        make_json_api_request :get, "v2/#{account_id}/broadcasts", options
       end
 
       # Public: Fetch a broadcast.
@@ -22,7 +22,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#broadcasts
       def broadcast(id)
-        get "v2/#{account_id}/broadcasts/#{id}"
+        make_json_api_request :get, "v2/#{account_id}/broadcasts/#{id}"
       end
     end
   end

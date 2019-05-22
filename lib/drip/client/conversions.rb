@@ -10,7 +10,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#conversions
       def conversions(options = {})
-        get "v2/#{account_id}/goals", options
+        make_json_api_request :get, "v2/#{account_id}/goals", options
       end
 
       # Public: Fetch a conversion.
@@ -20,7 +20,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#conversions
       def conversion(id)
-        get "v2/#{account_id}/goals/#{id}"
+        make_json_api_request :get, "v2/#{account_id}/goals/#{id}"
       end
     end
   end

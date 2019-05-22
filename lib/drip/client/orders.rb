@@ -11,7 +11,7 @@ module Drip
       # See https://developer.drip.com/#orders
       def create_or_update_order(email, options = {})
         data = options.merge(email: email)
-        post "v2/#{account_id}/orders", private_generate_resource("orders", data)
+        make_json_api_request :post, "v2/#{account_id}/orders", private_generate_resource("orders", data)
       end
 
       # Public: Create or update a batch of orders.
@@ -21,7 +21,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#create-or-update-a-batch-of-orders
       def create_or_update_orders(orders)
-        post "v2/#{account_id}/orders/batches", private_generate_resource("batches", { "orders" => orders })
+        make_json_api_request :post, "v2/#{account_id}/orders/batches", private_generate_resource("batches", { "orders" => orders })
       end
 
       # Public: Create or update a refund.
@@ -38,7 +38,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#create-or-update-a-refund
       def create_or_update_refund(options)
-        post "v2/#{account_id}/refunds", private_generate_resource("refunds", options)
+        make_json_api_request :post, "v2/#{account_id}/refunds", private_generate_resource("refunds", options)
       end
     end
   end
