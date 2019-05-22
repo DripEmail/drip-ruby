@@ -126,6 +126,17 @@ class Drip::ResponseTest < Drip::TestCase
       subject = Drip::Response.new(200, body)
       assert_equal "john@acme.com", subject.subscriber.email
     end
+
+    context "with v3 response" do
+      setup do
+        @body = { "request_id" => "9f119d4b-893a-4279-adb2-c920b6c2034b" }
+        @subject = Drip::Response.new(200, @body)
+      end
+
+      should "be accessible via method call" do
+        assert_equal "9f119d4b-893a-4279-adb2-c920b6c2034b", @subject.request_id
+      end
+    end
   end
 
   context "rate limit response" do

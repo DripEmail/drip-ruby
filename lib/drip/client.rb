@@ -12,6 +12,7 @@ require "drip/client/events"
 require "drip/client/forms"
 require "drip/client/http_client"
 require "drip/client/orders"
+require "drip/client/shopper_activity"
 require "drip/client/subscribers"
 require "drip/client/tags"
 require "drip/client/webhooks"
@@ -32,6 +33,7 @@ module Drip
     include Events
     include Forms
     include Orders
+    include ShopperActivity
     include Subscribers
     include Tags
     include Webhooks
@@ -52,6 +54,9 @@ module Drip
 
     JSON_API_CONTENT_TYPE = "application/vnd.api+json".freeze
     private_constant :JSON_API_CONTENT_TYPE
+
+    JSON_CONTENT_TYPE = "application/json".freeze
+    private_constant :JSON_CONTENT_TYPE
 
     def initialize(options = {})
       @config = Drip::Client::Configuration.new(options)
@@ -79,6 +84,10 @@ module Drip
 
     def make_json_api_request(http_verb, path, options = {})
       make_request Drip::Request.new(http_verb, make_uri(path), options, JSON_API_CONTENT_TYPE)
+    end
+
+    def make_json_request(http_verb, path, options = {})
+      make_request Drip::Request.new(http_verb, make_uri(path), options, JSON_CONTENT_TYPE)
     end
 
     def private_generate_resource(key, *args)

@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [master]: https://github.com/DripEmail/drip-ruby/compare/v3.2.0...HEAD
 
+### Added
+- Support for the cart, order, and product endpoints in the shopper activity API.
+
 ### Changed
 - `Drip::Client#url_prefix` parameter no longer includes `/vN` part of the URL in order to prepare for Shopper Activity API. This breaks backwards compatibility for this option, but there is no expected production usage of this parameter.
 - `Drip::Client#get`, `Drip::Client#post`, `Drip::Client#put`, and `Drip::Client#delete` are deprecated. If you are using these to hit a Drip API endpoint, please file a ticket or PR to fix the use case.
