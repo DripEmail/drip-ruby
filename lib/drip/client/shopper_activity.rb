@@ -45,14 +45,14 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#create-or-update-a-batch-of-orders
       def create_order_activity_events(records = [])
-        records.each_with_index do |rec, i|
-          raise ArgumentError, "email: or person_id: parameter required in record #{i}" if !rec.key?(:email) && !rec.key?(:person_id)
+        records.each_with_index do |record, i|
+          raise ArgumentError, "email: or person_id: parameter required in record #{i}" if !record.key?(:email) && !record.key?(:person_id)
 
           %i[provider action order_id].each do |key|
-            raise ArgumentError, "#{key}: parameter required in record #{i}" unless rec.key?(key)
+            raise ArgumentError, "#{key}: parameter required in record #{i}" unless record.key?(key)
           end
 
-          rec[:occurred_at] = Time.now.iso8601 unless rec.key?(:occurred_at)
+          record[:occurred_at] = Time.now.iso8601 unless record.key?(:occurred_at)
         end
 
         make_json_request :post, "v3/#{account_id}/shopper_activity/order/batch", records
