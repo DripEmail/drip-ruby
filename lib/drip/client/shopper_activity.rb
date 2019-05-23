@@ -37,6 +37,27 @@ module Drip
         make_json_request :post, "v3/#{account_id}/shopper_activity/order", data
       end
 
+      # Public: Create a batch of order activity events.
+      #
+      # options    - Required. An array of hashes containing additional order options.
+      #                       Refer to the Drip API docs for the required schema.
+      #
+      # Returns a Drip::Response.
+      # See https://developer.drip.com/#order-activity
+      def create_order_activity_events(records = [])
+        records.each_with_index do |rec, i|
+          raise ArgumentError, "email: or person_id: parameter required in record #{i}" if !rec.key?(:email) && !rec.key?(:person_id)
+
+          %i[provider action order_id].each do |key|
+            raise ArgumentError, "#{key}: parameter required in record #{i}" unless rec.key?(key)
+          end
+
+          rec[:occurred_at] = Time.now.iso8601 unless rec.key?(:occurred_at)
+        end
+
+        make_json_request :post, "v3/#{account_id}/shopper_activity/order/batch", records
+      end
+
       # Public: Create a product activity event.
       #
       # options    - Required. A Hash of additional product options. Refer to the
