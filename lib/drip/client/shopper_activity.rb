@@ -39,7 +39,7 @@ module Drip
 
       # Public: Create a batch of order activity events.
       #
-      # options    - Required. An array of hashes containing additional order options.
+      # records    - Required. An array of hashes containing orders attributes.
       #                       Refer to the Drip API docs for the required schema.
       #
       # Returns a Drip::Response.
