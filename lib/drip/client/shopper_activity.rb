@@ -43,7 +43,7 @@ module Drip
       #                       Refer to the Drip API docs for the required schema.
       #
       # Returns a Drip::Response.
-      # See https://developer.drip.com/#order-activity
+      # See https://developer.drip.com/#create-or-update-a-batch-of-orders
       def create_order_activity_events(records = [])
         records.each_with_index do |rec, i|
           raise ArgumentError, "email: or person_id: parameter required in record #{i}" if !rec.key?(:email) && !rec.key?(:person_id)
