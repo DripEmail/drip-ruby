@@ -55,7 +55,7 @@ module Drip
           record[:occurred_at] = Time.now.iso8601 unless record.key?(:occurred_at)
         end
 
-        make_json_request :post, "v3/#{account_id}/shopper_activity/order/batch", records
+        make_json_request :post, "v3/#{account_id}/shopper_activity/order/batch", { orders: records }
       end
 
       # Public: Create a product activity event.
