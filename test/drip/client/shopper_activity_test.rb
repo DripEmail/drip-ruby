@@ -80,6 +80,60 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     end
   end
 
+  context "#create_order_activity_events" do
+    setup do
+      @records = [
+        {
+          email: "drippy@example.com",
+          action: "created",
+          provider: "shopify",
+          order_id: "abcdef",
+          amount: 4900,
+          tax: 100,
+          fees: 0,
+          discount: 0,
+          currency_code: "USD",
+          properties: {
+            "size" => "medium",
+            "color" => "red"
+          }
+        },
+        {
+          email: "drippy1@example.com",
+          action: "created",
+          provider: "shopify",
+          order_id: "fdsgs",
+          amount: 4900,
+          tax: 100,
+          fees: 0,
+          discount: 0,
+          currency_code: "USD",
+          properties: {
+            "size" => "medium",
+            "color" => "red"
+          }
+        }
+      ]
+      @response_status = 202
+      @response_body = "{}"
+
+      stub_request(:post, "https://api.getdrip.com/v3/12345/shopper_activity/order/batch").
+        with(headers: { "Content-Type" => "application/json" }).
+        to_return(status: @response_status, body: @response_body, headers: {})
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      assert_equal expected, @client.create_order_activity_events(@records)
+    end
+
+    should "return error when missing fields" do
+      @records[1].delete(:order_id)
+      err = assert_raises(ArgumentError) { @client.create_order_activity_events(@records) }
+      assert_equal "order_id: parameter required in record 1", err.message
+    end
+  end
+
   context "#create_product_activity_event" do
     setup do
       @email = "drippy@drip.com"
