@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[master]: https://github.com/DripEmail/drip-ruby/compare/v3.2.0...HEAD
+[master]: https://github.com/DripEmail/drip-ruby/compare/v3.3.0...HEAD
+
+- Your contribution here!
+
+## [3.3.0] - 2019-05-24
+
+[3.3.0]: https://github.com/DripEmail/drip-ruby/compare/v3.2.0...v3.3.0
 
 ### Added
 - Support for the cart, order, and product endpoints in the shopper activity API.
@@ -22,8 +28,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - Drop support for Ruby 2.1.
-
-- Your contribution here!
 
 ## [3.2.0] - 2018-08-15
 
