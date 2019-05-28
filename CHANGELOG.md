@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Your contribution here!
 
+### Fixed
+- Correct shopper activity batch orders API to wrap things in an `orders` key.
+
 ## [3.3.0] - 2019-05-24
 
 [3.3.0]: https://github.com/DripEmail/drip-ruby/compare/v3.2.0...v3.3.0
