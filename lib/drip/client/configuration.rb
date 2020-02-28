@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Drip
   class Client
     class Configuration
-      DEFAULT_URL_PREFIX = "https://api.getdrip.com/".freeze
+      DEFAULT_URL_PREFIX = "https://api.getdrip.com/"
       private_constant :DEFAULT_URL_PREFIX
 
       CONFIGURATION_FIELDS = %i[access_token api_key account_id url_prefix http_open_timeout http_timeout].freeze

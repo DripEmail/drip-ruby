@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Drip
   class Client
     module CampaignSubscriptions

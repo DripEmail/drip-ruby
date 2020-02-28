@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "drip/errors"
 require "drip/request"
 require "drip/response"
@@ -52,10 +54,10 @@ module Drip
       end
     end
 
-    JSON_API_CONTENT_TYPE = "application/vnd.api+json".freeze
+    JSON_API_CONTENT_TYPE = "application/vnd.api+json"
     private_constant :JSON_API_CONTENT_TYPE
 
-    JSON_CONTENT_TYPE = "application/json".freeze
+    JSON_CONTENT_TYPE = "application/json"
     private_constant :JSON_CONTENT_TYPE
 
     def initialize(options = {})

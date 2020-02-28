@@ -1,4 +1,5 @@
 # coding: utf-8
+# frozen_string_literal: true
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
@@ -19,5 +20,5 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = '>= 2.2'
+  spec.required_ruby_version = '>= 2.3'
 end

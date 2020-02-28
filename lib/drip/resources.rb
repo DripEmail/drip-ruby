@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "drip/resources/account"
 require "drip/resources/broadcast"
 require "drip/resources/campaign"
