@@ -43,6 +43,18 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
       @options.delete(:cart_id)
       assert_raises(ArgumentError) { @client.create_cart_activity_event(@options) }
     end
+
+    should "return error when missing person identifier" do
+      @options.delete(:email)
+      assert_raises(ArgumentError) { @client.create_cart_activity_event(@options) }
+
+      @options[:person_id] = "acd123"
+      @client.create_cart_activity_event(@options)
+
+      @options.delete(:person_id)
+      @options[:visitor_uuid] = "v1234"
+      @client.create_cart_activity_event(@options)
+    end
   end
 
   context "#create_order_activity_event" do
