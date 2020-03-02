@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "drip/collections/accounts"
 require "drip/collections/broadcasts"
 require "drip/collections/campaigns"

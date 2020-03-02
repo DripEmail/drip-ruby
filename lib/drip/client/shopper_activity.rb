@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Drip
   class Client
     module ShopperActivity
@@ -9,7 +11,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#cart-activity
       def create_cart_activity_event(data = {})
-        raise ArgumentError, 'email: or person_id: parameter required' if !data.key?(:email) && !data.key?(:person_id)
+        raise ArgumentError, 'email:, person_id:, or :visitor_uuid parameter required' if !data.key?(:email) && !data.key?(:person_id) && !data.key?(:visitor_uuid)
 
         %i[provider action cart_id cart_url].each do |key|
           raise ArgumentError, "#{key}: parameter required" unless data.key?(key)

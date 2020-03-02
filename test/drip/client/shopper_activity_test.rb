@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class Drip::Client::ShopperActivityTest < Drip::TestCase
@@ -40,6 +42,18 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     should "return error when missing fields" do
       @options.delete(:cart_id)
       assert_raises(ArgumentError) { @client.create_cart_activity_event(@options) }
+    end
+
+    should "return error when missing person identifier" do
+      @options.delete(:email)
+      assert_raises(ArgumentError) { @client.create_cart_activity_event(@options) }
+
+      @options[:person_id] = "acd123"
+      @client.create_cart_activity_event(@options)
+
+      @options.delete(:person_id)
+      @options[:visitor_uuid] = "v1234"
+      @client.create_cart_activity_event(@options)
     end
   end
 
