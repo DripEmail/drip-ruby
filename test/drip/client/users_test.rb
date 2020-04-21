@@ -11,7 +11,7 @@ class Drip::Client::UsersTest < Drip::TestCase
     setup do
       @response_status = 200
       @response_body = "{}"
-      
+
       stub_request(:get, "https://api.getdrip.com/v2/user").
         to_return(status: @response_status, body: @response_body, headers: {})
     end
