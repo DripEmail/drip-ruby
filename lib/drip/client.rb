@@ -17,6 +17,7 @@ require "drip/client/orders"
 require "drip/client/shopper_activity"
 require "drip/client/subscribers"
 require "drip/client/tags"
+require "drip/client/users"
 require "drip/client/webhooks"
 require "drip/client/workflows"
 require "drip/client/workflow_triggers"
@@ -38,6 +39,7 @@ module Drip
     include ShopperActivity
     include Subscribers
     include Tags
+    include Users
     include Webhooks
     include Workflows
     include WorkflowTriggers
