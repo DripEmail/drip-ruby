@@ -150,6 +150,12 @@ as methods on the client object. The following methods are currently available:
 | Apply a tag                | `#apply_tag(email, tag)`                             |
 | Remove a tag               | `#remove_tag(email, tag)`                            |
 
+
+#### Users
+| Actions                    | Methods                                              |
+| :------------------------- | :--------------------------------------------------- |
+| Fetch user                 | `#user`                                              |
+
 #### Webhooks
 
 | Actions                    | Methods                                              |
