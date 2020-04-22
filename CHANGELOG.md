@@ -6,13 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[master]: https://github.com/DripEmail/drip-ruby/compare/v3.3.2...HEAD
+[master]: https://github.com/DripEmail/drip-ruby/compare/v3.4.0...HEAD
 
 - Your contribution here!
 
-## [3.3.2] - 2020-04-21
+## [3.4.0] - 2020-04-21
 
-[3.3.2]: https://github.com/DripEmail/drip-ruby/compare/v3.3.1...v3.3.2
+[3.4.0]: https://github.com/DripEmail/drip-ruby/compare/v3.3.1...v3.4.0
 
 ### Added
 - Support for the user endpoint in the REST API
