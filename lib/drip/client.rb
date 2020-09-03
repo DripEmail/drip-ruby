@@ -63,7 +63,7 @@ module Drip
     private_constant :JSON_CONTENT_TYPE
 
     def initialize(options = {})
-      @config = Drip::Client::Configuration.new(options)
+      @config = Drip::Client::Configuration.new(**options)
       yield(@config) if block_given?
     end
 
