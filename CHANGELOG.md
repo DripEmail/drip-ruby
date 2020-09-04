@@ -6,9 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[master]: https://github.com/DripEmail/drip-ruby/compare/v3.4.0...HEAD
+[master]: https://github.com/DripEmail/drip-ruby/compare/v3.4.1...HEAD
 
 - Your contribution here!
+
+## [3.4.1] - 2020-04-21
+
+[3.4.1]: https://github.com/DripEmail/drip-ruby/compare/v3.4.0...v3.4.1
+
+### Fixed
+- Support for Ruby 2.7 hash parameters.
 
 ## [3.4.0] - 2020-04-21
 
