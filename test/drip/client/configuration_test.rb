@@ -17,23 +17,11 @@ class Drip::Client::ConfigurationTest < Drip::TestCase
         err = assert_raises(ArgumentError) { Drip::Client::Configuration.new(blahdeblah: "123") }
         assert_equal "unknown keyword: blahdeblah", err.message
       end
-
-      should "match core ruby behavior" do
-        def test_method(hello: "test"); end
-        err = assert_raises(ArgumentError) { test_method(blahdeblah: "123") }
-        assert_equal "unknown keyword: blahdeblah", err.message
-      end
     end
 
     context "with multiple additional parameters" do
       should "raise plural error" do
         err = assert_raises(ArgumentError) { Drip::Client::Configuration.new(blahdeblah: "123", blahdeblah1: "123") }
-        assert_equal "unknown keywords: blahdeblah, blahdeblah1", err.message
-      end
-
-      should "match core ruby behavior" do
-        def test_method(hello: "test"); end
-        err = assert_raises(ArgumentError) { test_method(blahdeblah: "123", blahdeblah1: "123") }
         assert_equal "unknown keywords: blahdeblah, blahdeblah1", err.message
       end
     end
