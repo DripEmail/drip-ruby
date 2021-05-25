@@ -84,6 +84,12 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       assert_equal expected, @client.create_or_update_subscriber(id: 123456)
       assert_requested :post, "https://api.getdrip.com/v2/12345/subscribers", body: '{"subscribers":[{"id":123456}]}', times: 1
     end
+
+    should "allow request with bigcommerce_subscriber_id keyword argument" do
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      assert_equal expected, @client.create_or_update_subscriber(external_ids: { "bigcommerce_subscriber_id" => "2" })
+      assert_requested :post, "https://api.getdrip.com/v2/12345/subscribers", body: '{"subscribers":[{"external_ids":{"bigcommerce_subscriber_id":"2"}}]}', times: 1
+    end
   end
 
   context "#create_or_update_subscribers" do

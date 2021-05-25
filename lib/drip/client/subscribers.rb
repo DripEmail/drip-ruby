@@ -35,8 +35,10 @@ module Drip
       #
       # email   - Optional. The String subscriber email address. (Deprecated in favor of a hash argument)
       # options - A Hash of options.
-      #           - email         - Required (or id). Lookup the subscriber by email.
-      #           - id            - Required (or email). Lookup the subscriber by Drip ID.
+      #           - email         - Required (or id, or bigcommerce_subscriber_id).
+      #                             Lookup the subscriber by email.
+      #           - id            - Required (or email, or bigcommerce_subscriber_id).
+      #                             Lookup the subscriber by Drip ID.
       #           - new_email     - Optional. A new email address for the subscriber.
       #                             If provided and a subscriber with the email above
       #                             does not exist, this address will be used to
@@ -45,6 +47,9 @@ module Drip
       #                             format). Defaults to Etc/UTC.
       #           - custom_fields - Optional. A Hash of custom field data.
       #           - tags          - Optional. An Array of tags.
+      #           - external_ids  - Optional. A hash of relevant ids for other integrations.
+      #                             For unsubscribing BigCommerce subscribers, a bigcommerce_subscriber_id
+      #                             can be provided in external_ids rather than email or id as the required field.
       #
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#create_or_update_subscriber
@@ -52,7 +57,7 @@ module Drip
         data = {}
         data[:email] = args[0] if args[0].is_a? String
         data.merge!(args.last) if args.last.is_a? Hash
-        raise ArgumentError, 'email: or id: parameter required' if !data.key?(:email) && !data.key?(:id)
+        raise ArgumentError, 'email: or id: or bigcommerce_subscriber_id: parameter required' if missing_subscriber_identifier(data)
         make_json_api_request :post, "v2/#{account_id}/subscribers", private_generate_resource("subscribers", data)
       end
 
@@ -151,6 +156,13 @@ module Drip
       def unsubscribe_from_all(id_or_email)
         make_json_api_request :post, "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}/unsubscribe_all"
       end
+    end
+
+  private
+
+    def missing_subscriber_identifier(data)
+      external_ids = data[:external_ids] || {}
+      !data.key?(:email) && !data.key?(:id) && !external_ids.key?("bigcommerce_subscriber_id")
     end
   end
 end
