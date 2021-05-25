@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [master]: https://github.com/DripEmail/drip-ruby/compare/v3.4.1...HEAD
 
+### Changed
+- `Drip::Client#create_or_update_subscriber` can be used with a BigCommerce Subscriber ID as the required key
+
 - Your contribution here!
 
 ## [3.4.1] - 2020-04-21
