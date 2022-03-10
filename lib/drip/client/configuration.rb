@@ -6,7 +6,15 @@ module Drip
       DEFAULT_URL_PREFIX = "https://api.getdrip.com/"
       private_constant :DEFAULT_URL_PREFIX
 
-      CONFIGURATION_FIELDS = %i[access_token api_key account_id url_prefix http_open_timeout http_timeout].freeze
+      CONFIGURATION_FIELDS = %i[
+        access_token
+        account_id
+        api_key
+        http_open_timeout
+        http_timeout
+        skip_analytics
+        url_prefix
+      ].freeze
 
       attr_accessor(*CONFIGURATION_FIELDS)
 

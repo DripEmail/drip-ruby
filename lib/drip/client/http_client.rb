@@ -46,6 +46,7 @@ module Drip
           request.basic_auth @config.api_key, ""
         end
 
+        request['Skip-Analytics'] = true if @config.skip_analytics
         request
       end
 

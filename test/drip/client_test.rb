@@ -43,7 +43,8 @@ class Drip::ClientTest < Drip::TestCase
         api_key: "aaaa",
         access_token: "bbbb",
         http_open_timeout: 20,
-        http_timeout: 25
+        http_timeout: 25,
+        skip_analytics: true
       )
 
       assert_equal "1234567", client.account_id
@@ -51,6 +52,7 @@ class Drip::ClientTest < Drip::TestCase
       assert_equal "bbbb", client.access_token
       assert_equal 20, client.http_open_timeout
       assert_equal 25, client.http_timeout
+      assert client.skip_analytics, "config should skip analytics"
     end
 
     should "accept options after initialization" do

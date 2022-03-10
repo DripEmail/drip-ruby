@@ -109,4 +109,17 @@ class Drip::Client::ConfigurationTest < Drip::TestCase
       assert_equal 42, config.http_timeout
     end
   end
+
+  context "#skip_analytics" do
+    should "accept passed parameter" do
+      config = Drip::Client::Configuration.new(skip_analytics: true)
+      assert_equal true, config.skip_analytics
+    end
+
+    should "allow setter" do
+      config = Drip::Client::Configuration.new
+      config.skip_analytics = true
+      assert_equal true, config.skip_analytics
+    end
+  end
 end
