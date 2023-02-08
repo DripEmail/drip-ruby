@@ -85,7 +85,7 @@ module Drip
       # See https://developer.drip.com/#checkout-activity
       def create_checkout_activity_event(data = {})
         %i[provider action checkout_id].each do |key|
-          raise ArgumentError, "#{key}: parameter required" if !data.key?(:email) && !data.key?(:person_id)
+          raise ArgumentError, "#{key}: parameter required" if !data.key?(key)
         end
 
         data[:occurred_at] = Time.now.iso8601 unless data.key?(:occurred_at)
