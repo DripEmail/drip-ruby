@@ -75,6 +75,22 @@ module Drip
         data[:occurred_at] = Time.now.iso8601 unless data.key?(:occurred_at)
         make_json_request :post, "v3/#{account_id}/shopper_activity/product", data
       end
+
+      # Public: Create a checkout activity event.
+      #
+      # options    - Required. A Hash of additional checkout options. Refer to the
+      #                       Drip API docs for the required schema.
+      #
+      # Returns a Drip::Response.
+      # See https://developer.drip.com/#checkout-activity
+      def create_checkout_activity_event(data = {})
+        %i[provider action checkout_id].each do |key|
+          raise ArgumentError, "#{key}: parameter required" if !data.key?(:email) && !data.key?(:person_id)
+        end
+
+        data[:occurred_at] = Time.now.iso8601 unless data.key?(:occurred_at)
+        make_json_request :post, "v3/#{account_id}/shopper_activity/checkout", data
+      end
     end
   end
 end
