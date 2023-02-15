@@ -6,9 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[master]: https://github.com/DripEmail/drip-ruby/compare/v3.4.2...HEAD
+[master]: https://github.com/DripEmail/drip-ruby/compare/v3.4.3...HEAD
 
 - Your contribution here!
+
+## [3.4.3] - 2023-02-15
+
+[3.4.3]: https://github.com/DripEmail/drip-ruby/compare/v3.4.2...v3.4.3
+
+### Added
+- `Drip::Client::ShopperActivity#create_checkout_activity_event` can create `checkout` activity events now
 
 ## [3.4.2] - 2021-04-25
 
