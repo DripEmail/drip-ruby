@@ -186,4 +186,38 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
       assert_raises(ArgumentError) { @client.create_product_activity_event(@options) }
     end
   end
+
+  context "#create_checkout_activity_event" do
+    setup do
+      @email = "drippy@drip.com"
+      @options = {
+        email: @email,
+        provider: "shopify",
+        action: "created",
+        occurred_at: "2019-01-28T12:15:23Z",
+        checkout_id: "B01J4",
+        total_price: 11.16
+      }
+      @response_status = 202
+      @response_body = "{}"
+
+      stub_request(:post, "https://api.getdrip.com/v3/12345/shopper_activity/checkout").
+        with(headers: { "Content-Type" => "application/json" }).
+        to_return(status: @response_status, body: @response_body, headers: {})
+    end
+
+    should "send the right request" do
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      assert_equal expected, @client.create_checkout_activity_event(@options)
+    end
+
+    should "return error with missing fields" do
+      %i[provider action checkout_id].each do |key|
+        params = @options.dup
+        params.delete(key)
+
+        assert_raises(ArgumentError) { @client.create_checkout_activity_event(params) }
+      end
+    end
+  end
 end
