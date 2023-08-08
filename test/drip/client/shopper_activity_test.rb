@@ -35,7 +35,7 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      expected = Drip::Response.new(@response_status, @response_body.to_json)
       assert_equal expected, @client.create_cart_activity_event(@options)
     end
 
@@ -84,7 +84,7 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      expected = Drip::Response.new(@response_status, @response_body.to_json)
       assert_equal expected, @client.create_order_activity_event(@options)
     end
 
@@ -137,7 +137,7 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      expected = Drip::Response.new(@response_status, @response_body.to_json)
       assert_equal expected, @client.create_order_activity_events(@records)
     end
 
@@ -177,7 +177,7 @@ class Drip::Client::ShopperActivityTest < Drip::TestCase
     end
 
     should "send the right request" do
-      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      expected = Drip::Response.new(@response_status, @response_body.to_json)
       assert_equal expected, @client.create_product_activity_event(@options)
     end
 
