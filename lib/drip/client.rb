@@ -49,7 +49,7 @@ module Drip
         @config.public_send(config_key)
       end
 
-      setter_name = "#{config_key}=".to_sym
+      setter_name = :"#{config_key}="
       define_method(setter_name) do |val|
         warn "[DEPRECATED] Setting configuration on Drip::Client after initialization will be removed in a future version"
         @config.public_send(setter_name, val)
@@ -77,7 +77,7 @@ module Drip
       JSON_API_CONTENT_TYPE
     end
 
-    Drip::Request::VERB_CLASS_MAPPING.keys.each do |verb|
+    Drip::Request::VERB_CLASS_MAPPING.each_key do |verb|
       define_method(verb) do |path, options = {}|
         warn "[DEPRECATED] Drip::Client##{verb} please use the API endpoint specific methods"
         make_json_api_request(verb, "v2/#{path}", options)
@@ -109,7 +109,7 @@ module Drip
       end
     end
 
-    def build_response(&block)
+    def build_response(&)
       response = yield
       Drip::Response.new(response.code.to_i, response.body || response.body == "" ? JSON.parse(response.body) : nil)
     rescue JSON::ParserError

@@ -11,7 +11,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#cart-activity
       def create_cart_activity_event(data = {})
-        raise ArgumentError, 'email:, person_id:, or :visitor_uuid parameter required' if !data.key?(:email) && !data.key?(:person_id) && !data.key?(:visitor_uuid)
+        raise ArgumentError, 'email:, person_id:, or :visitor_uuid parameter required' if missing_cart_identifier?(data)
 
         %i[provider action cart_id cart_url].each do |key|
           raise ArgumentError, "#{key}: parameter required" unless data.key?(key)
@@ -47,10 +47,12 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#create-or-update-a-batch-of-orders
       def create_order_activity_events(records = [])
+        required_keys = %i[provider action order_id]
+
         records.each_with_index do |record, i|
           raise ArgumentError, "email: or person_id: parameter required in record #{i}" if !record.key?(:email) && !record.key?(:person_id)
 
-          %i[provider action order_id].each do |key|
+          required_keys.each do |key|
             raise ArgumentError, "#{key}: parameter required in record #{i}" unless record.key?(key)
           end
 
@@ -85,12 +87,18 @@ module Drip
       # See https://developer.drip.com/#checkout-activity
       def create_checkout_activity_event(data = {})
         %i[provider action checkout_id].each do |key|
-          raise ArgumentError, "#{key}: parameter required" if !data.key?(key)
+          raise ArgumentError, "#{key}: parameter required" unless data.key?(key)
         end
 
         data[:occurred_at] = Time.now.iso8601 unless data.key?(:occurred_at)
         make_json_request :post, "v3/#{account_id}/shopper_activity/checkout", data
       end
+    end
+
+  private
+
+    def missing_cart_identifier?(data)
+      !data.key?(:email) && !data.key?(:person_id) && !data.key?(:visitor_uuid)
     end
   end
 end

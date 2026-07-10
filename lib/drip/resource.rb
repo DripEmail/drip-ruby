@@ -19,26 +19,26 @@ module Drip
       true
     end
 
-    def respond_to?(method_name, include_private = false)
-      attributes.keys.include?(method_name.to_s) || super
+    def respond_to_missing?(method_name, include_private = false)
+      attributes.key?(method_name.to_s) || super
     end
 
-    def method_missing(method_name, *args, &block)
-      attributes.keys.include?(method_name.to_s) ? attributes[method_name.to_s] : super
+    def method_missing(method_name, *args, &)
+      attributes.key?(method_name.to_s) ? attributes[method_name.to_s] : super
     end
 
   private
 
     def process(attributes)
       {}.tap do |attrs|
-        attributes.keys.each do |key|
+        attributes.each_key do |key|
           attrs[key] = process_attribute(key, attributes[key])
         end
       end
     end
 
     def process_attribute(key, raw_value)
-      if key.to_s =~ /_at$/ # auto-coerce times
+      if key.to_s.match?(/_at$/) # auto-coerce times
         raw_value ? Time.parse(raw_value) : nil
       else
         raw_value

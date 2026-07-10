@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.dirname(__FILE__) + '/../../test_helper.rb'
+require_relative '../../test_helper'
 
 class Drip::Client::WorkflowsTest < Drip::TestCase
   def setup
@@ -33,6 +33,22 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
     end
 
     should "send the right request" do
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      assert_equal expected, @client.workflow(@id)
+    end
+  end
+
+  context "#workflow with an id that needs escaping" do
+    setup do
+      @response_status = 200
+      @response_body = "{}"
+      @id = "abc/123 xyz"
+
+      stub_request(:get, "https://api.getdrip.com/v2/12345/workflows/#{CGI.escape @id}").
+        to_return(status: @response_status, body: @response_body, headers: {})
+    end
+
+    should "escape the id in the request path" do
       expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
       assert_equal expected, @client.workflow(@id)
     end
@@ -76,7 +92,7 @@ class Drip::Client::WorkflowsTest < Drip::TestCase
         "email" => "someone@example.com",
         "time_zone" => "America/Los_Angeles"
       }
-      @id = 9999999
+      @id = 9_999_999
       @payload = { "subscribers" => [@data] }.to_json
 
       @response_status = 204

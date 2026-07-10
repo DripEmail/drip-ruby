@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.dirname(__FILE__) + '/../../test_helper.rb'
+require_relative '../../test_helper'
 
 class Drip::Client::BroadcastsTest < Drip::TestCase
   def setup
@@ -26,7 +26,7 @@ class Drip::Client::BroadcastsTest < Drip::TestCase
     setup do
       @response_status = 200
       @response_body = "{}"
-      @id = 99999
+      @id = 99_999
 
       stub_request(:get, "https://api.getdrip.com/v2/12345/broadcasts/#{@id}").
         to_return(status: @response_status, body: @response_body, headers: {})

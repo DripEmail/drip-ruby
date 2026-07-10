@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.dirname(__FILE__) + '/../../test_helper.rb'
+require_relative '../../test_helper'
 require "drip/client/configuration"
 require "drip/client/http_client"
 require "drip/request"
@@ -19,7 +19,7 @@ class Drip::Client::HTTPClientTest < Drip::TestCase
 
       @client.make_request(Drip::Request.new(:get, URI("https://api.getdrip.com/v2/testpath")))
 
-      header = "Basic #{Base64.encode64(@key + ':')}".strip
+      header = "Basic #{Base64.encode64("#{@key}:")}".strip
       assert_requested :get, "https://api.getdrip.com/v2/testpath", headers: { 'Authorization' => header }
     end
   end
@@ -65,6 +65,36 @@ class Drip::Client::HTTPClientTest < Drip::TestCase
       assert_raises(Drip::TooManyRedirectsError) { @client.make_request(Drip::Request.new(:get, URI("https://api.getdrip.com/v2/accounts"))) }
       assert_requested :get, "https://api.getdrip.com/v2/accounts", times: 5
       assert_requested :get, "https://api.example.com/mytestpath", times: 5
+    end
+  end
+
+  context "given a redirect to a different host" do
+    setup do
+      @config = Drip::Client::Configuration.new(api_key: "secret-key")
+      @client = Drip::Client::HTTPClient.new(@config)
+    end
+
+    should "not forward credentials to the redirect target" do
+      stub_request(:get, "https://api.getdrip.com/v2/testpath").
+        to_return(status: 301, body: "", headers: { "Location" => "https://evil.example.com/steal" })
+      stub_request(:get, "https://evil.example.com/steal").
+        to_return(status: 200, body: "{}")
+
+      @client.make_request(Drip::Request.new(:get, URI("https://api.getdrip.com/v2/testpath")))
+
+      assert_requested(:get, "https://api.getdrip.com/v2/testpath") { |req| req.headers.key?("Authorization") }
+      assert_requested(:get, "https://evil.example.com/steal") { |req| !req.headers.key?("Authorization") }
+    end
+
+    should "still forward credentials when the redirect stays on the same host" do
+      stub_request(:get, "https://api.getdrip.com/v2/testpath").
+        to_return(status: 301, body: "", headers: { "Location" => "https://api.getdrip.com/v2/othertestpath" })
+      stub_request(:get, "https://api.getdrip.com/v2/othertestpath").
+        to_return(status: 200, body: "{}")
+
+      @client.make_request(Drip::Request.new(:get, URI("https://api.getdrip.com/v2/testpath")))
+
+      assert_requested(:get, "https://api.getdrip.com/v2/othertestpath") { |req| req.headers.key?("Authorization") }
     end
   end
 

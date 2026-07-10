@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.dirname(__FILE__) + '/../../test_helper.rb'
+require_relative '../../test_helper'
 
 class Drip::Client::WorkflowTriggersTest < Drip::TestCase
   def setup
@@ -9,7 +9,7 @@ class Drip::Client::WorkflowTriggersTest < Drip::TestCase
 
   context "#workflow_triggers" do
     setup do
-      @id = 9999999
+      @id = 9_999_999
       @response_status = 200
       @response_body = "{}"
 

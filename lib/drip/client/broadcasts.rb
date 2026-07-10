@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "cgi"
+
 module Drip
   class Client
     module Broadcasts
@@ -24,7 +26,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#broadcasts
       def broadcast(id)
-        make_json_api_request :get, "v2/#{account_id}/broadcasts/#{id}"
+        make_json_api_request :get, "v2/#{account_id}/broadcasts/#{CGI.escape id.to_s}"
       end
     end
   end

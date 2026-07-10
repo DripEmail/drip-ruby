@@ -1,11 +1,15 @@
+plugins:
+  - rubocop-performance
+
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: '2.3'
+  TargetRubyVersion: '3.1'
+  NewCops: enable
   Exclude:
     - 'test/fixtures/**/*'
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Layout/ClosingParenthesisIndentation:
@@ -14,14 +18,31 @@ Layout/ClosingParenthesisIndentation:
 Layout/DotPosition:
   EnforcedStyle: trailing
 
-Style/BracesAroundHashParameters:
-  Enabled: false
-
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+# This codebase intentionally uses the compact `class Drip::Client::Foo`
+# style throughout instead of nested `module`/`class` blocks.
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# Methods are documented with "Public:"-style comments above each method
+# rather than class/module-level documentation.
+Style/Documentation:
+  Enabled: false
+
+# Data-literal methods that just enumerate known classes aren't meaningfully
+# simplified by splitting them up.
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/drip/resources.rb'
+    - 'lib/drip/collections.rb'
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: 'indented'

@@ -23,7 +23,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def workflow(id)
-        make_json_api_request :get, "v2/#{account_id}/workflows/#{id}"
+        make_json_api_request :get, "v2/#{account_id}/workflows/#{CGI.escape id.to_s}"
       end
 
       # Public: Activate a workflow.
@@ -32,7 +32,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def activate_workflow(id)
-        make_json_api_request :post, "v2/#{account_id}/workflows/#{id}/activate"
+        make_json_api_request :post, "v2/#{account_id}/workflows/#{CGI.escape id.to_s}/activate"
       end
 
       # Public: Pause a workflow.
@@ -41,7 +41,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def pause_workflow(id)
-        make_json_api_request :post, "v2/#{account_id}/workflows/#{id}/pause"
+        make_json_api_request :post, "v2/#{account_id}/workflows/#{CGI.escape id.to_s}/pause"
       end
 
       # Public: Start someone on a workflow.
@@ -65,7 +65,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def start_subscriber_workflow(id, options = {})
-        make_json_api_request :post, "v2/#{account_id}/workflows/#{id}/subscribers", private_generate_resource("subscribers", options)
+        make_json_api_request :post, "v2/#{account_id}/workflows/#{CGI.escape id.to_s}/subscribers", private_generate_resource("subscribers", options)
       end
 
       # Public: Remove someone from a workflow.
@@ -75,7 +75,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#workflows
       def remove_subscriber_workflow(workflow_id, id_or_email)
-        make_json_api_request :delete, "v2/#{account_id}/workflows/#{workflow_id}/subscribers/#{CGI.escape id_or_email}"
+        make_json_api_request :delete, "v2/#{account_id}/workflows/#{CGI.escape workflow_id.to_s}/subscribers/#{CGI.escape id_or_email}"
       end
     end
   end

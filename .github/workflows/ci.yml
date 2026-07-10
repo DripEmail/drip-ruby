@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.1", "3.2", "3.3", "3.4"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - run: bundle exec rake test
+
+  # Runs the suite through the same flake.nix shell used for local development,
+  # so a broken dev environment fails CI instead of surfacing only when someone
+  # next runs `nix develop`. No Nix cache action is wired up here: this flake
+  # doesn't build anything from source, so every package is already served by
+  # the public cache.nixos.org substituter and there's nothing to gain from one.
+  nix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - run: nix develop --command bundle install
+      - run: nix develop --command bundle exec rake test
+      - run: nix develop --command bundle exec rubocop

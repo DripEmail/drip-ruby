@@ -34,8 +34,8 @@ module Drip
       items.length < 2
     end
 
-    def each(&block)
-      items.each { |item| yield(item) }
+    def each(&)
+      items.each(&)
     end
   end
 end

@@ -57,7 +57,8 @@ module Drip
         data = {}
         data[:email] = args[0] if args[0].is_a? String
         data.merge!(args.last) if args.last.is_a? Hash
-        raise ArgumentError, 'email: or id: or bigcommerce_subscriber_id: parameter required' if missing_subscriber_identifier(data)
+        raise ArgumentError, 'email: or id: or bigcommerce_subscriber_id: parameter required' if missing_subscriber_identifier?(data)
+
         make_json_api_request :post, "v2/#{account_id}/subscribers", private_generate_resource("subscribers", data)
       end
 
@@ -104,7 +105,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#unsubscribe
       def unsubscribe(id_or_email, options = {})
         url = "v2/#{account_id}/subscribers/#{CGI.escape id_or_email}/remove"
-        url += options[:campaign_id] ? "?campaign_id=#{options[:campaign_id]}" : ""
+        url += options[:campaign_id] ? "?campaign_id=#{CGI.escape options[:campaign_id].to_s}" : ""
         make_json_api_request :post, url
       end
 
@@ -133,7 +134,7 @@ module Drip
       # See https://www.getdrip.com/docs/rest-api#subscribe
       def subscribe(email, campaign_id, options = {})
         data = options.merge("email" => email)
-        url = "v2/#{account_id}/campaigns/#{campaign_id}/subscribers"
+        url = "v2/#{account_id}/campaigns/#{CGI.escape campaign_id.to_s}/subscribers"
         make_json_api_request :post, url, private_generate_resource("subscribers", data)
       end
 
@@ -160,7 +161,7 @@ module Drip
 
   private
 
-    def missing_subscriber_identifier(data)
+    def missing_subscriber_identifier?(data)
       external_ids = data[:external_ids] || {}
       !data.key?(:email) && !data.key?(:id) && !external_ids.key?("bigcommerce_subscriber_id")
     end

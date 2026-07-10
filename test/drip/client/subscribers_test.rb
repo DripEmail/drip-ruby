@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.dirname(__FILE__) + '/../../test_helper.rb'
+require_relative '../../test_helper'
 
 class Drip::Client::SubscribersTest < Drip::TestCase
   def setup
@@ -81,7 +81,7 @@ class Drip::Client::SubscribersTest < Drip::TestCase
 
     should "allow request with drip id keyword argument" do
       expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
-      assert_equal expected, @client.create_or_update_subscriber(id: 123456)
+      assert_equal expected, @client.create_or_update_subscriber(id: 123_456)
       assert_requested :post, "https://api.getdrip.com/v2/12345/subscribers", body: '{"subscribers":[{"id":123456}]}', times: 1
     end
 
@@ -164,6 +164,25 @@ class Drip::Client::SubscribersTest < Drip::TestCase
     end
   end
 
+  context "#subscribe with a campaign id that needs escaping" do
+    setup do
+      @email = "derrick@getdrip.com"
+      @campaign_id = "abc/123 xyz"
+      @data = { "time_zone" => "America/Los_Angeles" }
+
+      @response_status = 201
+      @response_body = "{}"
+
+      stub_request(:post, "https://api.getdrip.com/v2/12345/campaigns/#{CGI.escape @campaign_id}/subscribers").
+        to_return(status: @response_status, body: @response_body, headers: {})
+    end
+
+    should "escape the campaign id in the request path" do
+      expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+      assert_equal expected, @client.subscribe(@email, @campaign_id, @data)
+    end
+  end
+
   context "#unsubscribe" do
     context "if no campaign id is provided" do
       setup do
@@ -195,6 +214,24 @@ class Drip::Client::SubscribersTest < Drip::TestCase
       end
 
       should "send the right request" do
+        expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
+        assert_equal expected, @client.unsubscribe(@id, campaign_id: @campaign)
+      end
+    end
+
+    context "if a campaign id that needs escaping is provided" do
+      setup do
+        @id = "derrick@getdrip.com"
+        @campaign = "abc/123 xyz"
+
+        @response_status = 201
+        @response_body = "{}"
+
+        stub_request(:post, "https://api.getdrip.com/v2/12345/subscribers/#{CGI.escape @id}/remove?campaign_id=#{CGI.escape @campaign}").
+          to_return(status: @response_status, body: @response_body, headers: {})
+      end
+
+      should "escape the campaign id in the query string" do
         expected = Drip::Response.new(@response_status, JSON.parse(@response_body))
         assert_equal expected, @client.unsubscribe(@id, campaign_id: @campaign)
       end
