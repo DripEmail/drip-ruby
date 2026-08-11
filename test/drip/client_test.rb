@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.dirname(__FILE__) + '/../test_helper.rb'
+require_relative '../test_helper'
 require "base64"
 
 class Drip::ClientTest < Drip::TestCase
@@ -67,7 +67,7 @@ class Drip::ClientTest < Drip::TestCase
     setup do
       @client = Drip::Client.new do |config|
         config.api_key = "Hello world"
-        config.account_id = 12345
+        config.account_id = 12_345
       end
     end
 
@@ -114,7 +114,7 @@ class Drip::ClientTest < Drip::TestCase
     should "return a resource and note deprecation" do
       client = Drip::Client.new
       resource = nil
-      assert_output(nil, /^\[DEPRECATED\] Drip\:\:Client\#generate_resource is deprecated/) { resource = client.generate_resource("hello", {}) }
+      assert_output(nil, /^\[DEPRECATED\] Drip::Client\#generate_resource is deprecated/) { resource = client.generate_resource("hello", {}) }
       assert_equal({ "hello" => [{}] }, resource)
     end
   end
@@ -124,7 +124,7 @@ class Drip::ClientTest < Drip::TestCase
     should "return default content type and print warning" do
       client = Drip::Client.new
       content_type = nil
-      assert_output(nil, /^\[DEPRECATED\] Drip\:\:Client\#content_type is deprecated/) { content_type = client.content_type }
+      assert_output(nil, /^\[DEPRECATED\] Drip::Client\#content_type is deprecated/) { content_type = client.content_type }
       assert_equal "application/vnd.api+json", content_type
     end
   end
@@ -137,7 +137,7 @@ class Drip::ClientTest < Drip::TestCase
 
       client = Drip::Client.new
       response = nil
-      assert_output(nil, /^\[DEPRECATED\] Drip\:\:Client\#get please use the API endpoint specific methods/) { response = client.get("testpath") }
+      assert_output(nil, /^\[DEPRECATED\] Drip::Client\#get please use the API endpoint specific methods/) { response = client.get("testpath") }
       assert_equal({}, response.body)
     end
   end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "cgi"
+
 module Drip
   class Client
     module Accounts
@@ -18,7 +20,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#accounts
       def account(id)
-        make_json_api_request :get, "v2/accounts/#{id}"
+        make_json_api_request :get, "v2/accounts/#{CGI.escape id.to_s}"
       end
     end
   end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "cgi"
+
 module Drip
   class Client
     module Conversions
@@ -22,7 +24,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#conversions
       def conversion(id)
-        make_json_api_request :get, "v2/#{account_id}/goals/#{id}"
+        make_json_api_request :get, "v2/#{account_id}/goals/#{CGI.escape id.to_s}"
       end
     end
   end

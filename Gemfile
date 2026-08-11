@@ -5,12 +5,13 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in drip-ruby.gemspec
 gemspec
 
-gem "bundler", ">= 1.6", "< 3"
+gem "base64"
+gem "bundler", ">= 2.0", "< 5"
 gem "minitest", "~> 5.0"
-gem "mocha", "~> 1.1"
-gem "rake", "~> 12.0"
-gem "rubocop", "~> 0.67.2"
-gem "rubocop-performance", "~> 1.1.0"
-gem "shoulda-context", "~> 1.0"
-gem "simplecov", require: false
-gem "webmock", "~> 3.4"
+gem "mocha", "~> 2.1"
+gem "rake", "~> 13.0"
+gem "rubocop", "~> 1.81"
+gem "rubocop-performance", "~> 1.26"
+gem "shoulda-context", "~> 1.2"
+gem "simplecov", "~> 0.22", require: false
+gem "webmock", "~> 3.24"

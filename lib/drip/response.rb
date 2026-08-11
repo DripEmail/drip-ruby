@@ -26,12 +26,13 @@ module Drip
       (200..299).cover?(status)
     end
 
-    def respond_to?(method_name, include_private = false)
-      member_map.keys.include?(method_name) || super
+    def respond_to_missing?(method_name, include_private = false)
+      member_map.key?(method_name) || super
     end
 
-    def method_missing(method_name, *args, &block)
-      return super unless member_map.keys.include?(method_name)
+    def method_missing(method_name, *args, &)
+      return super unless member_map.key?(method_name)
+
       members[member_map[method_name]]
     end
 
@@ -47,27 +48,29 @@ module Drip
 
     def parse_members
       return body unless success?
-      {}.tap do |members|
-        if body.is_a?(Hash)
-          body.each do |key, value|
-            klass = case value
-                    when Array
-                      Drip::Collections.find_class(key)
-                    when String
-                      String
-                    else
-                      Drip::Resources.find_class(key)
-                    end
+      return {} unless body.is_a?(Hash)
 
-            members[key] = klass.new(value)
-          end
+      {}.tap do |members|
+        body.each do |key, value|
+          members[key] = member_class(key, value).new(value)
         end
+      end
+    end
+
+    def member_class(key, value)
+      case value
+      when Array
+        Drip::Collections.find_class(key)
+      when String
+        String
+      else
+        Drip::Resources.find_class(key)
       end
     end
 
     def member_map
       @member_map ||= {}.tap do |map|
-        members.each { |key, _value| map[key.to_sym] = key }
+        members.each_key { |key| map[key.to_sym] = key }
       end
     end
   end

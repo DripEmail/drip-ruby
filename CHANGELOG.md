@@ -6,9 +6,42 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[master]: https://github.com/DripEmail/drip-ruby/compare/v3.4.3...HEAD
+[main]: https://github.com/DripEmail/drip-ruby/compare/v3.5.0...HEAD
 
 - Your contribution here!
+
+## [3.5.0] - 2026-07-10
+
+[3.5.0]: https://github.com/DripEmail/drip-ruby/compare/v3.4.3...v3.5.0
+
+### Security
+- `Drip::Client::HTTPClient` no longer forwards the `Authorization`/Basic-auth
+  credentials when an HTTP redirect points to a different host than the one
+  originally requested.
+- Path segments and query values built from caller-supplied ids (`id`,
+  `campaign_id`, `workflow_id`, `subscriber_id`, etc.) are now consistently
+  URL-escaped, matching the existing behavior for emails and tags.
+
+### Fixed
+- `Drip::Client::Orders#create_or_update_order` no longer merges the `email`
+  option under a symbol key alongside a possible string `"email"` key, which
+  produced a hash with a duplicate JSON key and a deprecation warning under
+  recent `json` gem versions.
+
+### Changed
+- Raised `required_ruby_version` to `>= 3.1` and bumped development
+  dependencies (minitest, mocha, rake, rubocop, rubocop-performance,
+  shoulda-context, simplecov, webmock) to current versions.
+- Replaced Travis CI with a GitHub Actions workflow that runs the test suite
+  across Ruby 3.1-3.4 (via `ruby/setup-ruby`) plus a job that runs the suite
+  and rubocop through the project's `flake.nix` shell (via
+  `DeterminateSystems/determinate-nix-action`), so the documented dev
+  environment is itself covered by CI.
+- Upgraded rubocop from 0.67.2 to 1.x, resolved the accumulated
+  `.rubocop_todo.yml` offenses, and fixed the underlying code where
+  reasonable rather than just re-suppressing them.
+- Added a `flake.nix` development shell (ruby, bundler, libyaml, pkg-config)
+  for a reproducible local dev environment.
 
 ## [3.4.3] - 2023-02-15
 

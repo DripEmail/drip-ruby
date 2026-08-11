@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "cgi"
+
 module Drip
   class Client
     module Webhooks
@@ -17,7 +19,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#webhooks
       def webhook(id)
-        make_json_api_request :get, "v2/#{account_id}/webhooks/#{id}"
+        make_json_api_request :get, "v2/#{account_id}/webhooks/#{CGI.escape id.to_s}"
       end
 
       # Public: Create a webhook.
@@ -54,7 +56,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#webhooks
       def delete_webhook(id)
-        make_json_api_request :delete, "v2/#{account_id}/webhooks/#{id}"
+        make_json_api_request :delete, "v2/#{account_id}/webhooks/#{CGI.escape id.to_s}"
       end
     end
   end

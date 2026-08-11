@@ -12,7 +12,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://developer.drip.com/#orders
       def create_or_update_order(email, options = {})
-        data = options.merge(email: email)
+        data = options.merge("email" => email)
         make_json_api_request :post, "v2/#{account_id}/orders", private_generate_resource("orders", data)
       end
 

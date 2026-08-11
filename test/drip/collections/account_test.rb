@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.dirname(__FILE__) + '/../../test_helper.rb'
+require_relative '../../test_helper'
 require "drip/collections/accounts"
 
 class Drip::AccountsTest < Drip::TestCase

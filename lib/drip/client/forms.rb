@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "cgi"
+
 module Drip
   class Client
     module Forms
@@ -18,7 +20,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#forms
       def form(id)
-        make_json_api_request :get, "v2/#{account_id}/forms/#{id}"
+        make_json_api_request :get, "v2/#{account_id}/forms/#{CGI.escape id.to_s}"
       end
     end
   end

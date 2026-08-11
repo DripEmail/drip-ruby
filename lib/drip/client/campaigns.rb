@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "cgi"
+
 module Drip
   class Client
     module Campaigns
@@ -26,7 +28,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#campaigns
       def campaign(id)
-        make_json_api_request :get, "v2/#{account_id}/campaigns/#{id}"
+        make_json_api_request :get, "v2/#{account_id}/campaigns/#{CGI.escape id.to_s}"
       end
 
       # Public: Activate a campaign.
@@ -36,7 +38,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#campaigns
       def activate_campaign(id)
-        make_json_api_request :post, "v2/#{account_id}/campaigns/#{id}/activate"
+        make_json_api_request :post, "v2/#{account_id}/campaigns/#{CGI.escape id.to_s}/activate"
       end
 
       # Public: Pause a campaign.
@@ -46,7 +48,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#campaigns
       def pause_campaign(id)
-        make_json_api_request :post, "v2/#{account_id}/campaigns/#{id}/pause"
+        make_json_api_request :post, "v2/#{account_id}/campaigns/#{CGI.escape id.to_s}/pause"
       end
 
       # Public: List everyone subscribed to a campaign.
@@ -70,7 +72,7 @@ module Drip
       # Returns a Drip::Response.
       # See https://www.getdrip.com/docs/rest-api#campaigns
       def campaign_subscribers(id, options = {})
-        make_json_api_request :get, "v2/#{account_id}/campaigns/#{id}/subscribers", options
+        make_json_api_request :get, "v2/#{account_id}/campaigns/#{CGI.escape id.to_s}/subscribers", options
       end
     end
   end
