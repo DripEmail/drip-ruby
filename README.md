@@ -235,3 +235,14 @@ subscriber.email
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+## Releasing
+
+1. Set `Drip::VERSION` in `lib/drip/version.rb`.
+2. Move the `[Unreleased]` entries in `CHANGELOG.md` under a new `## [x.y.z] - YYYY-MM-DD` heading.
+3. Merge to `main`.
+4. From an up-to-date `main`, tag and push: `git tag -a vX.Y.Z -m vX.Y.Z && git push origin vX.Y.Z`.
+
+Pushing the tag triggers `.github/workflows/release.yml`, which checks that the
+tag matches `Drip::VERSION`, publishes the gem to RubyGems, and creates the
+GitHub release with the matching `CHANGELOG.md` section as its notes.
