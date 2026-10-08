@@ -67,9 +67,9 @@ module Drip
       yield(@config) if block_given?
     end
 
-    def generate_resource(key, *args)
+    def generate_resource(key, *)
       warn "[DEPRECATED] Drip::Client#generate_resource is deprecated and will be removed in a future version"
-      private_generate_resource(key, *args)
+      private_generate_resource(key, *)
     end
 
     def content_type
