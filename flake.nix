@@ -14,10 +14,20 @@
       {
         devShells.default = pkgs.mkShell {
           packages = [
-            pkgs.ruby_3_3
+            pkgs.actionlint
+            pkgs.bash-completion
+            pkgs.bashInteractive
             pkgs.bundler
+            pkgs.curl
+            pkgs.gh
+            pkgs.git
+            pkgs.jq
             pkgs.libyaml
+            pkgs.pinact
             pkgs.pkg-config
+            pkgs.ruby_3_3
+            pkgs.shellcheck
+            pkgs.zizmor
           ];
 
           shellHook = ''
