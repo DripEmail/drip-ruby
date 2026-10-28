@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [main]: https://github.com/DripEmail/drip-ruby/compare/v3.5.0...HEAD
 
-- Your contribution here!
+### Changed
+- Raised `required_ruby_version` to `>= 3.2`; Ruby 3.1 is no longer supported.
+- CI runs the test suite on Ruby 3.2, 3.3, 3.4, and 4.0.
+- Releases are published from GitHub Actions when a `v*` tag on `main` is
+  pushed, after the CI suite passes.
 
 ## [3.5.0] - 2026-07-10
 
