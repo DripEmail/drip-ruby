@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - CI runs the test suite on Ruby 3.2, 3.3, 3.4, and 4.0.
 - Releases are published from GitHub Actions when a `v*` tag on `main` is
   pushed, after the CI suite passes.
+- The gem package contains only `lib/`, `LICENSE.txt`, `README.md`, and
+  `CHANGELOG.md`, and building it no longer requires a git checkout.
 
 ## [3.5.0] - 2026-07-10
 
