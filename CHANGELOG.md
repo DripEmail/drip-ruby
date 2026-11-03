@@ -6,13 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[main]: https://github.com/DripEmail/drip-ruby/compare/v3.5.0...HEAD
+[Unreleased]: https://github.com/DripEmail/drip-ruby/compare/v3.5.0...HEAD
 
 ### Changed
 - Raised `required_ruby_version` to `>= 3.2`; Ruby 3.1 is no longer supported.
 - CI runs the test suite on Ruby 3.2, 3.3, 3.4, and 4.0.
 - Releases are published from GitHub Actions when a `v*` tag on `main` is
-  pushed, after the CI suite passes.
+  pushed, after the CI suite passes. `rake release:prepare` and
+  `rake release:tag` drive the release; `rake release` (from Bundler) is
+  removed. Prerelease versions (`X.Y.Z.rcN`) are supported.
 - The gem package contains only `lib/`, `LICENSE.txt`, `README.md`, and
   `CHANGELOG.md`, and building it no longer requires a git checkout.
 
