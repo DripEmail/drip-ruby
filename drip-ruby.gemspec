@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "http://github.com/DripEmail/drip-ruby"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = Dir.glob(["lib/**/*.rb", "LICENSE.txt", "README.md", "CHANGELOG.md"], base: __dir__).sort
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
