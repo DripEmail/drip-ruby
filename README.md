@@ -238,11 +238,28 @@ subscriber.email
 
 ## Releasing
 
-1. Set `Drip::VERSION` in `lib/drip/version.rb`.
-2. Move the `[Unreleased]` entries in `CHANGELOG.md` under a new `## [x.y.z] - YYYY-MM-DD` heading.
-3. Merge to `main`.
-4. From an up-to-date `main`, tag and push: `git tag -a vX.Y.Z -m vX.Y.Z && git push origin vX.Y.Z`.
+Releases are cut with Rake tasks and published by
+`.github/workflows/release.yml` when a `v*` tag is pushed. Versions are
+`X.Y.Z`, or `X.Y.Z.alphaN` / `X.Y.Z.betaN` / `X.Y.Z.rcN` for prereleases.
 
-Pushing the tag triggers `.github/workflows/release.yml`, which checks that the
-tag matches `Drip::VERSION`, publishes the gem to RubyGems, and creates the
-GitHub release with the matching `CHANGELOG.md` section as its notes.
+1. On a branch off an up-to-date `main`, run
+   `bundle exec rake "release:prepare[X.Y.Z]"`. It sets `Drip::VERSION`, and
+   for a final release moves the `[Unreleased]` entries in `CHANGELOG.md`
+   under a dated `## [X.Y.Z]` section. A prerelease changes only the version;
+   its notes come from `[Unreleased]`. The task then runs rubocop and the
+   test suite.
+2. Commit, open a pull request, and merge it after review.
+3. On an up-to-date `main`, run `bundle exec rake release:tag`. It checks the
+   branch, working tree, version, existing tags, RubyGems, `CHANGELOG.md`, and
+   the CI result for `HEAD` (via `gh`), prints the release notes, and asks for
+   confirmation before creating and pushing the tag.
+
+The workflow runs the CI suite, verifies the tag is on `main` and matches
+`Drip::VERSION`, builds the gem, creates a draft GitHub release with the gem
+attached, pushes the gem to RubyGems, and publishes the GitHub release. Each
+step skips work that is already done, so a failed run can be re-run.
+
+`bundle exec rake release:notes` previews the notes for the current version.
+Running the Release workflow manually (`workflow_dispatch`) is a dry run: it
+runs the tests, builds the gem and notes, and uploads them as a workflow
+artifact without publishing anything.
